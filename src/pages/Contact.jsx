@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { 
   Mail,
   Phone,
@@ -6,52 +6,97 @@ import {
   Send,
   Linkedin,
   Github,
-  Twitter
+  Twitter,
+  Loader2,
+  Check,
+  X
 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 import './Contact.css';
 
 export default function Contact() {
+  const form = useRef();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    
+    // EmailJS credentials
+    const serviceId = 'service_7d1rdnu';
+    const templateId = 'template_pi90lov';
+    const publicKey = 'jSzN1nnBCyfWN1SA3';
+
+    setIsLoading(true);
+    setIsSuccess(false);
+    setIsError(false);
+    setErrorMessage('');
+
+    try {
+      const result = await emailjs.sendForm(
+        serviceId,
+        templateId,
+        form.current,
+        publicKey
+      );
+      
+      setIsSuccess(true);
+      form.current.reset();
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setErrorMessage(error.text || 'Failed to send message. Please try again later.');
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => {
+        setIsSuccess(false);
+        setIsError(false);
+      }, 5000);
+    }
+  };
+
   return (
     <section id="contact" className="contact-section">
       <div className="contact-container">
-        <h2 className="section-title">
-          <span className="title-decoration">✉️</span> Get In Touch
-        </h2>
+        <header className="contact-header">
+          <h2 className="section-title">
+            <span className="title-decoration">✉️</span> Contact Me
+          </h2>
+          <p className="section-subtitle">Have a project in mind or want to connect? Send me a message.</p>
+        </header>
         
         <div className="contact-content">
           <div className="contact-info">
-            <h3 className="contact-subtitle">Contact Information</h3>
-            
-            <div className="contact-methods">
-              <div className="contact-item">
-                <Mail className="contact-icon" />
-                <div>
-                  <h4>Email</h4>
-                  <a href="mailto:meeknessbon@gmail.com" className="contact-link">
-                    meeknessbon@gmail.com
-                  </a>
-                </div>
-              </div>
-              
-              <div className="contact-item">
-                <Phone className="contact-icon" />
-                <div>
-                  <h4>Phone</h4>
-                  <a href="tel:+250793171200" className="contact-link">
-                    +250 793 171 200
-                  </a>
-                </div>
-              </div>
-              
-              <div className="contact-item">
-                <MapPin className="contact-icon" />
-                <div>
-                  <h4>Location</h4>
-                  <p className="contact-text">Kigali, Rwanda</p>
-                </div>
+            <div className="info-card">
+              <Mail className="contact-icon" />
+              <div>
+                <h3>Email</h3>
+                <a href="mailto:meeknessbon@gmail.com" className="contact-link">
+                  meeknessbon@gmail.com
+                </a>
               </div>
             </div>
             
+            <div className="info-card">
+              <Phone className="contact-icon" />
+              <div>
+                <h3>Phone</h3>
+                <a href="tel:+250793171200" className="contact-link">
+                  +250 793 171 200
+                </a>
+              </div>
+            </div>
+            
+            <div className="info-card">
+              <MapPin className="contact-icon" />
+              <div>
+                <h3>Location</h3>
+                <p className="contact-text">Kigali, Rwanda</p>
+              </div>
+            </div>
+
             <div className="social-links">
               <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="social-link">
                 <Linkedin size={20} />
@@ -65,26 +110,75 @@ export default function Contact() {
             </div>
           </div>
           
-          <form className="contact-form">
+          <form ref={form} onSubmit={sendEmail} className="contact-form">
             <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" placeholder="Your name" required />
+              <label htmlFor="name">Full Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                placeholder="Enter your full name" 
+                required 
+                minLength={2}
+              />
             </div>
             
             <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" placeholder="Your email" required />
+              <label htmlFor="email">Email Address</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="your.email@example.com" 
+                required
+                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              />
             </div>
             
             <div className="form-group">
-              <label htmlFor="message">Message</label>
-              <textarea id="message" rows="4" placeholder="Your message" required></textarea>
+              <label htmlFor="message">Your Message</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows={5} 
+                placeholder="Tell me about your project or inquiry..." 
+                required
+                minLength={10}
+              ></textarea>
             </div>
             
-            <button type="submit" className="submit-button">
-              <Send size={16} />
-              Send Message
+            <button 
+              type="submit" 
+              className={`submit-button ${isLoading ? 'loading' : ''}`}
+              disabled={isLoading}
+              aria-busy={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="animate-spin" size={18} />
+                  Sending Message...
+                </>
+              ) : (
+                <>
+                  <Send size={18} />
+                  Send Message
+                </>
+              )}
             </button>
+
+            {isSuccess && (
+              <div className="notification success">
+                <Check size={18} />
+                <span>Your message has been sent successfully! I'll get back to you soon.</span>
+              </div>
+            )}
+            
+            {isError && (
+              <div className="notification error">
+                <X size={18} />
+                <span>{errorMessage}</span>
+              </div>
+            )}
           </form>
         </div>
       </div>
