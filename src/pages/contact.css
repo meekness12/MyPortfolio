@@ -1,4 +1,16 @@
 /* ===== VARIABLES ===== */
+/* contact.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .contact-section {
+    @apply bg-white text-gray-800;
+  }
+}
+
+
 :root {
   /* Colors */
   --bg-color: #f8fafc;
