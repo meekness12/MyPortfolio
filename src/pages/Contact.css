@@ -1,5 +1,4 @@
-/* ===== VARIABLES ===== */
-/* contact.css */
+/* ===== TAILWIND INTEGRATION ===== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,6 +9,7 @@
   }
 }
 
+/* ===== CSS VARIABLES ===== */
 :root {
   /* Colors */
   --bg-color: #f8fafc;
@@ -21,7 +21,7 @@
   --warning-bg: #fffbeb;
   --warning-text: #b45309;
   --warning-border: #fcd34d;
-  
+
   /* Status Colors */
   --success-bg: #f0fdf4;
   --success-text: #15803d;
@@ -29,12 +29,12 @@
   --error-bg: #fef2f2;
   --error-text: #b91c1c;
   --error-border: #fecaca;
-  
+
   /* Effects */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
   --shadow-lg: 0 2px 10px rgba(0,0,0,0.1);
-  
+
   /* Measurements */
   --radius-sm: 4px;
   --radius-md: 6px;
@@ -42,7 +42,7 @@
   --transition: all 0.3s ease;
 }
 
-/* ===== BASE STYLES ===== */
+/* ===== BASE SECTION STYLES ===== */
 .contact-section {
   padding: 5rem 1.5rem;
   background-color: var(--bg-color);
@@ -56,8 +56,14 @@
 .section-title {
   font-size: 2.25rem;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: var(--logo-color);
+}
+
+.section-subtitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--nav-link);
 }
 
 /* ===== LAYOUT ===== */
@@ -68,7 +74,63 @@
   align-items: flex-start;
 }
 
-/* ===== CONTACT FORM SECTION ===== */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-icon {
+  color: var(--logo-color);
+  flex-shrink: 0;
+}
+
+.contact-link {
+  color: var(--text-color);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+.contact-text {
+  color: var(--text-color);
+}
+
+/* ===== SOCIAL LINKS ===== */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-link {
+  color: var(--text-color);
+  background: var(--nav-link-bg-hover);
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: inline-flex;
+  transition: var(--transition);
+}
+
+.social-link:hover {
+  background: var(--logo-color);
+  color: white;
+}
+
+/* ===== CONTACT FORM ===== */
 .contact-form {
   width: 100%;
   max-width: 600px;
@@ -129,7 +191,6 @@
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-/* Input validation states */
 .form-group.error input,
 .form-group.error textarea {
   border-color: var(--error-border);
@@ -140,6 +201,7 @@
   border-color: var(--success-border);
 }
 
+/* ===== SUBMIT BUTTON ===== */
 .submit-button {
   display: inline-flex;
   align-items: center;
@@ -180,17 +242,6 @@
   cursor: not-allowed;
 }
 
-.submit-button.loading::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: inherit;
-  border-radius: inherit;
-}
-
 .submit-button.loading::after {
   content: '';
   display: block;
@@ -226,12 +277,6 @@
   border: 1px solid var(--error-border);
 }
 
-.notification.warning {
-  background-color: var(--warning-bg);
-  color: var(--warning-text);
-  border: 1px solid var(--warning-border);
-}
-
 /* ===== ANIMATIONS ===== */
 @keyframes spin {
   from { transform: rotate(0deg); }
@@ -244,67 +289,75 @@
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+  .contact-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .contact-section {
     padding: 3rem 1rem;
   }
-  
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
   .contact-content {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 
-  .contact-info {
-    position: static;
-    order: 2;
+  .contact-info,
+  .contact-form {
+    margin: 0;
   }
 
   .contact-form {
-    order: 1;
-    margin-left: 0;
     padding: 1.5rem;
   }
-  
-  .section-title {
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-  }
-  
-  .contact-form-header h2 {
-    font-size: 1.5rem;
+
+  .social-links {
+    justify-content: center;
   }
 }
 
-/* Mobile-specific optimizations */
 @media (max-width: 480px) {
   .contact-section {
     padding: 2rem 1rem;
   }
-  
+
   .form-group input,
   .form-group textarea {
     padding: 0.75rem;
-    font-size: 16px; /* Prevent iOS zoom */
+    font-size: 16px;
   }
-  
+
   .submit-button {
     width: 100%;
     padding: 0.9rem;
   }
-  
+
   .contact-form {
     padding: 1.25rem;
   }
-}
 
-/* Tablet-specific adjustments */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .contact-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+  .section-title {
+    font-size: 1.5rem;
   }
-  
-  .contact-info {
-    top: 1rem;
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .info-card {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
