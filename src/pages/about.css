@@ -1,0 +1,189 @@
+.about-section {
+  padding: 4rem 1.5rem;
+  background-color: var(--bg-color);
+}
+
+.about-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--logo-color);
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.title-icon {
+  position: absolute;
+  left: 50%;
+  top: -1.5rem;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.about-content {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.about-text {
+  flex: 1.5;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.inline-icon {
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  color: var(--logo-color);
+}
+
+.highlights {
+  margin-bottom: 2rem;
+}
+
+.highlight-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.highlight-icon {
+  color: var(--logo-color);
+  font-size: 1.5rem;
+}
+
+.skills-list {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.skills-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.8rem;
+  background: var(--nav-link-bg-hover);
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.skills-list li:hover {
+  transform: translateY(-2px);
+}
+
+.skill-icon {
+  color: var(--logo-color);
+  flex-shrink: 0;
+}
+
+.mission {
+  font-style: italic;
+  color: var(--text-color);
+  position: relative;
+  padding-left: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.quote-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 2rem;
+  color: var(--logo-color);
+  line-height: 1;
+}
+
+.about-details {
+  flex: 1;
+  position: sticky;
+  top: 6rem;
+}
+
+.education-card {
+  background: var(--nav-link-bg-hover);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--logo-color);
+}
+
+.education-title {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.edu-icon {
+  color: var(--logo-color);
+}
+
+.education-info {
+  line-height: 1.6;
+}
+
+.institution {
+  color: var(--nav-link);
+  font-size: 0.9rem;
+}
+
+.cv-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--logo-color);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.cv-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+  }
+  
+  .about-details {
+    position: static;
+    width: 100%;
+  }
+  
+  .skills-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+}

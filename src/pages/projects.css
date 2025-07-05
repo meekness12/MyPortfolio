@@ -1,0 +1,135 @@
+.projects-section {
+  padding: 4rem 1.5rem;
+  background-color: var(--bg-color);
+}
+
+.projects-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--logo-color);
+}
+
+.title-decoration {
+  color: var(--nav-link);
+  opacity: 0.7;
+}
+
+.projects-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.project-card {
+  background: var(--nav-link-bg-hover);
+  border-radius: 12px;
+  padding: 2rem;
+  border-left: 4px solid var(--logo-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.project-title {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--logo-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: rgba(79, 70, 229, 0.1);
+  transition: all 0.3s ease;
+}
+
+.project-link:hover {
+  background: rgba(79, 70, 229, 0.2);
+}
+
+.project-description {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: var(--nav-link);
+}
+
+.features-title, .tech-title {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.feature-icon {
+  color: var(--logo-color);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.tech-tag {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--logo-color);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .projects-section {
+    padding: 3rem 1rem;
+  }
+  
+  .features-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-link {
+    padding: 0.5rem;
+  }
+}
