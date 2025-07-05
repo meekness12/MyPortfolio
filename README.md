@@ -1,4 +1,4 @@
-# 🌟 Meekness Bonface - Portfolio Website
+# 🌟 Meekness Bonheur - Portfolio Website
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://meekness12.github.io/MyPortfolio)
@@ -54,35 +54,18 @@ MyPortfolio/
 ├── package.json
 ├── README.md
 └── vite.config.js        # Vite configuration
-🌟 Featured Project
-🚔 Police Driving License System
-A digital platform for Rwanda National Police
 
-Technologies Used: React, Node.js, MongoDB, Express
 
-Key Features:
-
-Online license application submission
-
-Theory test administration system
-
-Real-time license status tracking
-
-Secure document upload
-
-Admin dashboard for officers
-
-https://img.shields.io/badge/GitHub-View%2520Project-blue
 
 🏆 My Skills
-<div align="center">
 Frontend Development	Backend Basics	Design & Tools
 React.js	Node.js	Figma
 JavaScript (ES6+)	Express	Adobe Premiere Pro
 HTML5 & CSS3	MongoDB	Git Version Control
 Responsive Design	REST APIs	VS Code
 CSS Variables	Authentication	Chrome DevTools
-</div>
+
+
 🖥️ Live Demo
 Experience the portfolio live:
 👉 https://meekness12.github.io/MyPortfolio
@@ -125,7 +108,7 @@ GitHub for free hosting via GitHub Pages
 
 All open source contributors whose work made this possible
 
-💻 Developed with ❤️ by Meekness Bonface
+💻 Developed with ❤️ by Meekness Bonheur
 📧 Contact Me: meeknessbon@gmail.com
 📱 Phone: +250 793 171 200
 📍 Location: Kigali, Rwanda
