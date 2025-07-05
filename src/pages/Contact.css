@@ -69,9 +69,25 @@
 /* ===== LAYOUT ===== */
 .contact-content {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  /* Left column auto‑sizes (min 260 px, up to 420 px)   *
+   * Right column flexes 320‑700 px with clamp() magic   */
+  grid-template-columns: minmax(260px, 420px) minmax(clamp(320px, 55%, 700px), 1fr);
   gap: 3rem;
   align-items: flex-start;
+}
+
+@media (max-width: 900px) {        /* earlier stack for tablets */
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* Super‑wide screens – give form more room */
+@media (min-width: 1400px) {
+  .contact-content {
+    grid-template-columns: 35% 65%;
+  }
 }
 
 .contact-info {
@@ -101,19 +117,15 @@
   text-decoration: none;
 }
 
-.contact-link:hover {
-  text-decoration: underline;
-}
+.contact-link:hover { text-decoration: underline; }
 
-.contact-text {
-  color: var(--text-color);
-}
+.contact-text { color: var(--text-color); }
 
 /* ===== SOCIAL LINKS ===== */
 .social-links {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .social-link {
@@ -125,20 +137,23 @@
   transition: var(--transition);
 }
 
-.social-link:hover {
-  background: var(--logo-color);
-  color: white;
-}
+.social-link:hover { background: var(--logo-color); color: #fff; }
 
 /* ===== CONTACT FORM ===== */
 .contact-form {
   width: 100%;
-  max-width: 600px;
+  /* Fluid but never smaller than 350 or larger than 700 px */
+  max-width: clamp(350px, 100%, 700px);
   padding: 2rem;
-  background: white;
+  background: #fff;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  margin-left: auto;
+  /* Float right only on extra‑large screens */
+  margin-left: 0;
+}
+
+@media (min-width: 1100px) {
+  .contact-form { margin-left: auto; }
 }
 
 .contact-form-header {
@@ -151,10 +166,9 @@
   color: var(--text-color);
 }
 
-.contact-form-header p {
-  color: var(--nav-link);
-}
+.contact-form-header p { color: var(--nav-link); }
 
+/* ===== FORM FIELDS ===== */
 .form-group {
   margin-bottom: 1.5rem;
   position: relative;
@@ -188,18 +202,14 @@
 .form-group textarea:focus {
   outline: none;
   border-color: var(--logo-color);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 2px rgba(59,130,246,.2);
 }
 
 .form-group.error input,
-.form-group.error textarea {
-  border-color: var(--error-border);
-}
+.form-group.error textarea { border-color: var(--error-border); }
 
 .form-group.success input,
-.form-group.success textarea {
-  border-color: var(--success-border);
-}
+.form-group.success textarea { border-color: var(--success-border); }
 
 /* ===== SUBMIT BUTTON ===== */
 .submit-button {
@@ -209,7 +219,7 @@
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
   background-color: var(--logo-color);
-  color: white;
+  color: #fff;
   border: none;
   border-radius: var(--radius-md);
   font-size: 1rem;
@@ -233,22 +243,17 @@
   background-color: #2563eb;
 }
 
-.submit-button:not(:disabled):hover::after {
-  opacity: 1;
-}
+.submit-button:not(:disabled):hover::after { opacity: 1; }
 
-.submit-button:disabled {
-  opacity: 0.8;
-  cursor: not-allowed;
-}
+.submit-button:disabled { opacity: .8; cursor: not-allowed; }
 
 .submit-button.loading::after {
   content: '';
   display: block;
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: white;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-left: 0.5rem;
@@ -262,102 +267,48 @@
   padding: 0.75rem 1rem;
   margin-top: 1rem;
   border-radius: var(--radius-sm);
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn .3s ease-in-out;
 }
 
 .notification.success {
-  background-color: var(--success-bg);
+  background: var(--success-bg);
   color: var(--success-text);
   border: 1px solid var(--success-border);
 }
 
 .notification.error {
-  background-color: var(--error-bg);
+  background: var(--error-bg);
   color: var(--error-text);
   border: 1px solid var(--error-border);
 }
 
 /* ===== ANIMATIONS ===== */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0);  }
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1024px) {
-  .contact-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .contact-section {
-    padding: 3rem 1rem;
-  }
-
-  .section-title {
-    font-size: 1.75rem;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-  }
-
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .contact-info,
-  .contact-form {
-    margin: 0;
-  }
-
-  .contact-form {
-    padding: 1.5rem;
-  }
-
-  .social-links {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-section {
-    padding: 2rem 1rem;
-  }
+/* ===== SMALLER BREAKPOINT TWEAKS ===== */
+@media (max-width: 600px) {
+  .contact-section { padding: 2.5rem 1rem; }
 
   .form-group input,
   .form-group textarea {
     padding: 0.75rem;
-    font-size: 16px;
+    font-size: 16px; /* prevent iOS zoom */
   }
 
-  .submit-button {
-    width: 100%;
-    padding: 0.9rem;
-  }
-
-  .contact-form {
-    padding: 1.25rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-  }
-
-  .section-subtitle {
-    font-size: 0.95rem;
-  }
+  .submit-button { width: 100%; padding: 0.9rem; }
 
   .info-card {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+@media (max-width: 350px) {     /* ultra‑small phones */
+  .section-title   { font-size: 1.5rem; }
+  .section-subtitle{ font-size: .9rem; }
+  .social-link     { padding: 0.4rem; }
 }
