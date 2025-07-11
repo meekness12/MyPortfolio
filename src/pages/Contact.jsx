@@ -1,16 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { 
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Linkedin,
-  Github,
-  Twitter,
-  Loader2,
-  Check,
-  X
-} from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Github, Twitter, Loader2, Check, X } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import './Contact.css';
 
@@ -24,7 +13,6 @@ export default function Contact() {
   const sendEmail = async (e) => {
     e.preventDefault();
     
-    // EmailJS credentials
     const serviceId = 'service_7d1rdnu';
     const templateId = 'template_pi90lov';
     const publicKey = 'jSzN1nnBCyfWN1SA3';
@@ -35,13 +23,7 @@ export default function Contact() {
     setErrorMessage('');
 
     try {
-      const result = await emailjs.sendForm(
-        serviceId,
-        templateId,
-        form.current,
-        publicKey
-      );
-      
+      await emailjs.sendForm(serviceId, templateId, form.current, publicKey);
       setIsSuccess(true);
       form.current.reset();
     } catch (error) {
@@ -72,7 +54,7 @@ export default function Contact() {
             <div className="info-card">
               <Mail className="contact-icon" />
               <div>
-                <h3>Email</h3>
+                <h3 className="info-title">Email</h3>
                 <a href="mailto:meeknessbon@gmail.com" className="contact-link">
                   meeknessbon@gmail.com
                 </a>
@@ -82,7 +64,7 @@ export default function Contact() {
             <div className="info-card">
               <Phone className="contact-icon" />
               <div>
-                <h3>Phone</h3>
+                <h3 className="info-title">Phone</h3>
                 <a href="tel:+250793171200" className="contact-link">
                   +250 793 171 200
                 </a>
@@ -92,7 +74,7 @@ export default function Contact() {
             <div className="info-card">
               <MapPin className="contact-icon" />
               <div>
-                <h3>Location</h3>
+                <h3 className="info-title">Location</h3>
                 <p className="contact-text">Kigali, Rwanda</p>
               </div>
             </div>
@@ -112,11 +94,12 @@ export default function Contact() {
           
           <form ref={form} onSubmit={sendEmail} className="contact-form">
             <div className="form-group">
-              <label htmlFor="name">Full Name</label>
+              <label htmlFor="name" className="form-label">Full Name</label>
               <input 
                 type="text" 
                 id="name" 
                 name="name" 
+                className="form-input"
                 placeholder="Enter your full name" 
                 required 
                 minLength={2}
@@ -124,11 +107,12 @@ export default function Contact() {
             </div>
             
             <div className="form-group">
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="email" className="form-label">Email Address</label>
               <input 
                 type="email" 
                 id="email" 
                 name="email" 
+                className="form-input"
                 placeholder="your.email@example.com" 
                 required
                 pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
@@ -136,10 +120,11 @@ export default function Contact() {
             </div>
             
             <div className="form-group">
-              <label htmlFor="message">Your Message</label>
+              <label htmlFor="message" className="form-label">Your Message</label>
               <textarea 
                 id="message" 
                 name="message" 
+                className="form-textarea"
                 rows={5} 
                 placeholder="Tell me about your project or inquiry..." 
                 required

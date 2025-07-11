@@ -65,7 +65,7 @@ export default function About() {
               </p>
             </div>
 
-            <a href="/cv.pdf" download className="cv-button">
+            <a href="#" download className="cv-button">
               <Download size={16} className="button-icon" />
               Download CV
             </a>
