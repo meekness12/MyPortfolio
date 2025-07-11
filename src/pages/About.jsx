@@ -1,13 +1,17 @@
 import React from 'react';
-import { 
+import {
   Download,
   Code,
   Paintbrush,
   GitBranch,
   Film,
   School,
-  Lightbulb
+  Lightbulb,
+  FileCode,
+  Figma,
+  Github
 } from 'lucide-react';
+
 import './About.css';
 
 export default function About() {
@@ -27,25 +31,33 @@ export default function About() {
             <div className="highlights">
               <h3 className="highlight-title">
                 <span className="highlight-icon">▹</span> Core Skills
-              </h3>
-              <ul className="skills-list">
-                <li>
-                  <Code size={16} className="skill-icon" />
-                  <strong>React</strong>, JavaScript, HTML/CSS
-                </li>
-                <li>
-                  <Paintbrush size={16} className="skill-icon" />
-                  UI Design with <strong>Figma</strong>
-                </li>
-                <li>
-                  <GitBranch size={16} className="skill-icon" />
-                  Version Control with <strong>Git</strong>
-                </li>
-                <li>
-                  <Film size={16} className="skill-icon" />
-                  Video Editing
-                </li>
-              </ul>
+              </h3><ul className="skills-list">
+  <li>
+    <FileCode size={16} className="skill-icon" />
+    <strong>HTML</strong> & <strong>CSS</strong>
+  </li>
+  <li>
+    <Code size={16} className="skill-icon" />
+    <strong>JavaScript</strong>
+  </li>
+  <li>
+    <Code size={16} className="skill-icon" />
+    <strong>React.js</strong>
+  </li>
+  <li>
+    <Figma size={16} className="skill-icon" />
+    UI Design with <strong>Figma</strong>
+  </li>
+  <li>
+    <GitBranch size={16} className="skill-icon" />
+    Version Control with <strong>Git</strong>
+  </li>
+  <li>
+    <Film size={16} className="skill-icon" />
+    Video Editing
+  </li>
+</ul>
+
             </div>
 
             <p className="mission">
