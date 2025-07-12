@@ -5,18 +5,52 @@
 
 /* ===== CSS VARIABLES ===== */
 :root {
+  /* Light mode colors */
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
   --primary-color: #3b82f6;
   --text-color: #1e293b;
-  --light-bg: #f8fafc;
+  --secondary-text: #64748b;
   --border-color: #cbd5e1;
   --success-color: #15803d;
   --error-color: #b91c1c;
+  --shadow-color: rgba(0,0,0,0.1);
+  --social-bg: #e2e8f0;
+
+  /* Dark mode colors */
+  --dark-bg: #1e293b;
+  --dark-card-bg: #334155;
+  --dark-primary: #60a5fa;
+  --dark-text: #e2e8f0;
+  --dark-secondary-text: #94a3b8;
+  --dark-border: #475569;
+  --dark-success: #4ade80;
+  --dark-error: #f87171;
+  --dark-shadow: rgba(0,0,0,0.3);
+  --dark-social-bg: #475569;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: var(--dark-bg);
+    --card-bg: var(--dark-card-bg);
+    --primary-color: var(--dark-primary);
+    --text-color: var(--dark-text);
+    --secondary-text: var(--dark-secondary-text);
+    --border-color: var(--dark-border);
+    --success-color: var(--dark-success);
+    --error-color: var(--dark-error);
+    --shadow-color: var(--dark-shadow);
+    --social-bg: var(--dark-social-bg);
+  }
 }
 
 /* ===== BASE STYLES ===== */
 .contact-section {
   background-color: var(--bg-color);
+  color: var(--text-color);
   padding: 4rem 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .contact-container {
@@ -36,7 +70,7 @@
 }
 
 .section-subtitle {
-  color: var(--text-color);
+  color: var(--secondary-text);
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
@@ -66,21 +100,24 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  background: var(--card-bg);
   padding: 1.25rem;
   border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px var(--shadow-color);
+  transition: all 0.3s ease;
 }
 
 .info-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color:white;
+  color: var(--text-color);
   margin-bottom: 0.25rem;
 }
 
 .contact-link, .contact-text {
-  color: var(--light-bg);
+  color: var(--text-color);
   font-size: 1rem;
+  transition: color 0.2s ease;
 }
 
 .contact-link:hover {
@@ -102,7 +139,8 @@
 }
 
 .social-link {
-  color: var(--light-bg);
+  color: var(--text-color);
+  background: var(--social-bg);
   padding: 0.5rem;
   border-radius: 50%;
   transition: all 0.2s ease;
@@ -115,9 +153,11 @@
 
 /* ===== CONTACT FORM ===== */
 .contact-form {
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  transition: all 0.3s ease;
 }
 
 .form-group {
@@ -128,16 +168,18 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: white;
+  color: var(--text-color);
 }
 
 .form-input, .form-textarea {
-  width: 80%;
+  width: 90%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 0.375rem;
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: all 0.3s ease;
+  background-color: var(--card-bg);
+  color: var(--text-color);
 }
 
 .form-textarea {
@@ -194,15 +236,15 @@
 }
 
 .notification.success {
-  background-color: #f0fdf4;
+  background-color: rgba(21, 128, 61, 0.1);
   color: var(--success-color);
-  border: 1px solid #bbf7d0;
+  border: 1px solid rgba(21, 128, 61, 0.2);
 }
 
 .notification.error {
-  background-color: #fef2f2;
+  background-color: rgba(185, 28, 28, 0.1);
   color: var(--error-color);
-  border: 1px solid #fecaca;
+  border: 1px solid rgba(185, 28, 28, 0.2);
 }
 
 /* ===== ANIMATIONS ===== */
