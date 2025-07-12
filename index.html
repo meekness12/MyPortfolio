@@ -9,18 +9,16 @@
   <body>
     <div id="root"></div>
 
-    <!-- React entry point -->
     <script type="module" src="/src/main.jsx"></script>
 
-    <!-- Chatbase Chatbot (corrected) -->
     <script>
       window.chatbaseConfig = {
-        chatbotId: "jA4fe7RSImUpnnI1uEZb_",
+        chatbotId: "%VITE_CHATBASE_BOT_ID%",
       };
     </script>
     <script
       src="https://www.chatbase.co/embed.min.js"
-      chatbotId="jA4fe7RSImUpnnI1uEZb_"
+      chatbotId="%VITE_CHATBASE_BOT_ID%"
       defer>
     </script>
   </body>
