@@ -17,7 +17,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
 
-  // Handle smooth scrolling and set active link
   const handleLinkClick = (href) => {
     setIsOpen(false);
     setActiveLink(href);
@@ -30,7 +29,6 @@ export default function Navbar() {
     }
   };
 
-  // Update active link on scroll
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll('section[id]');
@@ -59,27 +57,15 @@ export default function Navbar() {
   ];
 
   const socialLinks = [
-    { 
-      href: "https://github.com/meekness12", 
-      icon: Github, 
-      name: "GitHub" 
-    },
-    { 
-      href: "https://instagram.com/meek_hinker", 
-      icon: Instagram, 
-      name: "Instagram" 
-    },
-    { 
-      href: "https://twitter.com/meek1hinker", 
-      icon: Twitter, 
-      name: "Twitter" 
-    },
+    { href: "https://github.com/meekness12", icon: Github, name: "GitHub" },
+    { href: "https://instagram.com/meek_hinker", icon: Instagram, name: "Instagram" },
+    { href: "https://twitter.com/meek1hinker", icon: Twitter, name: "Twitter" },
   ];
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo/Brand Section */}
+        {/* Logo */}
         <div className="navbar-brand">
           <a 
             href="#home" 
@@ -102,9 +88,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className={`navbar-desktop-link ${
-                      activeLink === link.href ? 'active' : ''
-                    }`}
+                    className={`navbar-desktop-link ${activeLink === link.href ? 'active' : ''}`}
                     onClick={(e) => {
                       e.preventDefault();
                       handleLinkClick(link.href);
@@ -117,8 +101,7 @@ export default function Navbar() {
               );
             })}
           </ul>
-          
-          {/* Social Icons */}
+
           <div className="navbar-social">
             {socialLinks.map((social) => {
               const Icon = social.icon;
@@ -136,9 +119,21 @@ export default function Navbar() {
               );
             })}
           </div>
+
+          {/* Hire Me Button (Desktop) */}
+          <a
+            href="#contact"
+            className="navbar-hireme-button"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick('#contact');
+            }}
+          >
+            Hire Me
+          </a>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle */}
         <button
           className="navbar-mobile-button"
           onClick={() => setIsOpen(!isOpen)}
@@ -152,7 +147,7 @@ export default function Navbar() {
           )}
         </button>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Content */}
         <div className={`navbar-mobile ${isOpen ? 'open' : ''}`}>
           <div className="navbar-mobile-content">
             <ul className="navbar-mobile-list">
@@ -162,9 +157,7 @@ export default function Navbar() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className={`navbar-mobile-link ${
-                        activeLink === link.href ? 'active' : ''
-                      }`}
+                      className={`navbar-mobile-link ${activeLink === link.href ? 'active' : ''}`}
                       onClick={(e) => {
                         e.preventDefault();
                         handleLinkClick(link.href);
@@ -177,7 +170,7 @@ export default function Navbar() {
                 );
               })}
             </ul>
-            
+
             {/* Social Icons (Mobile) */}
             <div className="navbar-mobile-social">
               {socialLinks.map((social) => {
@@ -196,6 +189,18 @@ export default function Navbar() {
                 );
               })}
             </div>
+
+            {/* Hire Me Button (Mobile) */}
+            <a
+              href="#contact"
+              className="navbar-mobile-hireme-button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleLinkClick('#contact');
+              }}
+            >
+              Hire Me
+            </a>
           </div>
         </div>
       </div>
