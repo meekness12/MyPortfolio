@@ -3,7 +3,7 @@ import { Github } from 'lucide-react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'; 
 import './Projects.css';
-import Policeimg from '../assets/police.jpg';
+import Policeimg from '../assets/Police.jpg';
 import Portfolioimg from '../assets/Portfolio.jpg';
 
 export default function Projects() {
