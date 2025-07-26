@@ -1,3 +1,24 @@
+:root {
+  /* Light mode colors */
+  --bg-color: #ffffff;
+  --text-color: #1f2937;
+  --navbar-bg: #ffffff;
+  --navbar-text: #1f2937;
+  --logo-color: #4f46e5;
+  --nav-link: #4b5563;
+  --nav-link-hover: #1f2937;
+  --nav-link-active: #111827;
+  --nav-link-bg-hover: #f3f4f6;
+  --nav-link-bg-active: #e5e7eb;
+  --mobile-button: #6b7280;
+  --mobile-button-hover: #374151;
+  --mobile-menu-bg: #ffffff;
+  --search-bg: #f9fafb;
+  --search-border: #e5e7eb;
+  --social-icon: #6b7280;
+  --social-icon-hover: #4f46e5;
+}
+
 /* Container */
 .projects-section {
   padding: 3rem 1rem;
@@ -19,7 +40,7 @@
 }
 
 .title-decoration {
-  color: #a78bfa;
+  color: #4f46e5;
   margin-right: 0.5rem;
 }
 
@@ -33,7 +54,7 @@
 
 .category-button {
   background: #e0e7ff;
-  color: #3730a3;
+  color: #4f46e5;
   border: none;
   border-radius: 9999px;
   padding: 0.4rem 1rem;

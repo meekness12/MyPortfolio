@@ -19,29 +19,6 @@
   --social-icon-hover: #4f46e5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark mode colors */
-    --bg-color: #1f2937;
-    --text-color: #f9fafb;
-    --navbar-bg: #1f2937;
-    --navbar-text: #f9fafb;
-    --logo-color: #818cf8;
-    --nav-link: #d1d5db;
-    --nav-link-hover: #f9fafb;
-    --nav-link-active: #f9fafb;
-    --nav-link-bg-hover: #374151;
-    --nav-link-bg-active: #111827;
-    --mobile-button: #9ca3af;
-    --mobile-button-hover: #d1d5db;
-    --mobile-menu-bg: #1f2937;
-    --search-bg: #374151;
-    --search-border: #4b5563;
-    --social-icon: #9ca3af;
-    --social-icon-hover: #818cf8;
-  }
-}
-
 /* Navbar positioning - ensures it stays at top */
 body {
   margin: 0;
