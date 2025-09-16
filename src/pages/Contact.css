@@ -190,7 +190,6 @@
 }
 
 .submit-button:hover {
-  background-color: #2563eb;
   transform: translateY(-1px);
 }
 
@@ -295,7 +294,6 @@
 
 .project-start-container {
   margin-top: 4rem; /* mt-16 */
-  background-color: ;
   border-radius: 1rem; /* rounded-2xl */
   padding: 2rem; /* p-8 */
   color: #4f46e5; /* text-white */
