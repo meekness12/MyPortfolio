@@ -1,39 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Home, 
-  User, 
-  FolderKanban, 
-  Phone, 
-  Menu, 
-  X, 
+import {
+  Home,
+  User,
+  FolderKanban,
+  Phone,
+  Menu,
+  X,
   CodeXml,
   Github,
   Instagram,
-  Twitter
+  Twitter,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
-import './Navbar.css';
+import TextScramble from './TextScramble';
+import { soundManager } from '../utils/SoundManager';
+// import './Navbar.css'; // Deprecated in favor of Tailwind
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('#home');
-
-  const handleLinkClick = (href) => {
-    setIsOpen(false);
-    setActiveLink(href);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
+  const [scrolled, setScrolled] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
       const sections = document.querySelectorAll('section[id]');
       let current = '';
-      
+
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
@@ -49,6 +44,20 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLinkClick = (href) => {
+    setIsOpen(false);
+    setActiveLink(href);
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const toggleMute = () => {
+    const muted = soundManager.toggleMute();
+    setIsMuted(muted);
+  };
+
   const navLinks = [
     { href: "#home", text: "Home", icon: Home },
     { href: "#about", text: "About", icon: User },
@@ -63,46 +72,60 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-dark/80 backdrop-blur-lg border-b border-primary/20 shadow-[0_0_15px_rgba(0,240,255,0.1)]' : 'py-6 bg-transparent'
+      }`}>
+      <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
+
         {/* Logo */}
-        <div className="navbar-brand">
-          <a 
-            href="#home" 
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick('#home');
-            }}
-          >
-            <CodeXml className="navbar-logo-icon" />
-            <span className="navbar-logo-text">MyPortfolio</span>
-          </a>
-        </div>
+        <a
+          href="#home"
+          onClick={(e) => { e.preventDefault(); handleLinkClick('#home'); }}
+          className="group flex items-center gap-2 group"
+        >
+          <div className="relative flex items-center justify-center w-10 h-10 rounded bg-dark-200 border border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_10px_#00F0FF] transition-all duration-300">
+            <CodeXml className="w-6 h-6 text-primary group-hover:animate-pulse" />
+          </div>
+          <span className="font-orbitron font-bold text-xl tracking-wider text-light group-hover:text-primary transition-colors flex gap-1">
+            My<span className="text-primary"><TextScramble text="Portfolio" /></span>
+          </span>
+        </a>
 
         {/* Desktop Navigation */}
-        <div className="navbar-desktop-content">
-          <ul className="navbar-desktop-list">
+        <div className="hidden md:flex items-center gap-6">
+          <ul className="flex items-center gap-1 bg-dark-200/50 px-2 py-1 rounded-full border border-white/5 backdrop-blur-sm">
             {navLinks.map((link) => {
               const Icon = link.icon;
+              const isActive = activeLink === link.href;
               return (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className={`navbar-desktop-link ${activeLink === link.href ? 'active' : ''}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleLinkClick(link.href);
-                    }}
+                    onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
+                    onMouseEnter={() => soundManager.play('hover')}
+                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2
+                      ${isActive
+                        ? 'text-dark bg-primary shadow-[0_0_15px_#00F0FF]'
+                        : 'text-light hover:text-primary hover:bg-white/5'
+                      }`}
                   >
-                    <Icon className="navbar-icon" />
-                    <span>{link.text}</span>
+                    <Icon className="w-4 h-4" />
+                    <span className="font-space">{link.text}</span>
                   </a>
                 </li>
               );
             })}
           </ul>
 
-          <div className="navbar-social">
+          <div className="flex items-center gap-4 pl-4 border-l border-white/10">
+            {/* Sound Toggle */}
+            <button
+              onClick={toggleMute}
+              className="text-gray-400 hover:text-primary transition-colors"
+              aria-label="Toggle Sound"
+            >
+              {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            </button>
+
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
@@ -111,97 +134,90 @@ export default function Navbar() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="navbar-social-link"
+                  onMouseEnter={() => soundManager.play('hover')}
+                  className="text-gray-400 hover:text-primary hover:-translate-y-1 transition-all duration-300"
                   aria-label={social.name}
                 >
-                  <Icon className="navbar-icon" />
+                  <Icon className="w-5 h-5" />
                 </a>
               );
             })}
           </div>
 
-          {/* Hire Me Button (Desktop) */}
           <a
             href="#contact"
-            className="navbar-hireme-button"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick('#contact');
-            }}
+            onClick={(e) => { e.preventDefault(); handleLinkClick('#contact'); }}
+            onMouseEnter={() => soundManager.play('hover')}
+            className="ml-4 px-6 py-2 rounded bg-transparent border border-primary text-primary font-orbitron text-sm hover:bg-primary hover:text-dark hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all duration-300"
           >
-            Hire Me
+            HIRE ME
           </a>
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button
-          className="navbar-mobile-button"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-expanded={isOpen}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? (
-            <X className="navbar-mobile-icon" />
-          ) : (
-            <Menu className="navbar-mobile-icon" />
-          )}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <button
+            onClick={toggleMute}
+            className="text-gray-400 hover:text-primary transition-colors"
+          >
+            {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+          </button>
+
+          <button
+            className="p-2 text-light hover:text-primary transition-colors"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+          </button>
+        </div>
 
         {/* Mobile Menu Content */}
-        <div className={`navbar-mobile ${isOpen ? 'open' : ''}`}>
-          <div className="navbar-mobile-content">
-            <ul className="navbar-mobile-list">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className={`navbar-mobile-link ${activeLink === link.href ? 'active' : ''}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleLinkClick(link.href);
-                      }}
-                    >
-                      <Icon className="navbar-icon" />
-                      <span>{link.text}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-
-            {/* Social Icons (Mobile) */}
-            <div className="navbar-mobile-social">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
+        <div className={`fixed inset-0 z-40 bg-dark/95 backdrop-blur-xl transition-transform duration-500 md:hidden flex flex-col items-center justify-center gap-8 ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}>
+          <ul className="flex flex-col items-center gap-6">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = activeLink === link.href;
+              return (
+                <li key={link.href} className="w-full text-center">
                   <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="navbar-mobile-social-link"
-                    aria-label={social.name}
+                    href={link.href}
+                    onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
+                    className={`text-2xl font-orbitron flex items-center gap-3 transition-all duration-300
+                      ${isActive ? 'text-primary drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]' : 'text-light hover:text-primary'}`
+                    }
                   >
-                    <Icon className="navbar-icon" />
+                    <Icon className="w-6 h-6" />
+                    {link.text}
                   </a>
-                );
-              })}
-            </div>
+                </li>
+              );
+            })}
+          </ul>
 
-            {/* Hire Me Button (Mobile) */}
-            <a
-              href="#contact"
-              className="navbar-mobile-hireme-button"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLinkClick('#contact');
-              }}
-            >
-              Hire Me
-            </a>
+          <div className="flex gap-6 mt-8">
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
+                  <Icon className="w-8 h-8" />
+                </a>
+              );
+            })}
           </div>
+
+          <a
+            href="#contact"
+            onClick={(e) => { e.preventDefault(); handleLinkClick('#contact'); }}
+            className="mt-8 px-8 py-3 bg-primary text-dark font-bold font-orbitron rounded hover:shadow-[0_0_30px_#00F0FF] transition-all duration-300"
+          >
+            HIRE ME NOW
+          </a>
         </div>
       </div>
     </nav>
