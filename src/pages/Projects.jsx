@@ -77,8 +77,6 @@ export default function Projects() {
     <section id="projects" className="py-24 bg-transparent relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 relative z-10">
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-
         {/* Section Title */}
         <motion.div
            className="text-center mb-16"
