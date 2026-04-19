@@ -19,27 +19,27 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-primary font-mono mb-4 tracking-widest text-lg">
-              <TextScramble text="SYSTEM ONLINE //" />
-            </h2>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-orbitron font-bold leading-tight mb-6">
-              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary text-glow"><TextScramble text="Meekness" /></span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-xs font-mono text-light/70 uppercase tracking-wider">Available for work</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold leading-tight mb-6 tracking-tighter">
+              Hi, I'm <span className="text-white">Meekness</span>
             </h1>
-            <h2 className="text-2xl md:text-3xl text-light/80 font-space mb-8">
-              <span className="border-r-4 border-primary animate-pulse">Frontend Developer</span>
+            <h2 className="text-2xl md:text-3xl text-light/60 font-sans mb-8">
+              Frontend Engineer
             </h2>
 
-            <p className="text-light/60 text-lg max-w-xl mx-auto md:mx-0 mb-10 leading-relaxed">
-              Architecting futuristic digital experiences with <span className="text-primary">React</span> and <span className="text-secondary">Modern CSS</span>. Building the web of tomorrow, today.
+            <p className="text-light/60 text-lg max-w-xl mx-auto md:mx-0 mb-10 leading-relaxed font-sans">
+              Architecting premium digital experiences with <span className="text-white">React</span> and <span className="text-white">Modern CSS</span>. Building the web of tomorrow, today.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
               <MagneticButton>
                 <a
                   href="#projects"
-                  className="group relative px-8 py-3 bg-transparent overflow-hidden rounded-md border border-primary text-primary transition-all hover:shadow-[0_0_20px_#00F0FF] flex items-center gap-2 font-orbitron tracking-wider"
+                  className="px-8 py-3 bg-white text-dark rounded-full font-heading font-medium hover:scale-105 transition-all duration-300 flex items-center gap-2"
                 >
-                  <div className="absolute inset-0 w-0 bg-primary transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
                   View Work <ArrowRight className="w-4 h-4" />
                 </a>
               </MagneticButton>
@@ -47,9 +47,9 @@ export default function Home() {
               <MagneticButton>
                 <a
                   href="/cv.pdf"
-                  className="group relative px-8 py-3 bg-dark-100/50 backdrop-blur-sm rounded-md border border-white/10 text-light transition-all hover:bg-white/5 hover:border-white/30 flex items-center gap-2 font-space"
+                  className="px-8 py-3 bg-white/5 border border-white/10 text-white rounded-full font-heading font-medium hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
                 >
-                  Download CV <Download className="w-4 h-4 group-hover:animate-bounce" />
+                  Download CV <Download className="w-4 h-4" />
                 </a>
               </MagneticButton>
             </div>

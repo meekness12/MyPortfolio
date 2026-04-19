@@ -72,7 +72,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-dark/60 backdrop-blur-xl border-b border-primary/20 shadow-[0_0_15px_rgba(0,240,255,0.1)]' : 'py-6 bg-transparent'
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-dark/80 backdrop-blur-xl border-b border-white/5' : 'py-6 bg-transparent'
       }`}>
       <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
 
@@ -82,11 +82,11 @@ export default function Navbar() {
           onClick={(e) => { e.preventDefault(); handleLinkClick('#home'); }}
           className="group flex items-center gap-2 group"
         >
-          <div className="relative flex items-center justify-center w-10 h-10 rounded bg-dark-200 border border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_10px_#00F0FF] transition-all duration-300">
-            <CodeXml className="w-6 h-6 text-primary group-hover:animate-pulse" />
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 group-hover:bg-white/10 transition-all duration-300">
+            <CodeXml className="w-5 h-5 text-light" />
           </div>
-          <span className="font-orbitron font-bold text-xl tracking-wider text-light group-hover:text-primary transition-colors flex gap-1">
-            My<span className="text-primary"><TextScramble text="Portfolio" /></span>
+          <span className="font-heading font-semibold text-xl tracking-tight text-light group-hover:text-white transition-colors flex gap-1">
+            MyPortfolio
           </span>
         </a>
 
@@ -104,8 +104,8 @@ export default function Navbar() {
                     onMouseEnter={() => soundManager.play('hover')}
                     className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2
                       ${isActive
-                        ? 'text-dark bg-primary shadow-[0_0_15px_#00F0FF]'
-                        : 'text-light hover:text-primary hover:bg-white/5'
+                        ? 'text-dark bg-light'
+                        : 'text-light/70 hover:text-light hover:bg-white/5'
                       }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -148,9 +148,9 @@ export default function Navbar() {
             href="#contact"
             onClick={(e) => { e.preventDefault(); handleLinkClick('#contact'); }}
             onMouseEnter={() => soundManager.play('hover')}
-            className="ml-4 px-6 py-2 rounded bg-transparent border border-primary text-primary font-orbitron text-sm hover:bg-primary hover:text-dark hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all duration-300"
+            className="ml-4 px-6 py-2 rounded-full bg-white text-dark font-heading font-medium text-sm hover:bg-white/90 hover:scale-105 transition-all duration-300"
           >
-            HIRE ME
+            Hire Me
           </a>
         </div>
 
@@ -184,8 +184,8 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
-                    className={`text-2xl font-orbitron flex items-center gap-3 transition-all duration-300
-                      ${isActive ? 'text-primary drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]' : 'text-light hover:text-primary'}`
+                    className={`text-3xl font-heading font-semibold flex items-center gap-3 transition-all duration-300
+                      ${isActive ? 'text-white' : 'text-light/50 hover:text-light'}`
                     }
                   >
                     <Icon className="w-6 h-6" />
@@ -214,9 +214,9 @@ export default function Navbar() {
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); handleLinkClick('#contact'); }}
-            className="mt-8 px-8 py-3 bg-primary text-dark font-bold font-orbitron rounded hover:shadow-[0_0_30px_#00F0FF] transition-all duration-300"
+            className="mt-8 px-8 py-3 bg-white text-dark font-heading font-medium rounded-full hover:scale-105 transition-all duration-300"
           >
-            HIRE ME NOW
+            Hire Me Now
           </a>
         </div>
       </div>

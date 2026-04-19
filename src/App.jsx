@@ -1,31 +1,23 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Footer from './pages/Footer';
-import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
-import HudOverlay from './components/HudOverlay';
 import MeekAssistant from './components/MeekAssistant';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
-
-const SpaceBackground = lazy(() => import('./components/3d/SpaceBackground'));
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="bg-transparent min-h-screen text-light font-space selection:bg-primary selection:text-dark cursor-none relative overflow-x-hidden">
-      <CustomCursor />
-      <HudOverlay />
-
-      {/* 3D Space Background */}
-      <Suspense fallback={null}>
-        <SpaceBackground />
-      </Suspense>
+    <div className="bg-dark min-h-screen text-light font-sans relative overflow-x-hidden selection:bg-white/20 selection:text-white">
+      
+      {/* Subtle Premium Background Glow */}
+      <div className="fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] pointer-events-none"></div>
 
       <AnimatePresence mode='wait'>
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}

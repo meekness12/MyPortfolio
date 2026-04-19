@@ -2,20 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;600&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @layer base {
   body {
-    @apply bg-[#030014] text-light font-space overflow-x-hidden antialiased;
+    @apply bg-dark text-light font-sans overflow-x-hidden antialiased selection:bg-white/20 selection:text-white;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-orbitron tracking-wide;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
   }
 
   /* Custom Scrollbar */
@@ -24,24 +19,24 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-dark-200;
+    @apply bg-dark-100;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/50 rounded-full hover:bg-primary transition-colors;
+    @apply bg-secondary/30 rounded-full hover:bg-secondary/50 transition-colors;
   }
 }
 
 @layer utilities {
   .glass-card {
-    @apply bg-dark-100/30 backdrop-blur-md border border-white/10 shadow-xl;
+    @apply bg-dark-100/40 backdrop-blur-lg border border-white/5 shadow-2xl;
   }
 
   .text-glow {
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   }
 
   .border-glow {
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
   }
 }

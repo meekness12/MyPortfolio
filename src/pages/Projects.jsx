@@ -75,8 +75,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24 bg-transparent relative overflow-hidden">
-      {/* Decorative Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
 
@@ -88,10 +87,9 @@ export default function Projects() {
            viewport={{ once: true }}
            transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-light mb-4 text-glow">
-            <span className="text-primary">Featured</span> <span className="text-white">Projects</span>
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4 tracking-tight">
+            Featured <span className="text-white/40">Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto rounded-full" />
         </motion.div>
 
         {/* Category Filter Buttons */}
@@ -99,19 +97,16 @@ export default function Projects() {
           {categories.map(cat => (
             <button
               key={cat}
-              className={`px-6 py-2 rounded-full font-mono text-sm tracking-wider border transition-all duration-300 relative overflow-hidden group
+              className={`px-6 py-2 rounded-full font-sans font-medium text-sm transition-all duration-300
                 ${selectedCategory === cat 
-                  ? 'bg-primary/10 border-primary text-primary shadow-[0_0_15px_rgba(0,240,255,0.3)]' 
-                  : 'bg-dark-100 border-white/10 text-light/60 hover:border-primary/50 hover:text-primary'
+                  ? 'bg-white text-dark' 
+                  : 'bg-dark-100 border border-white/5 text-light/60 hover:text-white hover:bg-white/5'
                 }`}
               onClick={() => setSelectedCategory(cat)}
               role="tab"
               aria-selected={selectedCategory === cat}
             >
-              <span className="relative z-10">{cat}</span>
-              {selectedCategory === cat && (
-                <span className="absolute inset-0 bg-primary/10 blur-md" />
-              )}
+              <span>{cat}</span>
             </button>
           ))}
         </div>
@@ -121,7 +116,7 @@ export default function Projects() {
             filteredProjects.map((project, index) => (
               <ProjectCard3D key={index}>
               <motion.article
-                className="group relative bg-dark-200/50 backdrop-blur-sm rounded-xl overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+                className="group relative bg-dark-100/40 backdrop-blur-md rounded-2xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300 hover:shadow-2xl"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -137,29 +132,21 @@ export default function Projects() {
                   />
                   
                   {project.featured && (
-                     <span className="absolute top-4 right-4 z-20 px-3 py-1 bg-primary text-dark font-bold text-xs rounded-sm font-orbitron shadow-[0_0_10px_#00F0FF]">
-                       FEATURED
+                     <span className="absolute top-4 right-4 z-20 px-3 py-1 bg-white text-dark font-semibold text-xs rounded-full shadow-lg">
+                       Featured
                      </span>
                   )}
                   
                   <div className="absolute top-4 left-4 z-20 flex gap-2">
-                     <div className="bg-dark/80 backdrop-blur-sm p-2 rounded-full border border-white/10">
-                       <Code2 className="w-4 h-4 text-primary" />
+                     <div className="bg-dark/80 backdrop-blur-md p-2 rounded-full border border-white/10">
+                       <Code2 className="w-4 h-4 text-white" />
                      </div>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6 relative z-20">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.categories.map((cat, i) => (
-                      <span key={i} className="text-[10px] uppercase tracking-wider px-2 py-1 rounded bg-secondary/10 border border-secondary/20 text-secondary-300 font-mono">
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h3 className="text-xl font-bold font-space text-light mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-heading font-bold text-white mb-3 group-hover:text-white/80 transition-colors">
                     {project.title}
                   </h3>
                   
@@ -180,12 +167,12 @@ export default function Projects() {
                     )}
                   </div>
 
-                  <div className="flex items-center gap-4 pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-4 pt-6 mt-6 border-t border-white/5">
                     <a
                       href={project.liveDemo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded bg-primary/10 text-primary font-bold text-sm hover:bg-primary hover:text-dark transition-all duration-300 font-orbitron"
+                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded-full bg-white text-dark font-semibold text-sm hover:bg-white/90 hover:scale-105 transition-all duration-300"
                       aria-label={`View ${project.title} live demo`}
                     >
                       <ExternalLink className="w-4 h-4" /> Live Demo

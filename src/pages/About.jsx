@@ -40,10 +40,9 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-light mb-4">
-            <span className="text-primary text-glow">About</span> <span className="text-white">Me</span>
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4 tracking-tight">
+            About <span className="text-white/40">Me</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-secondary to-transparent mx-auto rounded-full" />
         </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-12 items-start">
@@ -56,32 +55,32 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-500" />
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-all duration-500" />
 
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-primary/20 rounded-lg border border-primary/30">
-                  <Lightbulb className="w-6 h-6 text-primary" />
+                <div className="p-2 bg-white/5 rounded-lg border border-white/10">
+                  <Lightbulb className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-orbitron text-light">Profile_Info</h3>
+                <h3 className="text-2xl font-heading font-bold text-white">Profile</h3>
               </div>
 
-              <p className="text-light/70 mb-8 leading-relaxed font-space text-lg">
-                IT student at <strong className="text-primary font-bold">Rwanda Polytechnic</strong> and <strong className="text-secondary font-bold">Frontend Developer</strong> with 2+ years of experience. Not just coding, but engineering digital experiences. I blend technical precision with creative flair to build web apps that feel alive.
+              <p className="text-light/70 mb-8 leading-relaxed font-sans text-lg">
+                IT student at <strong className="text-white font-semibold">Rwanda Polytechnic</strong> and <strong className="text-white font-semibold">Frontend Developer</strong> with 2+ years of experience. Not just coding, but engineering digital experiences. I blend technical precision with creative flair to build web apps that feel alive.
               </p>
 
-              <div className="p-6 bg-dark-200/50 rounded-xl border border-white/5 mb-8 hover:border-secondary/30 transition-colors">
+              <div className="p-6 bg-dark-100/40 rounded-xl border border-white/5 mb-8 hover:border-white/20 transition-colors">
                 <div className="flex items-center gap-3 mb-4">
-                  <School className="w-5 h-5 text-secondary" />
-                  <h4 className="text-lg font-bold font-orbitron text-light">Education</h4>
+                  <School className="w-5 h-5 text-white/70" />
+                  <h4 className="text-lg font-bold font-heading text-white">Education</h4>
                 </div>
-                <p className="text-light/80">Advanced Diploma in IT</p>
-                <p className="text-light/50 text-sm">Rwanda Polytechnic</p>
+                <p className="text-light/80 font-sans">Advanced Diploma in IT</p>
+                <p className="text-light/50 text-sm font-sans">Rwanda Polytechnic</p>
               </div>
 
               <div className="relative">
-                <Zap className="absolute -left-6 top-0 w-4 h-4 text-primary animate-pulse" />
-                <p className="text-light/80 italic pl-4 border-l-2 border-primary/50">
+                <Zap className="absolute -left-6 top-0 w-4 h-4 text-white/50" />
+                <p className="text-light/80 italic pl-4 border-l-2 border-white/20 font-sans">
                   "Passionate about creating clean, functional interfaces that solve real problems."
                 </p>
               </div>
@@ -96,8 +95,8 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-orbitron text-light mb-8 flex items-center gap-3">
-              <span className="text-secondary">#</span> Core Skills
+            <h3 className="text-2xl font-heading font-bold text-white mb-8 flex items-center gap-3">
+              Core Skills
             </h3>
 
             {/* 3D Skill Sphere */}
