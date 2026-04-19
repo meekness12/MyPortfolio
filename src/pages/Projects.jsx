@@ -1,12 +1,48 @@
 import React, { useState } from 'react';
 import { Github, ExternalLink, Code2, Layers } from 'lucide-react';
 import { motion } from 'framer-motion'; 
-// import './Projects.css'; // Deprecated
+import ProjectCard3D from '../components/3d/ProjectCard3D';
 import Policeimg from '../assets/Police.jpg';
 import Portfolioimg from '../assets/Portfolio.jpg';
+import InternbridgeImg from '../assets/internbridge.png';
+import EdgejournalImg from '../assets/edgejournal.png';
+import ClassroomImg from '../assets/classroom.png';
 
 export default function Projects() {
   const projects = [
+    {
+      title: "InternBridge: Internship Management System",
+      description: "An enterprise-grade, multi-tenant platform engineered to digitize and manage the entire academic internship lifecycle. Includes strict RBAC, ATS, and decoupled Three-Tier Monolithic Architecture.",
+      technologies: ["Java 21", "Spring Boot", "PostgreSQL", "React", "Tailwind CSS"],
+      githubLink: "https://github.com/meekness12/internbridge",
+      liveDemo: "#",
+      categories: ["Web"],
+      status: "Completed",
+      imageUrl: InternbridgeImg,
+      featured: true
+    },
+    {
+      title: "Edge Journal",
+      description: "A comprehensive digital journaling platform.",
+      technologies: ["React", "CSS", "JavaScript"],
+      githubLink: "https://github.com/meekness12/EdgeJournal",
+      liveDemo: "#",
+      categories: ["Personal", "Web"],
+      status: "Completed",
+      imageUrl: EdgejournalImg,
+      featured: false
+    },
+    {
+      title: "Classroom Resource Auto-Distribution System",
+      description: "A system designed to automatically distribute resources across a Local Area Network (LAN) in a classroom environment.",
+      technologies: ["Java", "Networking", "System Design"],
+      githubLink: "https://github.com/meekness12/Classroom-Resource-Auto-Distribution-System-On-Lan",
+      liveDemo: "#",
+      categories: ["Personal", "Web"],
+      status: "Completed",
+      imageUrl: ClassroomImg,
+      featured: false
+    },
     {
       title: "Police Driving License System",
       description: "Digital platform for Rwanda National Police to manage driver's license applications and administration.",
@@ -38,7 +74,7 @@ export default function Projects() {
     : projects.filter(p => p.categories.includes(selectedCategory));
 
   return (
-    <section id="projects" className="py-24 bg-dark relative overflow-hidden">
+    <section id="projects" className="py-24 bg-transparent relative overflow-hidden">
       {/* Decorative Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
@@ -83,9 +119,9 @@ export default function Projects() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
+              <ProjectCard3D key={index}>
               <motion.article
-                key={index}
-                className="group relative bg-dark-200/50 rounded-xl overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+                className="group relative bg-dark-200/50 backdrop-blur-sm rounded-xl overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -166,6 +202,7 @@ export default function Projects() {
                   </div>
                 </div>
               </motion.article>
+              </ProjectCard3D>
             ))
           ) : (
             <p className="col-span-full text-center text-light/50 py-12">

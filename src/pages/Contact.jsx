@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, Suspense, lazy } from 'react';
 import { Send, Loader2, Check, X, Mail, Phone, MapPin } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
-// import './Contact.css'; // Deprecated
+
+const WireframeGlobe = lazy(() => import('../components/3d/WireframeGlobe'));
 
 export default function Contact() {
   const form = useRef();
@@ -41,9 +42,14 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-dark relative overflow-hidden">
+    <section id="contact" className="py-24 bg-transparent relative overflow-hidden">
       {/* Background Grids */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(112,0,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(112,0,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+
+      {/* 3D Wireframe Globe */}
+      <Suspense fallback={null}>
+        <WireframeGlobe />
+      </Suspense>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
@@ -85,12 +91,12 @@ export default function Contact() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <a href="mailto:meeknessbon@gmail.com" className="group p-6 bg-dark-100 rounded-xl border border-white/5 hover:border-primary/50 transition-all">
+              <a href="mailto:meeknessbon@gmail.com" className="group p-6 bg-dark-100/80 backdrop-blur-sm rounded-xl border border-white/5 hover:border-primary/50 transition-all">
                 <Mail className="w-8 h-8 text-primary mb-4 group-hover:scale-110 transition-transform" />
                 <h4 className="font-orbitron text-light mb-1">Email Me</h4>
                 <p className="text-light/50 text-sm group-hover:text-primary transition-colors">meeknessbon@gmail.com</p>
               </a>
-              <a href="tel:+250793171200" className="group p-6 bg-dark-100 rounded-xl border border-white/5 hover:border-primary/50 transition-all">
+              <a href="tel:+250793171200" className="group p-6 bg-dark-100/80 backdrop-blur-sm rounded-xl border border-white/5 hover:border-primary/50 transition-all">
                 <Phone className="w-8 h-8 text-secondary mb-4 group-hover:scale-110 transition-transform" />
                 <h4 className="font-orbitron text-light mb-1">Call Me</h4>
                 <p className="text-light/50 text-sm group-hover:text-secondary transition-colors">+250 793 171 200</p>

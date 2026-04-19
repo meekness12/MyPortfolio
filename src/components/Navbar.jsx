@@ -72,7 +72,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-dark/80 backdrop-blur-lg border-b border-primary/20 shadow-[0_0_15px_rgba(0,240,255,0.1)]' : 'py-6 bg-transparent'
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-dark/60 backdrop-blur-xl border-b border-primary/20 shadow-[0_0_15px_rgba(0,240,255,0.1)]' : 'py-6 bg-transparent'
       }`}>
       <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
 

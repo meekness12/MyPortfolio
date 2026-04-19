@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import {
   Download,
@@ -14,7 +14,7 @@ import {
   Zap
 } from 'lucide-react';
 
-// import './About.css'; // Deprecated
+const SkillSphere = lazy(() => import('../components/3d/SkillSphere'));
 
 export default function About() {
   const skills = [
@@ -27,7 +27,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-24 bg-dark relative overflow-hidden">
+    <section id="about" className="py-24 bg-transparent relative overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[128px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[128px] pointer-events-none" />
@@ -88,7 +88,7 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Skills Grid */}
+          {/* Skills — 3D Sphere + Grid */}
           <motion.div
             className="flex-1"
             initial={{ opacity: 0, x: 50 }}
@@ -100,11 +100,23 @@ export default function About() {
               <span className="text-secondary">#</span> Core Skills
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* 3D Skill Sphere */}
+            <div className="hidden lg:block mb-8">
+              <Suspense fallback={
+                <div className="w-full h-[400px] flex items-center justify-center">
+                  <div className="w-16 h-16 border-t-2 border-primary rounded-full animate-spin" />
+                </div>
+              }>
+                <SkillSphere />
+              </Suspense>
+            </div>
+
+            {/* Fallback skills grid (always visible on mobile, hidden on lg) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
               {skills.map((skill, index) => (
                 <motion.div
                   key={index}
-                  className="bg-dark-100/80 p-4 rounded-xl border border-white/5 hover:border-primary/50 hover:bg-dark-200/80 transition-all duration-300 group"
+                  className="bg-dark-100/80 backdrop-blur-sm p-4 rounded-xl border border-white/5 hover:border-primary/50 hover:bg-dark-200/80 transition-all duration-300 group"
                   whileHover={{ y: -5 }}
                 >
                   <div className="flex items-center gap-4 mb-3">
@@ -113,8 +125,6 @@ export default function About() {
                     </div>
                     <span className="font-space font-bold text-light/90">{skill.name}</span>
                   </div>
-
-                  {/* Skill level bar */}
                   <div className="w-full h-1.5 bg-dark-200 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-gradient-to-r from-primary to-secondary"
@@ -129,9 +139,9 @@ export default function About() {
 
             <div className="mt-10 flex justify-center lg:justify-start">
               <a
-                href="#"
+                href="/cv.pdf"
                 download
-                className="group relative px-8 py-3 bg-secondary/10 border border-secondary text-secondary rounded overflow-hidden transition-all hover:bg-secondary hover:text-white"
+                className="group relative px-8 py-3 bg-secondary/10 backdrop-blur-sm border border-secondary text-secondary rounded overflow-hidden transition-all hover:bg-secondary hover:text-white"
               >
                 <span className="relative z-10 flex items-center gap-2 font-orbitron font-bold">
                   <Download className="w-4 h-4 group-hover:animate-bounce" /> Download CV

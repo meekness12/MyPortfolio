@@ -1,21 +1,14 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
-import image1 from '../assets/image1.svg';
 import MagneticButton from '../components/MagneticButton';
 import TextScramble from '../components/TextScramble';
-// import './Home.css'; // Deprecated
+
+const HeroScene = lazy(() => import('../components/3d/HeroScene'));
 
 export default function Home() {
   return (
     <section className="min-h-screen relative overflow-hidden flex items-center justify-center pt-20">
-
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/20 rounded-full blur-[120px] animate-pulse-slow" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-      </div>
 
       <div className="container mx-auto px-4 md:px-8 flex flex-col-reverse md:flex-row items-center gap-12 md:gap-20">
 
@@ -53,8 +46,8 @@ export default function Home() {
 
               <MagneticButton>
                 <a
-                  href="/resume.pdf"
-                  className="group relative px-8 py-3 bg-dark-100 rounded-md border border-white/10 text-light transition-all hover:bg-white/5 hover:border-white/30 flex items-center gap-2 font-space"
+                  href="/cv.pdf"
+                  className="group relative px-8 py-3 bg-dark-100/50 backdrop-blur-sm rounded-md border border-white/10 text-light transition-all hover:bg-white/5 hover:border-white/30 flex items-center gap-2 font-space"
                 >
                   Download CV <Download className="w-4 h-4 group-hover:animate-bounce" />
                 </a>
@@ -63,24 +56,21 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Hero Image */}
+        {/* 3D Hero Scene */}
         <motion.div
           className="flex-1 relative flex justify-center items-center"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="relative w-full max-w-md aspect-square">
-            {/* Holographic Circles */}
-            <div className="absolute inset-0 border border-primary/30 rounded-full animate-spin-slow [--tw-duration:10s]" />
-            <div className="absolute inset-4 border border-secondary/30 rounded-full animate-spin-slow [--tw-duration:15s] flex-row-reverse" />
-            <div className="absolute inset-0 bg-gradient-radial from-primary/10 to-transparent blur-2xl" />
-
-            <img
-              src={image1}
-              alt="Futuristic Developer Illustration"
-              className="relative w-full h-full object-contain p-8 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)] animate-float"
-            />
+          <div className="relative w-full max-w-lg aspect-square">
+            <Suspense fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-24 h-24 border-t-2 border-primary rounded-full animate-spin" />
+              </div>
+            }>
+              <HeroScene />
+            </Suspense>
           </div>
         </motion.div>
 

@@ -6,7 +6,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="py-8 bg-dark-100 border-t border-white/5 font-mono text-sm">
+    <footer className="py-8 bg-dark-100/50 backdrop-blur-md border-t border-white/5 font-mono text-sm relative z-10">
       <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
 
         {/* Contact Quick Links */}

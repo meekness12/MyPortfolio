@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -12,13 +12,20 @@ import MeekAssistant from './components/MeekAssistant';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
 
+const SpaceBackground = lazy(() => import('./components/3d/SpaceBackground'));
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="bg-dark min-h-screen text-light font-space selection:bg-primary selection:text-dark cursor-none relative overflow-x-hidden">
+    <div className="bg-transparent min-h-screen text-light font-space selection:bg-primary selection:text-dark cursor-none relative overflow-x-hidden">
       <CustomCursor />
       <HudOverlay />
+
+      {/* 3D Space Background */}
+      <Suspense fallback={null}>
+        <SpaceBackground />
+      </Suspense>
 
       <AnimatePresence mode='wait'>
         {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}

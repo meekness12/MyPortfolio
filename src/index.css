@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-dark text-light font-space overflow-x-hidden antialiased;
+    @apply bg-[#030014] text-light font-space overflow-x-hidden antialiased;
   }
 
   h1,
