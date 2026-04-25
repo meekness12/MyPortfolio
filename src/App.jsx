@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Footer from './pages/Footer';
 import Preloader from './components/Preloader';
 import MeekAssistant from './components/MeekAssistant';
+import CustomCursor from './components/CustomCursor';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
 
@@ -26,6 +27,7 @@ export default function App() {
 
       {!isLoading && (
         <>
+          <CustomCursor />
           <Navbar />
           <MeekAssistant />
           <main>

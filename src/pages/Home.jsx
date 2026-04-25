@@ -24,7 +24,13 @@ export default function Home() {
               <span className="text-xs font-mono text-light/70 uppercase tracking-wider">Available for work</span>
             </div>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold leading-tight mb-6 tracking-tighter">
-              Hi, I'm <span className="text-white">Meekness</span>
+              Hi, I'm <motion.span 
+                className="text-white hover-target-meek inline-block cursor-none"
+                whileHover={{ scale: 1.05, color: "#00F0FF" }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                Meekness
+              </motion.span>
             </h1>
             <h2 className="text-2xl md:text-3xl text-light/60 font-sans mb-8">
               Full-Stack System Architect & <span className="text-white/80">Frontend Specialist</span>

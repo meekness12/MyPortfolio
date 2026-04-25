@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-dark text-light font-sans overflow-x-hidden antialiased selection:bg-white/20 selection:text-white;
+    @apply bg-dark text-light font-sans overflow-x-hidden antialiased selection:bg-white/20 selection:text-white cursor-none;
   }
 
   h1, h2, h3, h4, h5, h6 {
