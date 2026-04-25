@@ -11,7 +11,8 @@ import {
   Instagram,
   Twitter,
   Volume2,
-  VolumeX
+  VolumeX,
+  Briefcase
 } from 'lucide-react';
 import TextScramble from './TextScramble';
 import { soundManager } from '../utils/SoundManager';
@@ -61,6 +62,7 @@ export default function Navbar() {
   const navLinks = [
     { href: "#home", text: "Home", icon: Home },
     { href: "#about", text: "About", icon: User },
+    { href: "#experience", text: "Experience", icon: Briefcase },
     { href: "#projects", text: "Projects", icon: FolderKanban },
     { href: "#contact", text: "Contact", icon: Phone },
   ];

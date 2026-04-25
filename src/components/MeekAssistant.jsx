@@ -36,6 +36,9 @@ export default function MeekAssistant() {
         } else if (cmd.includes('about') || cmd.includes('who are you')) {
             scrollTo('#about');
             speak("Pulling up developer dossier.");
+        } else if (cmd.includes('experience') || cmd.includes('history')) {
+            scrollTo('#experience');
+            speak("Accessing professional service records.");
         } else if (cmd.includes('project') || cmd.includes('work')) {
             scrollTo('#projects');
             speak("Accessing project database.");
