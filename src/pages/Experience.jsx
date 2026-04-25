@@ -8,27 +8,30 @@ import {
   ExternalLink,
   ShieldCheck,
   Globe,
-  Database
+  Database,
+  Github
 } from 'lucide-react';
 
 export default function Experience() {
   const experiences = [
-    /* 
     {
-      company: "Company Name",
-      role: "Your Role",
-      period: "202X - Present",
-      location: "Location",
-      description: "Description of your impact and responsibilities.",
+      company: "Umurava AI Hackathon",
+      role: "AI Systems Engineer (Team Arc Lab)",
+      period: "2024",
+      location: "Remote / Hybrid",
+      description: "Engineered TalentLens, an AI-powered talent screening engine designed to automate the evaluation of unstructured resumes with transparent reasoning and native OCR.",
       achievements: [
-        "Key achievement or responsibility 1",
-        "Key achievement or responsibility 2"
+        "Integrated Gemini 1.5 Flash for native PDF processing and high-accuracy data extraction.",
+        "Architected a 'Zero-Data-Entry' pipeline converting noisy documents into structured profiles.",
+        "Developed a MatchScore algorithm providing recruiters with traceable AI reasoning and gaps analysis.",
+        "Built a resilient backend with TypeScript and Node.js capable of batch processing resume uploads."
       ],
-      skills: ["Skill 1", "Skill 2"],
-      icon: Briefcase,
-      color: "from-blue-500/20 to-blue-600/5"
+      skills: ["Node.js", "TypeScript", "Gemini AI", "MongoDB", "Express", "System Design"],
+      icon: ShieldCheck,
+      color: "from-blue-500/20 to-blue-600/5",
+      link: "https://talent-lens-eight.vercel.app",
+      github: "https://github.com/Jacksonsod/talent-lens"
     }
-    */
   ];
 
   return (
@@ -126,14 +129,30 @@ export default function Experience() {
                     </div>
                   </div>
 
-                  {/* Right: CTA (Optional) */}
-                  <div className="hidden xl:flex flex-col justify-center">
-                    <motion.div 
-                      whileHover={{ x: 5 }}
-                      className="p-3 rounded-full bg-white/5 border border-white/10 text-white cursor-pointer hover:bg-white hover:text-dark transition-all duration-300"
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                    </motion.div>
+                  {/* Right: CTA */}
+                  <div className="hidden xl:flex flex-col gap-4 justify-center">
+                    {exp.link && (
+                      <a 
+                        href={exp.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-full bg-white/5 border border-white/10 text-white cursor-pointer hover:bg-white hover:text-dark transition-all duration-300"
+                        title="Live Demo"
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
+                    )}
+                    {exp.github && (
+                      <a 
+                        href={exp.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-full bg-white/5 border border-white/10 text-white cursor-pointer hover:bg-white hover:text-dark transition-all duration-300"
+                        title="View Code"
+                      >
+                        <Github className="w-5 h-5" />
+                      </a>
+                    )}
                   </div>
 
                 </div>
