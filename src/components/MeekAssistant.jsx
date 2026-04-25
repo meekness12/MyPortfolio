@@ -11,76 +11,25 @@ export default function MeekAssistant() {
 
     const [hasGreeted, setHasGreeted] = useState(false);
 
-    // Speech Recognition Setup
-    useEffect(() => {
-        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            setSupported(false);
-            setResponse("Voice Module Unavailable");
-        } else {
-            // Attempt auto-greet on mount
-            const timer = setTimeout(() => {
-                if (!hasGreeted) {
-                    greetAndAsk();
-                }
-            }, 1000);
-            return () => clearTimeout(timer);
-        }
-    }, [hasGreeted, greetAndAsk]);
-
-    const greetAndAsk = useCallback(() => {
-        const greeting = "Welcome, Sir. I am MeekAssistant. What would you like to explore in the portfolio?";
-        speak(greeting, () => {
-            setHasGreeted(true);
-            // Optional: Auto-start listening after greeting if desired, 
-            // but browsers usually block 'start()' without direct user event.
-            // We'll leave it to the user to click to reply to avoid errors.
-            setResponse("Waiting for command...");
-        });
-    }, []);
-
-    const startListening = () => {
-        if (!supported) return;
-
-        soundManager.play('click');
-
-        // If we haven't greeted yet (e.g. auto-play blocked), greet first then listen
-        if (!hasGreeted) {
-            speak("I am listening. What do you need?", () => {
-                setHasGreeted(true);
-                runSpeechRecognition();
-            });
-            return;
-        }
-
-        runSpeechRecognition();
+    const scrollTo = (id) => {
+        const el = document.querySelector(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const runSpeechRecognition = () => {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
+    const speak = useCallback((text, onEndCallback) => {
+        setResponse(text);
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const voices = window.speechSynthesis.getVoices();
+        const techVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Samantha'));
+        if (techVoice) utterance.voice = techVoice;
+        utterance.pitch = 0.9;
+        utterance.rate = 1.05;
+        if (onEndCallback) utterance.onend = onEndCallback;
+        window.speechSynthesis.speak(utterance);
+    }, []);
 
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        recognition.onstart = () => {
-            setIsListening(true);
-            setResponse("Listening...");
-        };
-
-        recognition.onend = () => {
-            setIsListening(false);
-        };
-
-        recognition.onresult = (event) => {
-            const command = event.results[0][0].transcript.toLowerCase();
-            processCommand(command);
-        };
-
-        recognition.start();
-    }
-
-    const processCommand = (cmd) => {
+    const processCommand = useCallback((cmd) => {
         if (cmd.includes('home')) {
             scrollTo('#home');
             speak("Navigating to Home base.");
@@ -98,32 +47,61 @@ export default function MeekAssistant() {
         } else {
             speak("I'm afraid I didn't catch that. Could you repeat?");
         }
-    };
+    }, [speak]);
 
-    const scrollTo = (id) => {
-        const el = document.querySelector(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-    };
+    const runSpeechRecognition = useCallback(() => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+        recognition.onstart = () => {
+            setIsListening(true);
+            setResponse("Listening...");
+        };
+        recognition.onend = () => setIsListening(false);
+        recognition.onresult = (event) => {
+            const command = event.results[0][0].transcript.toLowerCase();
+            processCommand(command);
+        };
+        recognition.start();
+    }, [processCommand]);
 
-    const speak = (text, onEndCallback) => {
-        setResponse(text);
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        const voices = window.speechSynthesis.getVoices();
-        const techVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Samantha'));
-        if (techVoice) utterance.voice = techVoice;
-
-        utterance.pitch = 0.9;
-        utterance.rate = 1.05;
-
-        if (onEndCallback) {
-            utterance.onend = onEndCallback;
+    const startListening = useCallback(() => {
+        if (!supported) return;
+        soundManager.play('click');
+        if (!hasGreeted) {
+            speak("I am listening. What do you need?", () => {
+                setHasGreeted(true);
+                runSpeechRecognition();
+            });
+            return;
         }
+        runSpeechRecognition();
+    }, [supported, hasGreeted, speak, runSpeechRecognition]);
 
-        window.speechSynthesis.speak(utterance);
-    };
+    const greetAndAsk = useCallback(() => {
+        const greeting = "Welcome, Sir. I am MeekAssistant. What would you like to explore in the portfolio?";
+        speak(greeting, () => {
+            setHasGreeted(true);
+            setResponse("Waiting for command...");
+        });
+    }, [speak]);
+
+    // Speech Recognition Setup
+    useEffect(() => {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            setSupported(false);
+            setResponse("Voice Module Unavailable");
+        } else {
+            const timer = setTimeout(() => {
+                if (!hasGreeted) {
+                    greetAndAsk();
+                }
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [hasGreeted, greetAndAsk]);
 
     // Drag constraints could be added here, but sticking to fixed position for now
     return (
