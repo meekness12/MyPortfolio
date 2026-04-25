@@ -92,12 +92,12 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
-          <ul className="flex items-center gap-1 bg-dark-200/50 px-2 py-1 rounded-full border border-white/5 backdrop-blur-sm">
+          <ul className="flex items-center gap-1 bg-dark-200/50 px-2 py-1 rounded-full border border-white/5 backdrop-blur-sm" role="list">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = activeLink === link.href;
               return (
-                <li key={link.href}>
+                <li key={link.href} role="listitem">
                   <a
                     href={link.href}
                     onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
@@ -107,8 +107,9 @@ export default function Navbar() {
                         ? 'text-dark bg-light'
                         : 'text-light/70 hover:text-light hover:bg-white/5'
                       }`}
+                    aria-current={isActive ? 'page' : undefined}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4" aria-hidden="true" />
                     <span className="font-space">{link.text}</span>
                   </a>
                 </li>
@@ -121,9 +122,9 @@ export default function Navbar() {
             <button
               onClick={toggleMute}
               className="text-gray-400 hover:text-primary transition-colors"
-              aria-label="Toggle Sound"
+              aria-label={isMuted ? "Unmute sound effects" : "Mute sound effects"}
             >
-              {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              {isMuted ? <VolumeX className="w-5 h-5" aria-hidden="true" /> : <Volume2 className="w-5 h-5" aria-hidden="true" />}
             </button>
 
             {socialLinks.map((social) => {

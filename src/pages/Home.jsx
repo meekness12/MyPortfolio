@@ -27,11 +27,11 @@ export default function Home() {
               Hi, I'm <span className="text-white">Meekness</span>
             </h1>
             <h2 className="text-2xl md:text-3xl text-light/60 font-sans mb-8">
-              Frontend Engineer
+              Full-Stack System Architect & <span className="text-white/80">Frontend Specialist</span>
             </h2>
 
             <p className="text-light/60 text-lg max-w-xl mx-auto md:mx-0 mb-10 leading-relaxed font-sans">
-              Architecting premium digital experiences with <span className="text-white">React</span> and <span className="text-white">Modern CSS</span>. Building the web of tomorrow, today.
+              Engineering high-fidelity digital systems with <span className="text-white">technical precision</span> and <span className="text-white">creative flair</span>. I bridge the gap between complex system architecture and premium user experiences.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">

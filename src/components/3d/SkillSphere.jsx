@@ -175,6 +175,7 @@ export default function SkillSphere() {
                 dpr={[1, 1.5]}
                 gl={{ antialias: true, alpha: true }}
                 style={{ background: 'transparent' }}
+                aria-label="Interactive 3D Skill Sphere: A rotating constellation of my technical skills including React, JavaScript, and UI Design."
             >
                 <Suspense fallback={null}>
                     <SkillSphereScene />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff } from 'lucide-react';
 import ArcReactor from './ArcReactor';
@@ -6,7 +6,6 @@ import { soundManager } from '../utils/SoundManager';
 
 export default function MeekAssistant() {
     const [isListening, setIsListening] = useState(false);
-    const [transcript, setTranscript] = useState('');
     const [response, setResponse] = useState("System Ready");
     const [supported, setSupported] = useState(true);
 
@@ -19,15 +18,16 @@ export default function MeekAssistant() {
             setResponse("Voice Module Unavailable");
         } else {
             // Attempt auto-greet on mount
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 if (!hasGreeted) {
                     greetAndAsk();
                 }
             }, 1000);
+            return () => clearTimeout(timer);
         }
-    }, []);
+    }, [hasGreeted, greetAndAsk]);
 
-    const greetAndAsk = () => {
+    const greetAndAsk = useCallback(() => {
         const greeting = "Welcome, Sir. I am MeekAssistant. What would you like to explore in the portfolio?";
         speak(greeting, () => {
             setHasGreeted(true);
@@ -36,7 +36,7 @@ export default function MeekAssistant() {
             // We'll leave it to the user to click to reply to avoid errors.
             setResponse("Waiting for command...");
         });
-    };
+    }, []);
 
     const startListening = () => {
         if (!supported) return;
@@ -74,7 +74,6 @@ export default function MeekAssistant() {
 
         recognition.onresult = (event) => {
             const command = event.results[0][0].transcript.toLowerCase();
-            setTranscript(command);
             processCommand(command);
         };
 
@@ -142,6 +141,8 @@ export default function MeekAssistant() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
                         className="bg-dark/80 backdrop-blur-md border border-primary/30 px-4 py-2 rounded-lg text-primary font-mono text-sm max-w-[200px] text-right shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                        role="status"
+                        aria-live="polite"
                     >
                         {response}
                     </motion.div>
@@ -152,12 +153,13 @@ export default function MeekAssistant() {
             <button
                 onClick={startListening}
                 className="group relative focus:outline-none"
-                aria-label="Activate Voice Assistant"
+                aria-label={isListening ? "Assistant is listening" : "Activate Voice Assistant"}
+                aria-pressed={isListening}
             >
                 <ArcReactor isActive={true} isListening={isListening} />
 
                 {/* Hover Hint */}
-                <div className="absolute -left-20 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-primary font-mono whitespace-nowrap pointer-events-none">
+                <div className="absolute -left-20 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-primary font-mono whitespace-nowrap pointer-events-none" aria-hidden="true">
                     {isListening ? "LISTENING..." : "PUSH TO TALK"}
                 </div>
             </button>

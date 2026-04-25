@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Trail, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -130,6 +130,7 @@ export default function HeroScene() {
                 dpr={[1, 1.5]}
                 gl={{ antialias: true, alpha: true }}
                 style={{ background: 'transparent' }}
+                aria-label="Interactive 3D Hero Scene: A glowing torus knot orbiting with particles reacting to your mouse movement."
             >
                 <Suspense fallback={null}>
                     <HeroScene3D />
