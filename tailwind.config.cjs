@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./index.html",
@@ -9,52 +10,65 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: "1rem",
-        sm: "2rem",
-        lg: "4rem",
-        xl: "5rem",
-        "2xl": "6rem",
+        sm: "1.5rem",
+        md: "2rem",
+        lg: "3rem",
+        xl: "4rem",
       },
     },
     extend: {
       colors: {
-        primary: "#ffffff", // Pure white for high contrast accents
-        secondary: "#a1a1aa", // Zinc-400 for secondary text
-        tertiary: "#3b82f6", // Subtle blue accent
-        dark: {
-          DEFAULT: "#09090b", // Deep black (Zinc-950)
-          100: "#18181b", // Zinc-900
-          200: "#27272a", // Zinc-800
+        // Masculine modern palette
+        brand: {
+          blue: "#3B82F6", // Electric Blue
+          cyan: "#06B6D4", // High-tech Cyan
+          indigo: "#6366F1",
         },
+        // Deep obsidian dark mode
+        dark: {
+          bg: "#0A0C10",
+          surface: "#141721",
+          surface2: "#1B1F2D",
+          surface3: "#23283B",
+          border: "rgba(255, 255, 255, 0.08)",
+          borderHover: "rgba(255, 255, 255, 0.18)",
+          text: "#EDEDED",
+          muted: "#94A3B8",
+        },
+        // Clean architectural light mode
         light: {
-          DEFAULT: "#fafafa", // Off-white
-          100: "#f4f4f5", // Zinc-100
-        }
+          bg: "#F8F9FA",
+          surface: "#FFFFFF",
+          surface2: "#F1F3F6",
+          surface3: "#E2E8F0",
+          border: "rgba(0, 0, 0, 0.08)",
+          borderHover: "rgba(0, 0, 0, 0.16)",
+          text: "#0F172A",
+          muted: "#64748B",
+        },
       },
       fontFamily: {
-        heading: ["Outfit", "sans-serif"],
-        sans: ["Inter", "sans-serif"],
+        signature: ["Satisfy", "cursive"],
+        instrument: ["Instrument Serif", "Georgia", "serif"],
+        space: ["Space Grotesk", "sans-serif"],
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "hero-glow": "conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)",
-      },
       animation: {
-        "spin-slow": "spin 3s linear infinite",
-        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "float": "float 6s ease-in-out infinite",
-        "glow": "glow 2s ease-in-out infinite alternate",
+        "marquee": "marquee 26s linear infinite",
+        "pulse-subtle": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
         },
-        glow: {
-          "0%": { boxShadow: "0 0 5px rgba(255,255,255,0.1)" },
-          "100%": { boxShadow: "0 0 15px rgba(255,255,255,0.2)" },
-        }
-      }
+      },
+      boxShadow: {
+        soft: "0 2px 10px rgba(0, 0, 0, 0.04)",
+        "soft-hover": "0 6px 20px rgba(0, 0, 0, 0.08)",
+        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.08)",
+      },
     },
   },
   plugins: [],

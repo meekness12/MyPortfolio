@@ -1,74 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/img.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="canonical" href="https://meekthinker.me/" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="theme-color" content="#0A0C10" />
     
-    <!-- Preload Critical Fonts -->
-    <!-- Fonts -->
+    <!-- Google Fonts: Satisfy, Instrument Serif, Space Grotesk, Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <meta name="title" content="Meek Thinker | Software Developer & System Architect" />
-    <meta name="description" content="Portfolio of Meek Thinker, a Software Developer and System Architect specializing in high-fidelity digital systems, React, and modern web architecture." />
-    <meta name="keywords" content="Software Developer, System Architect, Rwanda, Next.js, React, SaaS, Web3, Portfolio, Meek Thinker" />
-    <meta name="author" content="Meek Thinker" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Satisfy&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- SEO Meta Tags -->
+    <title>meekness — software developer & designer</title>
+    <meta name="title" content="meekness — software developer & designer" />
+    <meta
+      name="description"
+      content="Portfolio of Meekness Bonheur, a Frontend Developer and IT Student at Rwanda Polytechnic based in Kigali. Building clean, high-performance digital systems."
+    />
+    <meta name="keywords" content="Meekness Bonheur, meekness, software developer, frontend, react, spring boot, kigali, rwanda" />
+    <meta name="author" content="Meekness Bonheur" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://meekthinker.me/" />
-    <meta property="og:title" content="Meek Thinker | Software Developer & System Architect" />
-    <meta property="og:description" content="Engineering high-fidelity digital systems with technical precision and creative flair. Explore my latest projects and architectures." />
-    <meta property="og:image" content="https://meekthinker.me/og-image.png" />
-    <meta property="og:site_name" content="Meek Thinker Portfolio" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="meekness — software developer & designer" />
+    <meta
+      property="og:description"
+      content="Building clean, high-performance digital systems with thoughtful user experiences."
+    />
+    <meta property="og:site_name" content="meekness" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://meekthinker.me/" />
-    <meta property="twitter:title" content="Meek Thinker | Software Developer & System Architect" />
-    <meta property="twitter:description" content="Engineering high-fidelity digital systems with technical precision and creative flair. Explore my latest projects and architectures." />
-    <meta property="twitter:image" content="https://meekthinker.me/og-image.png" />
-
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Meek Thinker",
-        "url": "https://meekthinker.me/",
-        "jobTitle": "Software Developer & System Architect",
-        "sameAs": [
-          "https://github.com/meekness12",
-          "https://twitter.com/meek1hinker",
-          "https://instagram.com/meek_hinker"
-        ],
-        "knowsAbout": ["Web Development", "React", "System Architecture", "Software Engineering", "UI/UX Design"]
-      }
-    </script>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@meek1hinker" />
+    <meta name="twitter:title" content="meekness — software developer & designer" />
+    <meta
+      name="twitter:description"
+      content="Building clean, high-performance digital systems with thoughtful user experiences."
+    />
   </head>
-  <body>
+  <body class="bg-light-bg dark:bg-dark-bg text-slate-800 dark:text-[#EDEDED] font-sans antialiased selection:bg-brand-blue/20 selection:text-brand-blue transition-colors duration-150">
     <div id="root"></div>
-
     <script type="module" src="/src/main.jsx"></script>
-
-    <!-- Chatbase Integration (Requires VITE_CHATBASE_BOT_ID in .env) -->
-    <!--
-    <script>
-      window.chatbaseConfig = {
-        chatbotId: "%VITE_CHATBASE_BOT_ID%",
-      };
-    </script>
-    <script
-      src="https://www.chatbase.co/embed.min.js"
-      chatbotId="%VITE_CHATBASE_BOT_ID%"
-      defer>
-    </script>
-    -->
   </body>
 </html>
-

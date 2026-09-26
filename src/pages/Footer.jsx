@@ -1,42 +1,48 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Linkedin, Github, Twitter } from 'lucide-react';
-// import './Footer.css'; // Deprecated
+import { ArrowRight, Sparkles, Terminal, Code } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ onNavigate }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="py-8 bg-dark-100/50 backdrop-blur-md border-t border-white/5 font-mono text-sm relative z-10">
-      <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="w-full pt-16 pb-20 md:pb-12 flex flex-col items-center justify-center bg-white/70 dark:bg-dark-surface/50 border-t border-black/5 dark:border-white/10 transition-colors duration-150 overflow-hidden relative">
+      {/* Background radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_120%,rgba(59,130,246,0.1),transparent)] pointer-events-none" />
 
-        {/* Contact Quick Links */}
-        <div className="flex gap-6 text-light/60">
-          <a href="mailto:meeknessbon@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
-            <Mail size={16} /> meeknessbon@gmail.com
-          </a>
-          <span className="opacity-20 hidden md:block">|</span>
-          <span className="flex items-center gap-2">
-            <MapPin size={16} /> Kigali, Rwanda
-          </span>
-        </div>
+      {/* Main Content (Matching Palakonweb $e) */}
+      <div className="flex flex-col items-center text-center mb-8 px-6 relative z-10 max-w-xl mx-auto">
+        <p className="font-instrument italic text-3xl sm:text-4xl text-slate-900 dark:text-white mb-6">
+          Have an idea or project?<br />
+          Let's build something together.
+        </p>
 
-        {/* Social Icons */}
-        <div className="flex items-center gap-4">
-          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/5 hover:bg-primary/20 hover:text-primary transition-all">
-            <Linkedin size={18} />
-          </a>
-          <a href="https://github.com/meekness12" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/5 hover:bg-primary/20 hover:text-primary transition-all">
-            <Github size={18} />
-          </a>
-          <a href="https://twitter.com/meek1hinker" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/5 hover:bg-primary/20 hover:text-primary transition-all">
-            <Twitter size={18} />
-          </a>
-        </div>
+        <button
+          onClick={() => {
+            if (onNavigate) {
+              onNavigate('contact');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          className="glare-button group flex items-center gap-2 px-7 py-3.5 bg-slate-900 text-white dark:bg-white dark:text-slate-900 rounded-full font-medium text-sm hover:shadow-soft-hover transition-all duration-150 shadow-soft"
+        >
+          <span>Let's Talk</span>
+          <ArrowRight size={16} className="transition-transform duration-150 group-hover:translate-x-1" />
+        </button>
+      </div>
 
-        {/* Copyright */}
-        <div className="text-light/30">
-          © {year} <span className="text-primary">Meekness_Bonheur</span>. Executing Protocol...
-        </div>
+      {/* Signature Credit */}
+      <p className="relative z-10 text-xs sm:text-sm text-slate-500 dark:text-white/50 text-center mb-6">
+        Made with <span className="text-brand-blue font-bold">⚡</span> and craft by{' '}
+        <span className="font-signature text-xl text-slate-900 dark:text-white ml-1">
+          meekness
+        </span>
+      </p>
+
+      {/* Subtle tech footer mark */}
+      <div className="relative z-10 flex items-center gap-3 text-[11px] font-mono text-slate-400 dark:text-white/30">
+        <span>Kigali, Rwanda 🇷🇼</span>
+        <span>·</span>
+        <span>© {year}</span>
       </div>
     </footer>
   );

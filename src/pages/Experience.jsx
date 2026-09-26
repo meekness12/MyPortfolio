@@ -1,170 +1,184 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Briefcase, 
-  Calendar, 
-  MapPin, 
-  ChevronRight, 
-  ExternalLink,
-  ShieldCheck,
-  Globe,
-  Database,
-  Github
-} from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ExternalLink, Github, Calendar, MapPin, Briefcase } from 'lucide-react';
 
 export default function Experience() {
+  const [expandedId, setExpandedId] = useState(0);
+
   const experiences = [
     {
       company: "Umurava AI Hackathon",
       role: "AI Systems Engineer (Team Arc Lab)",
       period: "2024",
-      location: "Remote / Hybrid",
-      description: "Engineered TalentLens, an AI-powered talent screening engine designed to automate the evaluation of unstructured resumes with transparent reasoning and native OCR.",
+      location: "Kigali, Rwanda · Remote / Hybrid",
+      summary: "Engineered TalentLens, an AI talent screening engine designed to evaluate unstructured resumes with transparent reasoning and automated OCR.",
       achievements: [
-        "Integrated Gemini 1.5 Flash for native PDF processing and high-accuracy data extraction.",
-        "Architected a 'Zero-Data-Entry' pipeline converting noisy documents into structured profiles.",
-        "Developed a MatchScore algorithm providing recruiters with traceable AI reasoning and gaps analysis.",
-        "Built a resilient backend with TypeScript and Node.js capable of batch processing resume uploads."
+        "Integrated Gemini 1.5 Flash for native multimodal document processing, converting unstructured PDFs into structured profiles.",
+        "Architected a 'Zero-Data-Entry' pipeline eliminating manual recruiter data entry.",
+        "Developed a traceable MatchScore algorithm providing recruiters with explicit gap analysis and scoring rationale.",
+        "Built a resilient backend with TypeScript, Node.js, and MongoDB handling batch resume processing."
       ],
-      skills: ["Node.js", "TypeScript", "Gemini AI", "MongoDB", "Express", "System Design"],
-      icon: ShieldCheck,
-      color: "from-blue-500/20 to-blue-600/5",
-      link: "https://talent-lens-eight.vercel.app",
-      github: "https://github.com/Jacksonsod/talent-lens"
+      tools: ["Gemini 1.5 Flash", "TypeScript", "Node.js", "Express", "MongoDB", "System Design"],
+      links: [
+        { label: "Live Demo", url: "https://talent-lens-eight.vercel.app" },
+        { label: "GitHub", url: "https://github.com/Jacksonsod/talent-lens" }
+      ]
+    },
+    {
+      company: "Rwanda Polytechnic",
+      role: "Advanced Diploma in Information Technology",
+      period: "2023 — Present",
+      location: "Kigali, Rwanda",
+      summary: "Undergraduate studies in software engineering, database administration, and networking. Built academic management systems and collaborative network tools.",
+      achievements: [
+        "Architected InternBridge, an academic internship management system utilizing Java 21, Spring Boot, and PostgreSQL.",
+        "Built Classroom Resource Auto-Distribution System running over Local Area Network (LAN) socket connections.",
+        "Maintained strong focus on software engineering best practices, data structures, and relational database normalization."
+      ],
+      tools: ["Java 21", "Spring Boot", "PostgreSQL", "React", "Linux", "Networking"],
+      links: []
+    },
+    {
+      company: "Independent Web Development",
+      role: "Frontend Developer & UI Designer",
+      period: "2023 — Present",
+      location: "Kigali, Rwanda",
+      summary: "Designing and developing responsive, accessible web applications with a focus on polished user experience and clean code architecture.",
+      achievements: [
+        "Crafted custom user interfaces in Figma and developed component libraries in React with Tailwind CSS.",
+        "Built Edge Journal, police license management platforms, and personal software tools.",
+        "Collaborated with peers to refine frontend workflows and code review practices."
+      ],
+      tools: ["React", "Tailwind CSS", "JavaScript", "Figma", "Git & GitHub"],
+      links: []
     }
   ];
 
   return (
-    <section id="experience" className="py-24 bg-transparent relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[128px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <motion.div 
-          className="max-w-3xl mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
-            <Briefcase className="w-4 h-4 text-primary" />
-            <span className="text-xs font-mono text-light/70 uppercase tracking-widest">Professional Dossier</span>
+    <section id="experience" className="py-24 relative overflow-hidden">
+      <div className="container mx-auto px-6">
+        <div className="max-w-5xl mx-auto">
+          
+          {/* Header */}
+          <div className="mb-14">
+            <span className="text-xs font-mono uppercase tracking-widest text-accent font-semibold block mb-3">
+              Journey & Milestones
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-bold text-dark-text dark:text-light-text tracking-tight">
+              Real-world{' '}
+              <span className="font-serif italic font-normal text-accent">
+                experience & education.
+              </span>
+            </h2>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-6 tracking-tight">
-            Real-World <span className="text-white/40">Experience</span>
-          </h2>
-          <p className="text-light/60 text-lg leading-relaxed font-sans max-w-2xl">
-            A track record of engineering scalable systems and high-fidelity interfaces for national-scale organizations and enterprise environments.
-          </p>
-        </motion.div>
 
-        {/* Timeline / Experience List */}
-        <div className="space-y-12">
-          {experiences.length > 0 ? (
-            experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                className={`relative glass-card p-8 md:p-10 rounded-3xl border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden group`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-              >
-                {/* Card Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${exp.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-                <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:items-start">
-                  
-                  {/* Left: Icon & Meta */}
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                      <exp.icon className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-
-                  {/* Center: Main Content */}
-                  <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                      <div>
-                        <h3 className="text-2xl font-heading font-bold text-white mb-1">{exp.role}</h3>
-                        <div className="flex items-center gap-2 text-primary font-medium text-lg">
-                          <span>{exp.company}</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col md:items-end gap-2 text-sm font-mono text-light/40">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          {exp.period}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4" />
-                          {exp.location}
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-light/70 mb-8 leading-relaxed text-lg max-w-3xl">
-                      {exp.description}
-                    </p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                      {exp.achievements.map((achievement, i) => (
-                        <div key={i} className="flex gap-3">
-                          <ChevronRight className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-light/60 text-sm leading-relaxed">{achievement}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Skills Tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {exp.skills.map((skill, i) => (
-                        <span key={i} className="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-xs font-mono text-light/40 group-hover:text-light/70 group-hover:border-white/10 transition-colors">
-                          {skill}
+          {/* Accordion List */}
+          <div className="rounded-3xl bg-white dark:bg-dark-card border border-warm-200 dark:border-dark-border divide-y divide-warm-200 dark:divide-dark-border shadow-sm overflow-hidden">
+            {experiences.map((exp, index) => {
+              const isExpanded = expandedId === index;
+              return (
+                <div key={exp.company} className="transition-colors">
+                  <button
+                    onClick={() => setExpandedId(isExpanded ? null : index)}
+                    className="w-full p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-4 text-left hover:bg-warm-100/50 dark:hover:bg-dark-cardHover transition-colors"
+                  >
+                    <div>
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-sans font-bold text-lg sm:text-xl text-dark-text dark:text-light-text">
+                          {exp.role}
+                        </h3>
+                        <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-warm-100 dark:bg-dark-bg text-dark-muted dark:text-light-muted border border-warm-200 dark:border-dark-border">
+                          {exp.company}
                         </span>
-                      ))}
+                      </div>
+                      <p className="text-xs sm:text-sm text-dark-muted dark:text-light-muted flex items-center gap-2">
+                        <MapPin size={13} /> {exp.location}
+                      </p>
                     </div>
-                  </div>
 
-                  {/* Right: CTA */}
-                  <div className="hidden xl:flex flex-col gap-4 justify-center">
-                    {exp.link && (
-                      <a 
-                        href={exp.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 rounded-full bg-white/5 border border-white/10 text-white cursor-pointer hover:bg-white hover:text-dark transition-all duration-300"
-                        title="Live Demo"
+                    <div className="flex items-center gap-4 text-xs font-mono text-dark-muted dark:text-light-muted shrink-0">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar size={13} /> {exp.period}
+                      </span>
+                      <div
+                        className={`p-1.5 rounded-full bg-warm-100 dark:bg-dark-bg border border-warm-200 dark:border-dark-border transition-transform duration-200 ${
+                          isExpanded ? 'rotate-180 text-accent' : ''
+                        }`}
                       >
-                        <ExternalLink className="w-5 h-5" />
-                      </a>
-                    )}
-                    {exp.github && (
-                      <a 
-                        href={exp.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 rounded-full bg-white/5 border border-white/10 text-white cursor-pointer hover:bg-white hover:text-dark transition-all duration-300"
-                        title="View Code"
-                      >
-                        <Github className="w-5 h-5" />
-                      </a>
-                    )}
-                  </div>
+                        <ChevronDown size={16} />
+                      </div>
+                    </div>
+                  </button>
 
+                  {/* Expandable Body */}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-6 pb-7 sm:px-7 sm:pb-8 pt-2 space-y-5 border-t border-warm-200/50 dark:border-dark-border/50 bg-warm-50/30 dark:bg-dark-bg/20">
+                          <p className="text-sm text-dark-muted dark:text-light-muted leading-relaxed font-normal">
+                            {exp.summary}
+                          </p>
+
+                          {/* Achievements */}
+                          <div>
+                            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-dark-text dark:text-light-text mb-2.5">
+                              Key Highlights
+                            </h4>
+                            <ul className="space-y-2">
+                              {exp.achievements.map((ach, i) => (
+                                <li key={i} className="flex items-start gap-2.5 text-sm text-dark-muted dark:text-light-muted">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0"></span>
+                                  <span>{ach}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Tools & Links */}
+                          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-warm-200/60 dark:border-dark-border/60">
+                            <div className="flex flex-wrap gap-1.5">
+                              {exp.tools.map((t) => (
+                                <span
+                                  key={t}
+                                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-warm-100 dark:bg-dark-card border border-warm-200 dark:border-dark-border text-dark-text/90 dark:text-light-text/90"
+                                >
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+
+                            {exp.links.length > 0 && (
+                              <div className="flex items-center gap-3">
+                                {exp.links.map((link) => (
+                                  <a
+                                    key={link.label}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-xs font-medium text-dark-text dark:text-light-text hover:text-accent transition-colors"
+                                  >
+                                    <ExternalLink size={13} /> {link.label}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </motion.div>
-            ))
-          ) : (
-            <div className="text-center py-20 bg-white/5 rounded-3xl border border-dashed border-white/10">
-              <p className="text-light/30 font-mono text-sm tracking-widest uppercase">Professional Records Pending Initialization...</p>
-            </div>
-          )}
-        </div>
+              );
+            })}
+          </div>
 
+        </div>
       </div>
     </section>
   );

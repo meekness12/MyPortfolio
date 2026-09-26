@@ -1,45 +1,158 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import SplashIntro from './components/SplashIntro';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import About from './pages/About';
 import Projects from './pages/Projects';
-import Experience from './pages/Experience';
+import Designs from './pages/Designs';
+import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import Footer from './pages/Footer';
-import Preloader from './components/Preloader';
-import MeekAssistant from './components/MeekAssistant';
-import CustomCursor from './components/CustomCursor';
-import { AnimatePresence } from 'framer-motion';
-import './App.css';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
+  const [currentView, setCurrentView] = useState('home'); // 'home' | 'projects' | 'designs' | 'blog' | 'contact'
+
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark';
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+
+  const handleViewChange = (view, projectId = null) => {
+    setCurrentView(view);
+    if (projectId) {
+      setSelectedProjectId(projectId);
+    } else if (view !== 'projects') {
+      setSelectedProjectId(null);
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
 
   return (
-    <div className="bg-dark min-h-screen text-light font-sans relative overflow-x-hidden selection:bg-white/20 selection:text-white">
-      
-      {/* Subtle Premium Background Glow */}
-      <div className="fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] pointer-events-none"></div>
+    <>
+      {/* 1-Second Signature Splash Screen (Matching Palakonweb Qe) */}
+      {showSplash && <SplashIntro onComplete={() => setShowSplash(false)} />}
 
-      <AnimatePresence mode='wait'>
-        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
+      <div
+        className={`relative w-full min-h-screen bg-light-bg text-slate-900 dark:bg-dark-bg dark:text-[#EDEDED] font-sans transition-colors duration-150 selection:bg-brand-blue/20 selection:text-brand-blue ${
+          showSplash ? 'h-screen overflow-hidden pointer-events-none' : ''
+        }`}
+      >
+        {/* Subtle Radial Tech Glows */}
+        <div className="fixed inset-0 pointer-events-none z-[-2] bg-light-bg dark:bg-dark-bg transition-colors duration-150" />
+        <div className="fixed top-0 right-0 w-[75vw] h-[75vh] pointer-events-none z-[-1] bg-[radial-gradient(ellipse_at_top_right,rgba(59,130,246,0.1),transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top_right,rgba(59,130,246,0.15),transparent_70%)]" />
 
-      {!isLoading && (
-        <>
-          <CustomCursor />
-          <Navbar />
-          <MeekAssistant />
-          <main>
-            <div id="home"><Home /></div>
-            <div id="about"><About /></div>
-            <div id="experience"><Experience /></div>
-            <div id="projects"><Projects /></div>
-            <div id="contact"><Contact /></div>
-          </main>
-          <Footer />
-        </>
-      )}
-    </div>
+        {/* Top Header Blur Strip */}
+        {!showSplash && (
+          <div className="fixed top-0 left-0 w-full h-14 md:h-16 backdrop-blur-md bg-white/20 dark:bg-black/25 z-40 pointer-events-none transition-colors duration-150" />
+        )}
+
+        {/* Navigation */}
+        <Navbar
+          currentView={currentView}
+          onViewChange={handleViewChange}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+        />
+
+        {/* Main View Container with Animated Transitions (Matching Palakonweb tm) */}
+        <main className="relative z-10 w-full flex flex-col items-center min-h-screen">
+          <div className="flex-1 w-full flex flex-col items-center">
+            <AnimatePresence mode="wait">
+              {currentView === 'home' && (
+                <motion.div
+                  key="home"
+                  className="w-full flex flex-col items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Home onViewChange={handleViewChange} />
+                </motion.div>
+              )}
+
+              {currentView === 'projects' && (
+                <motion.div
+                  key="projects"
+                  className="w-full flex flex-col items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Projects
+                    initialProjectId={selectedProjectId}
+                    onClearInitialProject={() => setSelectedProjectId(null)}
+                  />
+                </motion.div>
+              )}
+
+              {currentView === 'designs' && (
+                <motion.div
+                  key="designs"
+                  className="w-full flex flex-col items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Designs />
+                </motion.div>
+              )}
+
+              {currentView === 'blog' && (
+                <motion.div
+                  key="blog"
+                  className="w-full flex flex-col items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Blog />
+                </motion.div>
+              )}
+
+              {currentView === 'contact' && (
+                <motion.div
+                  key="contact"
+                  className="w-full flex flex-col items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Contact />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <Footer onNavigate={handleViewChange} />
+        </main>
+      </div>
+    </>
   );
 }
