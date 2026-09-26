@@ -6,7 +6,7 @@ import productDashboard from '../assets/product_dashboard.jpg';
 import internbridgeImg from '../assets/internbridge.png';
 import classroomImg from '../assets/classroom.png';
 import portfolioImg from '../assets/Portfolio.jpg';
-import avatarDark from '../assets/avatar_dark.jpg';
+import avatarDark from '../assets/anime_avatar.jpg';
 
 // 100% Authentic stories authored in Meekness Bonheur's real voice & project background
 const BLOG_POSTS = [

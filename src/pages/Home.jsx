@@ -20,7 +20,7 @@ import EditorialSidebar from '../components/EditorialSidebar';
 import { scrollRevealVariants } from '../utils/motion';
 
 import BannerImg from '../assets/banner.jpg';
-import ProfilePic from '../assets/pic.png';
+import ProfilePic from '../assets/anime_avatar.jpg';
 import Policeimg from '../assets/Police.jpg';
 import Portfolioimg from '../assets/Portfolio.jpg';
 import InternbridgeImg from '../assets/internbridge.png';
