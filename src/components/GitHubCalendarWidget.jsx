@@ -99,7 +99,7 @@ export default function GitHubCalendarWidget({ username = 'meekness12' }) {
         {loading ? (
           <div className="h-24 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] animate-pulse" />
         ) : (
-          <div className="overflow-x-auto pb-2 scrollbar-none">
+          <div className="overflow-x-auto pb-2 scrollbar-none touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
             <div className="min-w-[580px]">
               {/* Grid with 7 rows (days of week) */}
               <div className="grid grid-flow-col grid-rows-7 gap-1.5">

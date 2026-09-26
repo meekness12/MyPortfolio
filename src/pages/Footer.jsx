@@ -5,7 +5,7 @@ export default function Footer({ onNavigate }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full pt-16 pb-20 md:pb-12 flex flex-col items-center justify-center bg-white/70 dark:bg-dark-surface/50 border-t border-black/5 dark:border-white/10 transition-colors duration-150 overflow-hidden relative">
+    <footer className="w-full pt-16 pb-28 sm:pb-32 md:pb-14 flex flex-col items-center justify-center bg-white/70 dark:bg-dark-surface/50 border-t border-black/5 dark:border-white/10 transition-colors duration-150 overflow-hidden relative">
       {/* Background radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_120%,rgba(59,130,246,0.1),transparent)] pointer-events-none" />
 

@@ -9,6 +9,8 @@ import Designs from './pages/Designs';
 import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import Footer from './pages/Footer';
+import { pageViewVariants } from './utils/motion';
+import { initSmoothScroll, destroySmoothScroll, scrollToTop } from './utils/scroll';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -33,6 +35,14 @@ export default function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Initialize Lenis smooth scroll on mount
+  useEffect(() => {
+    initSmoothScroll();
+    return () => {
+      destroySmoothScroll();
+    };
+  }, []);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
@@ -46,7 +56,7 @@ export default function App() {
     } else if (view !== 'projects') {
       setSelectedProjectId(null);
     }
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    scrollToTop({ immediate: true });
   };
 
   return (
@@ -84,10 +94,10 @@ export default function App() {
                 <motion.div
                   key="home"
                   className="w-full flex flex-col items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  variants={pageViewVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
                   <Home onViewChange={handleViewChange} />
                 </motion.div>
@@ -97,10 +107,10 @@ export default function App() {
                 <motion.div
                   key="projects"
                   className="w-full flex flex-col items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  variants={pageViewVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
                   <Projects
                     initialProjectId={selectedProjectId}
@@ -113,10 +123,10 @@ export default function App() {
                 <motion.div
                   key="designs"
                   className="w-full flex flex-col items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  variants={pageViewVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
                   <Designs />
                 </motion.div>
@@ -126,10 +136,10 @@ export default function App() {
                 <motion.div
                   key="blog"
                   className="w-full flex flex-col items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  variants={pageViewVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
                   <Blog />
                 </motion.div>
@@ -139,10 +149,10 @@ export default function App() {
                 <motion.div
                   key="contact"
                   className="w-full flex flex-col items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  variants={pageViewVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
                   <Contact />
                 </motion.div>

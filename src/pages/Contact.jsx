@@ -49,7 +49,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="w-full min-h-screen relative z-20 flex flex-col items-center pt-28 md:pt-36 pb-32 px-6">
+    <section className="w-full min-h-screen relative z-20 flex flex-col items-center pt-28 md:pt-36 pb-32 px-4 sm:px-6">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ export default function Contact() {
       >
         {/* Dashed Border Card Container (Matching Palakonweb Ot) */}
         <div className="dashed-border-anim rounded-2xl w-full shadow-soft hover:shadow-soft-hover">
-          <div className="bg-white dark:bg-dark-surface rounded-2xl p-7 md:p-9 transition-colors duration-150">
+          <div className="bg-white dark:bg-dark-surface rounded-2xl p-5 sm:p-7 md:p-9 transition-colors duration-150">
             <h1 className="font-instrument font-semibold text-2xl md:text-3xl text-slate-800 dark:text-white mb-2">
               Send a Message
             </h1>
@@ -74,7 +74,7 @@ export default function Contact() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Full Name"
                   required
-                  className="w-full bg-transparent border border-black/10 dark:border-white/15 rounded-xl px-4 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-brand-blue dark:focus:border-brand-blue transition-colors duration-150"
+                  className="w-full bg-transparent border border-black/10 dark:border-white/15 rounded-xl px-4 py-3 text-[16px] sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-brand-blue dark:focus:border-brand-blue transition-colors duration-150"
                 />
               </div>
 
@@ -85,7 +85,7 @@ export default function Contact() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address"
                   required
-                  className="w-full bg-transparent border border-black/10 dark:border-white/15 rounded-xl px-4 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-brand-blue dark:focus:border-brand-blue transition-colors duration-150"
+                  className="w-full bg-transparent border border-black/10 dark:border-white/15 rounded-xl px-4 py-3 text-[16px] sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-brand-blue dark:focus:border-brand-blue transition-colors duration-150"
                 />
               </div>
 
@@ -96,7 +96,7 @@ export default function Contact() {
                   placeholder="Your Message"
                   rows={5}
                   required
-                  className="w-full bg-transparent border border-black/10 dark:border-white/15 rounded-xl px-4 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-brand-blue dark:focus:border-brand-blue transition-colors duration-150 resize-none"
+                  className="w-full bg-transparent border border-black/10 dark:border-white/15 rounded-xl px-4 py-3 text-[16px] sm:text-sm text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-brand-blue dark:focus:border-brand-blue transition-colors duration-150 resize-none"
                 />
               </div>
 

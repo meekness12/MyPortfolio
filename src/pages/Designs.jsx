@@ -10,6 +10,7 @@ import {
   ExternalLink,
   Layers
 } from 'lucide-react';
+import { SPRING_TACTILE } from '../utils/motion';
 
 // Assets
 import HeroCubeImg from '../assets/hero_cube.jpg';
@@ -421,7 +422,7 @@ export default function Designs() {
               </p>
 
               {/* Responsive Grid of Mockup Cards (Matching Screenshot 3) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 w-full">
                 {currentCategory?.items.map((item, idx) => (
                   <motion.div
                     key={item.id}
@@ -475,36 +476,37 @@ export default function Designs() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-8"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-8"
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={SPRING_TACTILE}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full bg-white dark:bg-[#141721] rounded-3xl overflow-hidden border border-black/10 dark:border-white/20 shadow-2xl flex flex-col"
+              data-lenis-prevent
+              className="relative max-w-4xl w-full max-h-[88dvh] overflow-y-auto bg-white dark:bg-[#141721] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/20 shadow-2xl flex flex-col"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedImage(null)}
                 aria-label="Close modal"
-                className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors cursor-pointer"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 sm:p-2.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
 
               {/* Large Image Canvas */}
-              <div className="max-h-[72vh] overflow-hidden bg-black/90 flex items-center justify-center">
+              <div className="max-h-[50vh] sm:max-h-[65vh] overflow-hidden bg-black/90 flex items-center justify-center shrink-0">
                 <img
                   src={selectedImage.image}
                   alt={selectedImage.title}
-                  className="max-h-[72vh] w-auto object-contain"
+                  className="max-h-[50vh] sm:max-h-[65vh] w-auto object-contain"
                 />
               </div>
 
               {/* Metadata Info Footer */}
-              <div className="p-6 sm:p-7 border-t border-black/10 dark:border-white/10 bg-white dark:bg-[#141721]">
+              <div className="p-5 sm:p-7 border-t border-black/10 dark:border-white/10 bg-white dark:bg-[#141721]">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono text-brand-blue dark:text-brand-cyan uppercase tracking-wider font-semibold">
                     {selectedImage.category}

@@ -142,7 +142,7 @@ export default function FeaturedCardsCluster({ onCardClick, className = '' }) {
 
   return (
     <div
-      className={`relative w-full max-w-[620px] h-[370px] sm:h-[420px] flex items-center justify-center mx-auto my-2 select-none ${className}`}
+      className={`relative w-full max-w-[620px] h-[310px] min-[400px]:h-[350px] sm:h-[420px] flex items-center justify-center mx-auto my-2 select-none overflow-hidden sm:overflow-visible ${className}`}
     >
       {/* Interactive Dither Wave Capacitive Desk Mat */}
       <div className="absolute inset-1 sm:inset-2 rounded-3xl overflow-hidden pointer-events-none opacity-25 dark:opacity-35 border border-black/5 dark:border-white/10 z-0 shadow-inner">
@@ -158,114 +158,117 @@ export default function FeaturedCardsCluster({ onCardClick, className = '' }) {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-100/50 via-transparent to-slate-100/30 dark:from-[#0A0C10]/60 dark:via-transparent dark:to-[#0A0C10]/30 pointer-events-none" />
       </div>
 
-      {/* ---------------- CARD 1: TalentLens (Left / Pinned) ---------------- */}
-      <motion.div
-        onMouseEnter={() => setHoveredCard('talentlens')}
-        onMouseLeave={() => setHoveredCard(null)}
-        onClick={() => onCardClick && onCardClick('talentlens')}
-        initial={{ opacity: 0, scale: 0.9, rotate: -12 }}
-        animate={{
-          opacity: 1,
-          scale: hoveredCard === 'talentlens' ? 1.05 : 1,
-          rotate: hoveredCard === 'talentlens' ? -6 : -12,
-          y: hoveredCard === 'talentlens' ? -10 : 0,
-          zIndex: hoveredCard === 'talentlens' ? 35 : 10,
-        }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="absolute left-2 sm:left-4 top-4 sm:top-6 w-[255px] sm:w-[290px] h-[160px] sm:h-[185px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-hidden group hover:border-cyan-400/50"
-      >
-        <PushPin />
-        
-        {/* Card Graphic */}
-        <div className="self-end -mr-2 -mt-2">
-          <OrbitalGraphic />
-        </div>
+      {/* Rotated Bento Card Stage with Responsive Mobile Scaling */}
+      <div className="w-full h-full relative flex items-center justify-center scale-[0.76] min-[400px]:scale-[0.85] min-[520px]:scale-[0.92] sm:scale-100 origin-center transition-transform duration-200">
+        {/* ---------------- CARD 1: TalentLens (Left / Pinned) ---------------- */}
+        <motion.div
+          onMouseEnter={() => setHoveredCard('talentlens')}
+          onMouseLeave={() => setHoveredCard(null)}
+          onClick={() => onCardClick && onCardClick('talentlens')}
+          initial={{ opacity: 0, scale: 0.9, rotate: -12 }}
+          animate={{
+            opacity: 1,
+            scale: hoveredCard === 'talentlens' ? 1.05 : 1,
+            rotate: hoveredCard === 'talentlens' ? -6 : -12,
+            y: hoveredCard === 'talentlens' ? -10 : 0,
+            zIndex: hoveredCard === 'talentlens' ? 35 : 10,
+          }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          className="absolute left-2 sm:left-4 top-4 sm:top-6 w-[255px] sm:w-[290px] h-[160px] sm:h-[185px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-hidden group hover:border-cyan-400/50"
+        >
+          <PushPin />
+          
+          {/* Card Graphic */}
+          <div className="self-end -mr-2 -mt-2">
+            <OrbitalGraphic />
+          </div>
 
-        {/* Card Label */}
-        <div className="relative z-10">
-          <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
-            TalentLens
-          </h3>
-          <p className="font-mono text-xs text-white/50">
-            talentlens.ai
-          </p>
-        </div>
+          {/* Card Label */}
+          <div className="relative z-10">
+            <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
+              TalentLens
+            </h3>
+            <p className="font-mono text-xs text-white/50">
+              talentlens.ai
+            </p>
+          </div>
 
-        {/* Brushed Texture Sheen */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
-      </motion.div>
+          {/* Brushed Texture Sheen */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
+        </motion.div>
 
-      {/* ---------------- CARD 2: InternBridge (Right) ---------------- */}
-      <motion.div
-        onMouseEnter={() => setHoveredCard('internbridge')}
-        onMouseLeave={() => setHoveredCard(null)}
-        onClick={() => onCardClick && onCardClick('internbridge')}
-        initial={{ opacity: 0, scale: 0.9, rotate: 9 }}
-        animate={{
-          opacity: 1,
-          scale: hoveredCard === 'internbridge' ? 1.05 : 1,
-          rotate: hoveredCard === 'internbridge' ? 3 : 9,
-          y: hoveredCard === 'internbridge' ? -10 : 0,
-          zIndex: hoveredCard === 'internbridge' ? 35 : 12,
-        }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="absolute right-2 sm:right-4 top-8 sm:top-10 w-[255px] sm:w-[290px] h-[160px] sm:h-[185px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-hidden group hover:border-emerald-400/50"
-      >
-        {/* Card Graphic */}
-        <div className="self-end -mr-2 -mt-2">
-          <LatticeGraphic />
-        </div>
+        {/* ---------------- CARD 2: InternBridge (Right) ---------------- */}
+        <motion.div
+          onMouseEnter={() => setHoveredCard('internbridge')}
+          onMouseLeave={() => setHoveredCard(null)}
+          onClick={() => onCardClick && onCardClick('internbridge')}
+          initial={{ opacity: 0, scale: 0.9, rotate: 9 }}
+          animate={{
+            opacity: 1,
+            scale: hoveredCard === 'internbridge' ? 1.05 : 1,
+            rotate: hoveredCard === 'internbridge' ? 3 : 9,
+            y: hoveredCard === 'internbridge' ? -10 : 0,
+            zIndex: hoveredCard === 'internbridge' ? 35 : 12,
+          }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          className="absolute right-2 sm:right-4 top-8 sm:top-10 w-[255px] sm:w-[290px] h-[160px] sm:h-[185px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-hidden group hover:border-emerald-400/50"
+        >
+          {/* Card Graphic */}
+          <div className="self-end -mr-2 -mt-2">
+            <LatticeGraphic />
+          </div>
 
-        {/* Card Label */}
-        <div className="relative z-10">
-          <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
-            InternBridge
-          </h3>
-          <p className="font-mono text-xs text-white/50">
-            internbridge.rw
-          </p>
-        </div>
+          {/* Card Label */}
+          <div className="relative z-10">
+            <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
+              InternBridge
+            </h3>
+            <p className="font-mono text-xs text-white/50">
+              internbridge.rw
+            </p>
+          </div>
 
-        {/* Brushed Texture Sheen */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
-      </motion.div>
+          {/* Brushed Texture Sheen */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
+        </motion.div>
 
-      {/* ---------------- CARD 3: Edge Journal (Foreground / Clipped) ---------------- */}
-      <motion.div
-        onMouseEnter={() => setHoveredCard('edgejournal')}
-        onMouseLeave={() => setHoveredCard(null)}
-        onClick={() => onCardClick && onCardClick('edgejournal')}
-        initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-        animate={{
-          opacity: 1,
-          scale: hoveredCard === 'edgejournal' ? 1.05 : 1,
-          rotate: hoveredCard === 'edgejournal' ? 0 : -2,
-          y: hoveredCard === 'edgejournal' ? -10 : 0,
-          zIndex: hoveredCard === 'edgejournal' ? 35 : 20,
-        }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="absolute bottom-4 sm:bottom-6 w-[265px] sm:w-[305px] h-[165px] sm:h-[190px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-visible group hover:border-brand-blue/50"
-      >
-        <BinderClip />
+        {/* ---------------- CARD 3: Edge Journal (Foreground / Clipped) ---------------- */}
+        <motion.div
+          onMouseEnter={() => setHoveredCard('edgejournal')}
+          onMouseLeave={() => setHoveredCard(null)}
+          onClick={() => onCardClick && onCardClick('edgejournal')}
+          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+          animate={{
+            opacity: 1,
+            scale: hoveredCard === 'edgejournal' ? 1.05 : 1,
+            rotate: hoveredCard === 'edgejournal' ? 0 : -2,
+            y: hoveredCard === 'edgejournal' ? -10 : 0,
+            zIndex: hoveredCard === 'edgejournal' ? 35 : 20,
+          }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          className="absolute bottom-4 sm:bottom-6 w-[265px] sm:w-[305px] h-[165px] sm:h-[190px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-visible group hover:border-brand-blue/50"
+        >
+          <BinderClip />
 
-        {/* Card Graphic */}
-        <div className="self-end -mr-1 -mt-1">
-          <DotMatrixGraphic />
-        </div>
+          {/* Card Graphic */}
+          <div className="self-end -mr-1 -mt-1">
+            <DotMatrixGraphic />
+          </div>
 
-        {/* Card Label */}
-        <div className="relative z-10 mb-2">
-          <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-brand-blue transition-colors">
-            Edge Journal
-          </h3>
-          <p className="font-mono text-xs text-white/50">
-            edgejournal.dev
-          </p>
-        </div>
+          {/* Card Label */}
+          <div className="relative z-10 mb-2">
+            <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-brand-blue transition-colors">
+              Edge Journal
+            </h3>
+            <p className="font-mono text-xs text-white/50">
+              edgejournal.dev
+            </p>
+          </div>
 
-        {/* Brushed Texture Sheen */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
-      </motion.div>
+          {/* Brushed Texture Sheen */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
+        </motion.div>
+      </div>
     </div>
   );
 }

@@ -240,7 +240,7 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
             Selected Work
           </span>
 
-          <h1 className="font-instrument font-bold text-slate-800 dark:text-white text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4 flex flex-wrap justify-center items-center gap-x-3">
+          <h1 className="font-instrument font-bold text-slate-800 dark:text-white text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-4 flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3">
             <span>Things I've</span>
             <span className="relative inline-flex items-center justify-center min-w-[125px] sm:min-w-[155px] border border-dashed border-slate-700/30 dark:border-white/30 rounded-xl px-3 py-0.5 overflow-hidden">
               <AnimatePresence mode="wait">

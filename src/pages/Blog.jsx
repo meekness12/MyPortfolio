@@ -266,7 +266,7 @@ export default function Blog() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="w-full max-w-[880px] mx-auto px-6 md:px-12 pt-28 md:pt-32 pb-24"
+            className="w-full max-w-[880px] mx-auto px-4 sm:px-6 md:px-12 pt-28 md:pt-32 pb-24"
           >
             {/* Header */}
             <div className="mb-10">
@@ -280,17 +280,18 @@ export default function Blog() {
 
             {/* Category Filter Pills Row (Exact Palakonweb pill design) */}
             <div
-              className="flex items-center gap-2.5 mb-10 overflow-x-auto pb-2 -mx-1 px-1"
-              style={{ scrollbarWidth: 'none' }}
+              className="flex items-center gap-2 sm:gap-2.5 mb-10 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-none touch-pan-x"
+              style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
             >
               {categoriesList.map((category) => {
                 const count = getTagCount(category);
                 const isActive = selectedTag === category;
 
                 return (
-                  <button
+                  <motion.button
                     key={category}
                     onClick={() => setSelectedTag(category)}
+                    whileTap={{ scale: 0.96 }}
                     className={`glare-button shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-150 cursor-pointer ${
                       isActive
                         ? 'bg-black dark:bg-white text-white dark:text-black'
@@ -307,7 +308,7 @@ export default function Blog() {
                     >
                       {count}
                     </span>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -390,7 +391,7 @@ export default function Blog() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="w-full max-w-[720px] mx-auto px-6 md:px-12 pt-28 md:pt-32 pb-24"
+            className="w-full max-w-[720px] mx-auto px-4 sm:px-6 md:px-12 pt-28 md:pt-32 pb-24"
           >
             {/* Top Navigation Row */}
             <div className="flex items-center justify-between mb-8">

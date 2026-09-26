@@ -17,6 +17,7 @@ import TechMarquee from '../components/TechMarquee';
 import FeaturedCardsCluster from '../components/FeaturedCardsCluster';
 import DitherWaveBackground from '../components/DitherWaveBackground';
 import EditorialSidebar from '../components/EditorialSidebar';
+import { scrollRevealVariants } from '../utils/motion';
 
 import BannerImg from '../assets/banner.jpg';
 import ProfilePic from '../assets/pic.png';
@@ -193,10 +194,10 @@ export default function Home({ onViewChange }) {
           </div>
 
           {/* Overlapping Avatar & Action Buttons Row */}
-          <div className="relative -mt-12 sm:-mt-16 mb-5 px-2 sm:px-5 flex items-end justify-between">
+          <div className="relative -mt-10 sm:-mt-16 mb-5 px-1 sm:px-5 flex flex-wrap sm:flex-nowrap items-end justify-between gap-3">
             
             {/* Circular Avatar with thick border */}
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white dark:border-dark-surface overflow-hidden shadow-md bg-white dark:bg-dark-surface2 shrink-0">
+            <div className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 border-white dark:border-dark-surface overflow-hidden shadow-md bg-white dark:bg-dark-surface2 shrink-0">
               <img
                 src={ProfilePic}
                 alt="Meekness Bonheur"
@@ -205,10 +206,10 @@ export default function Home({ onViewChange }) {
             </div>
 
             {/* Action Buttons Aligned to Bottom Right of Banner */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
               <button
                 onClick={() => onViewChange('designs')}
-                className="glare-button px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 flex items-center gap-1.5 shadow-soft transition-all"
+                className="glare-button px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 flex items-center gap-1.5 shadow-soft transition-all cursor-pointer shrink-0"
               >
                 <span>View Designs</span>
                 <ArrowRight size={14} />
@@ -218,7 +219,7 @@ export default function Home({ onViewChange }) {
                 href="/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glare-button px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-white dark:bg-dark-surface border border-black/10 dark:border-white/15 text-slate-800 dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.04] flex items-center gap-1.5 shadow-soft transition-all"
+                className="glare-button px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-white dark:bg-dark-surface border border-black/10 dark:border-white/15 text-slate-800 dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.04] flex items-center gap-1.5 shadow-soft transition-all cursor-pointer shrink-0"
               >
                 <span>View Resume</span>
                 <ArrowRight size={14} />
@@ -294,22 +295,40 @@ export default function Home({ onViewChange }) {
         </div>
 
         {/* GitHub Contribution Calendar Heatmap */}
-        <div className="w-full">
+        <motion.div
+          variants={scrollRevealVariants}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: '-40px' }}
+          className="w-full"
+        >
           <GitHubCalendarWidget username="meekness12" />
-        </div>
+        </motion.div>
 
         {/* Tech Stack Marquee */}
-        <div className="w-full">
+        <motion.div
+          variants={scrollRevealVariants}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: '-40px' }}
+          className="w-full"
+        >
           <div className="flex items-center justify-between mb-2 px-1">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-white/40">
               Stack & Technologies
             </span>
           </div>
           <TechMarquee />
-        </div>
+        </motion.div>
 
         {/* Work Experience Accordion */}
-        <div className="w-full">
+        <motion.div
+          variants={scrollRevealVariants}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: '-40px' }}
+          className="w-full"
+        >
           <div className="mb-6 px-1">
             <span className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-white/40 block mb-1">
               Career & Journey
@@ -327,7 +346,7 @@ export default function Home({ onViewChange }) {
                   <div key={exp.id}>
                     <button
                       onClick={() => setExpandedExp(isExpanded ? null : exp.id)}
-                      className="w-full flex flex-col md:flex-row md:items-center justify-between gap-2 p-5 md:p-6 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors duration-150"
+                      className="w-full flex flex-col md:flex-row md:items-center justify-between gap-2 p-5 md:p-6 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors duration-150 cursor-pointer"
                     >
                       <div>
                         <h4 className="font-space font-semibold text-base sm:text-lg text-slate-900 dark:text-white">
@@ -357,7 +376,7 @@ export default function Home({ onViewChange }) {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
                           <div className="px-5 md:px-6 pb-6 pt-1 flex flex-col gap-4 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
@@ -393,11 +412,17 @@ export default function Home({ onViewChange }) {
               })}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Featured Projects Tactile Cards Cluster */}
-        <div className="w-full">
-          <div className="flex items-center justify-between mb-6 px-1">
+        <motion.div
+          variants={scrollRevealVariants}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: '-40px' }}
+          className="w-full"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-6 px-1">
             <div>
               <span className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-white/40 block mb-1">
                 Featured Work
@@ -426,10 +451,16 @@ export default function Home({ onViewChange }) {
               Click any card to inspect full architectural case study and live demo
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Social Connect Strip */}
-        <div className="w-full flex flex-col items-center text-center pt-8 border-t border-black/5 dark:border-white/10">
+        <motion.div
+          variants={scrollRevealVariants}
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: '-40px' }}
+          className="w-full flex flex-col items-center text-center pt-8 border-t border-black/5 dark:border-white/10"
+        >
           <p className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-white/40 mb-4">
             Connect & Socials
           </p>
@@ -450,7 +481,7 @@ export default function Home({ onViewChange }) {
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         </div>
 

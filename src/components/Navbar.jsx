@@ -9,6 +9,7 @@ import {
   Sun,
   Moon,
 } from 'lucide-react';
+import { scrollToTop } from '../utils/scroll';
 
 /**
  * Standardized Theme Toggle Switch (matching palakonweb.in pe component)
@@ -57,17 +58,19 @@ export default function Navbar({ currentView, onViewChange, theme, onToggleTheme
   ];
 
   const handleNav = (view) => {
+    if (view === currentView) {
+      scrollToTop();
+      return;
+    }
     onViewChange(view);
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
   };
 
   const handleHomeClick = () => {
+    if (currentView === 'home') {
+      scrollToTop();
+      return;
+    }
     onViewChange('home');
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 50);
   };
 
   return (
@@ -137,9 +140,12 @@ export default function Navbar({ currentView, onViewChange, theme, onToggleTheme
         <ThemeToggle theme={theme} onToggle={onToggleTheme} size="md" />
       </nav>
 
-      {/* Mobile Floating Bottom Dock (matching palakonweb.in) */}
-      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-        <div className="flex items-center gap-1.5 bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-black/5 dark:border-white/10 rounded-[32px] p-1.5 transition-colors duration-150">
+      {/* Mobile Floating Bottom Dock (matching palakonweb.in with native safe-area support) */}
+      <div
+        className="md:hidden fixed left-1/2 -translate-x-1/2 z-50 max-w-[calc(100vw-1.5rem)]"
+        style={{ bottom: 'calc(1.25rem + env(safe-area-inset-bottom, 0px))' }}
+      >
+        <div className="flex items-center gap-1 sm:gap-1.5 bg-white/80 dark:bg-[#1a1a1a]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-black/5 dark:border-white/10 rounded-[32px] p-1.5 transition-colors duration-150">
           {mobileNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentView === item.view;
@@ -151,13 +157,13 @@ export default function Navbar({ currentView, onViewChange, theme, onToggleTheme
                 onClick={() => handleNav(item.view)}
                 className={`group relative flex items-center justify-center h-11 rounded-[24px] transition-colors duration-150 overflow-hidden cursor-pointer ${
                   isActive
-                    ? 'px-4 bg-black/10 dark:bg-white/10 gap-2'
-                    : 'w-12 hover:bg-black/5 dark:hover:bg-white/5'
+                    ? 'px-3 sm:px-4 bg-black/10 dark:bg-white/10 gap-1.5 sm:gap-2'
+                    : 'w-10 sm:w-12 hover:bg-black/5 dark:hover:bg-white/5'
                 }`}
               >
                 <motion.div layout className="shrink-0 flex items-center justify-center">
                   <Icon
-                    size={18}
+                    size={17}
                     strokeWidth={isActive ? 2 : 1.75}
                     className={`transition-colors duration-150 ${
                       isActive
