@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SiReact,
   SiTypescript,
-  SiJavascript,
   SiTailwindcss,
   SiSpringboot,
   SiPostgresql,
@@ -14,13 +13,14 @@ import {
   SiMongodb,
   SiDocker
 } from 'react-icons/si';
+import { FaJava } from 'react-icons/fa';
 
 const technologies = [
   { name: 'React', icon: SiReact, color: '#61DAFB' },
   { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
   { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
   { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F' },
-  { name: 'Java', icon: SiJavascript, color: '#F89820' },
+  { name: 'Java', icon: FaJava, color: '#F89820' },
   { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
   { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
   { name: 'Express', icon: SiExpress, color: '#888888' },

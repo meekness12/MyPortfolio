@@ -21,10 +21,6 @@ import { scrollRevealVariants } from '../utils/motion';
 
 import BannerImg from '../assets/banner.jpg';
 import ProfilePic from '../assets/anime_avatar.jpg';
-import Policeimg from '../assets/Police.jpg';
-import Portfolioimg from '../assets/Portfolio.jpg';
-import InternbridgeImg from '../assets/internbridge.png';
-import EdgejournalImg from '../assets/edgejournal.png';
 
 const roles = [
   'Frontend Engineer',
@@ -137,7 +133,7 @@ export default function Home({ onViewChange }) {
   const socials = [
     { name: 'GitHub', icon: Github, url: 'https://github.com/meekness12' },
     { name: 'Twitter (X)', icon: Twitter, url: 'https://twitter.com/meek1hinker' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/meeknessbonheur/' },
     { name: 'Email', icon: Mail, url: 'mailto:meeknessbon@gmail.com' },
   ];
 
