@@ -12,7 +12,7 @@ export default function Contact() {
   const socials = [
     { name: 'GitHub', icon: Github, url: 'https://github.com/meekness12' },
     { name: 'Twitter (X)', icon: Twitter, url: 'https://twitter.com/meek1hinker' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com' },
+    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/meeknessbonheur/' },
     { name: 'Email', icon: Mail, url: 'mailto:meeknessbon@gmail.com' },
   ];
 
@@ -22,9 +22,9 @@ export default function Contact() {
 
     setStatus('sending');
 
-    const serviceId = 'service_7d1rdnu';
-    const templateId = 'template_pi90lov';
-    const publicKey = 'jSzN1nnBCyfWN1SA3';
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_7d1rdnu';
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_pi90lov';
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'jSzN1nnBCyfWN1SA3';
 
     try {
       await emailjs.send(
@@ -69,6 +69,8 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <input
+                  id="contact-name"
+                  aria-label="Full Name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -80,6 +82,8 @@ export default function Contact() {
 
               <div>
                 <input
+                  id="contact-email"
+                  aria-label="Email Address"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -91,6 +95,8 @@ export default function Contact() {
 
               <div>
                 <textarea
+                  id="contact-message"
+                  aria-label="Your Message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Your Message"
