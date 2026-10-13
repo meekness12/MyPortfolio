@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useParams, useNavigate } from 'react-router-dom';
+import { scrollToTop } from '../utils/scroll';
 import {
   Github,
   ExternalLink,
@@ -196,16 +198,24 @@ const projects = [
 ];
 
 export default function Projects({ initialProjectId = null, onClearInitialProject }) {
+  const { projectId: routeProjectId } = useParams();
+  const navigate = useNavigate();
+
+  const activeProjectId = routeProjectId || initialProjectId;
+
   const [wordIndex, setWordIndex] = useState(0);
-  const [viewMode, setViewMode] = useState(initialProjectId ? 'detail' : 'featured');
-  const [selectedProjectId, setSelectedProjectId] = useState(initialProjectId || null);
+  const [viewMode, setViewMode] = useState(activeProjectId ? 'detail' : 'featured');
+  const [selectedProjectId, setSelectedProjectId] = useState(activeProjectId || null);
 
   useEffect(() => {
-    if (initialProjectId) {
-      setSelectedProjectId(initialProjectId);
+    if (activeProjectId) {
+      setSelectedProjectId(activeProjectId);
       setViewMode('detail');
+    } else if (!routeProjectId && !initialProjectId) {
+      setViewMode((prev) => (prev === 'detail' ? 'featured' : prev));
+      setSelectedProjectId(null);
     }
-  }, [initialProjectId]);
+  }, [activeProjectId, routeProjectId, initialProjectId]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -217,13 +227,16 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
   const openProjectDetail = (id) => {
     setSelectedProjectId(id);
     setViewMode('detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(`/projects/${id}`);
+    scrollToTop({ immediate: true });
   };
 
   const handleBackToFeatured = () => {
     setViewMode('featured');
+    setSelectedProjectId(null);
     if (onClearInitialProject) onClearInitialProject();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate('/projects');
+    scrollToTop({ immediate: true });
   };
 
   const selectedProject = projects.find((p) => p.id === selectedProjectId) || projects[0];
@@ -315,7 +328,7 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
               <button
                 onClick={() => {
                   setViewMode('featured');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  scrollToTop({ immediate: true });
                 }}
                 className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-white/60 dark:hover:text-white transition-colors mb-8 cursor-pointer group"
               >

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useParams, useNavigate } from 'react-router-dom';
+import { scrollToTop } from '../utils/scroll';
 import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Check } from 'lucide-react';
 
 import productDashboard from '../assets/product_dashboard.jpg';
@@ -221,16 +223,26 @@ const BLOG_POSTS = [
 ];
 
 export default function Blog() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+
   const [selectedTag, setSelectedTag] = useState('All');
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(() => {
+    if (slug) return BLOG_POSTS.find((p) => p.slug === slug) || null;
+    return null;
+  });
   const [copied, setCopied] = useState(false);
 
-  // Automatically scroll to top when opening an article
   useEffect(() => {
-    if (selectedPost) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (slug) {
+      const post = BLOG_POSTS.find((p) => p.slug === slug);
+      if (post) {
+        setSelectedPost(post);
+      }
+    } else {
+      setSelectedPost(null);
     }
-  }, [selectedPost]);
+  }, [slug]);
 
   // Dynamic Category Tags with real counts
   const categoriesList = ['All', 'AI', 'Engineering', 'Personal'];
@@ -245,9 +257,24 @@ export default function Blog() {
     return BLOG_POSTS.filter((post) => post.categories.includes(selectedTag));
   }, [selectedTag]);
 
+  const openPost = (post) => {
+    setSelectedPost(post);
+    navigate(`/blog/${post.slug}`);
+    scrollToTop({ immediate: true });
+  };
+
+  const closePost = () => {
+    setSelectedPost(null);
+    navigate('/blog');
+    scrollToTop({ immediate: true });
+  };
+
   const handleShare = () => {
     if (typeof window !== 'undefined') {
-      navigator.clipboard?.writeText(window.location.href);
+      const shareUrl = selectedPost
+        ? `https://meekthinker.me/blog/${selectedPost.slug}`
+        : 'https://meekthinker.me/blog';
+      navigator.clipboard?.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -324,7 +351,7 @@ export default function Blog() {
               {filteredPosts.map((post, index) => (
                 <motion.button
                   key={post.slug}
-                  onClick={() => setSelectedPost(post)}
+                  onClick={() => openPost(post)}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
@@ -396,7 +423,7 @@ export default function Blog() {
             {/* Top Navigation Row */}
             <div className="flex items-center justify-between mb-8">
               <button
-                onClick={() => setSelectedPost(null)}
+                onClick={closePost}
                 className="group flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors duration-150 cursor-pointer"
               >
                 <ArrowLeft
@@ -521,7 +548,7 @@ export default function Blog() {
             {/* Bottom Footer Attribution & Return Navigation */}
             <div className="mt-16 pt-8 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
               <button
-                onClick={() => setSelectedPost(null)}
+                onClick={closePost}
                 className="group flex items-center gap-2 text-sm font-semibold text-gray-800 dark:text-white hover:text-brand-blue dark:hover:text-brand-cyan transition-colors cursor-pointer"
               >
                 <ArrowLeft

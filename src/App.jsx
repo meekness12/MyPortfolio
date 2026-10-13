@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 
 import SplashIntro from './components/SplashIntro';
 import Navbar from './components/Navbar';
@@ -13,8 +14,15 @@ import { pageViewVariants } from './utils/motion';
 import { initSmoothScroll, destroySmoothScroll, scrollToTop } from './utils/scroll';
 
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [currentView, setCurrentView] = useState('home'); // 'home' | 'projects' | 'designs' | 'blog' | 'contact'
+  const [showSplash, setShowSplash] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('splash_shown');
+    }
+    return true;
+  });
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -47,22 +55,44 @@ export default function App() {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+    sessionStorage.setItem('splash_shown', '1');
+  };
 
   const handleViewChange = (view, projectId = null) => {
-    setCurrentView(view);
+    const routes = {
+      home: '/',
+      projects: '/projects',
+      designs: '/designs',
+      blog: '/blog',
+      contact: '/contact',
+    };
+
     if (projectId) {
-      setSelectedProjectId(projectId);
-    } else if (view !== 'projects') {
-      setSelectedProjectId(null);
+      navigate(`/projects/${projectId}`);
+    } else {
+      navigate(routes[view] || '/');
     }
     scrollToTop({ immediate: true });
   };
 
+  // Derive currentView from pathname for Navbar and visual indicator active state
+  const currentView = useMemo(() => {
+    const path = location.pathname;
+    if (path.startsWith('/projects')) return 'projects';
+    if (path.startsWith('/designs')) return 'designs';
+    if (path.startsWith('/blog')) return 'blog';
+    if (path === '/contact') return 'contact';
+    return 'home';
+  }, [location.pathname]);
+
+  const topLevelSection = location.pathname.split('/')[1] || 'home';
+
   return (
     <>
       {/* 1-Second Signature Splash Screen (Matching Palakonweb Qe) */}
-      {showSplash && <SplashIntro onComplete={() => setShowSplash(false)} />}
+      {showSplash && <SplashIntro onComplete={handleSplashComplete} />}
 
       <div
         className={`relative w-full min-h-screen bg-light-bg text-slate-900 dark:bg-dark-bg dark:text-[#EDEDED] font-sans transition-colors duration-150 selection:bg-brand-blue/20 selection:text-brand-blue ${
@@ -81,7 +111,6 @@ export default function App() {
         {/* Navigation */}
         <Navbar
           currentView={currentView}
-          onViewChange={handleViewChange}
           theme={theme}
           onToggleTheme={toggleTheme}
         />
@@ -90,73 +119,25 @@ export default function App() {
         <main className="relative z-10 w-full flex flex-col items-center min-h-screen">
           <div className="flex-1 w-full flex flex-col items-center">
             <AnimatePresence mode="wait">
-              {currentView === 'home' && (
-                <motion.div
-                  key="home"
-                  className="w-full flex flex-col items-center"
-                  variants={pageViewVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  <Home onViewChange={handleViewChange} />
-                </motion.div>
-              )}
-
-              {currentView === 'projects' && (
-                <motion.div
-                  key="projects"
-                  className="w-full flex flex-col items-center"
-                  variants={pageViewVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  <Projects
-                    initialProjectId={selectedProjectId}
-                    onClearInitialProject={() => setSelectedProjectId(null)}
-                  />
-                </motion.div>
-              )}
-
-              {currentView === 'designs' && (
-                <motion.div
-                  key="designs"
-                  className="w-full flex flex-col items-center"
-                  variants={pageViewVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  <Designs />
-                </motion.div>
-              )}
-
-              {currentView === 'blog' && (
-                <motion.div
-                  key="blog"
-                  className="w-full flex flex-col items-center"
-                  variants={pageViewVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  <Blog />
-                </motion.div>
-              )}
-
-              {currentView === 'contact' && (
-                <motion.div
-                  key="contact"
-                  className="w-full flex flex-col items-center"
-                  variants={pageViewVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  <Contact />
-                </motion.div>
-              )}
+              <motion.div
+                key={topLevelSection}
+                className="w-full flex flex-col items-center"
+                variants={pageViewVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Routes location={location}>
+                  <Route path="/" element={<Home onViewChange={handleViewChange} />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/projects/:projectId" element={<Projects />} />
+                  <Route path="/designs" element={<Designs />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<Blog />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </motion.div>
             </AnimatePresence>
           </div>
 

@@ -9,6 +9,7 @@ import {
   Sun,
   Moon,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../utils/scroll';
 
 /**
@@ -44,7 +45,9 @@ function ThemeToggle({ theme, onToggle, size = 'md' }) {
   );
 }
 
-export default function Navbar({ currentView, onViewChange, theme, onToggleTheme }) {
+export default function Navbar({ currentView, theme, onToggleTheme }) {
+  const navigate = useNavigate();
+
   const navItems = [
     { name: 'Home', view: 'home', icon: Home },
     { name: 'Projects', view: 'projects', icon: FolderKanban },
@@ -57,12 +60,21 @@ export default function Navbar({ currentView, onViewChange, theme, onToggleTheme
     { name: 'Talk', view: 'contact', icon: MessageSquare },
   ];
 
+  const viewToPath = {
+    home: '/',
+    projects: '/projects',
+    designs: '/designs',
+    blog: '/blog',
+    contact: '/contact',
+  };
+
   const handleNav = (view) => {
     if (view === currentView) {
       scrollToTop();
       return;
     }
-    onViewChange(view);
+    navigate(viewToPath[view] || '/');
+    scrollToTop({ immediate: true });
   };
 
   const handleHomeClick = () => {
@@ -70,7 +82,8 @@ export default function Navbar({ currentView, onViewChange, theme, onToggleTheme
       scrollToTop();
       return;
     }
-    onViewChange('home');
+    navigate('/');
+    scrollToTop({ immediate: true });
   };
 
   return (
