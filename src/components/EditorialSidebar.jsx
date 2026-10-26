@@ -1,39 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Radio, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
-
-const FIELD_NOTES = [
-  {
-    id: '#014',
-    quote: 'Good software shouldn’t make people think about the software.',
-    date: '26.09.26',
-    author: 'Meekness',
-  },
-  {
-    id: '#015',
-    quote: 'Performance isn’t an optimization pass. On metered 3G data, it’s the difference between accessibility and exclusion.',
-    date: '14.08.25',
-    author: 'Meekness',
-  },
-  {
-    id: '#016',
-    quote: 'A product can be technically impressive and still feel completely lifeless. Craft is what gives it a pulse.',
-    date: '20.05.25',
-    author: 'Meekness',
-  },
-];
+import { liveStatus } from '../data/status';
+import { getKigaliMonthYear, formatFieldNoteDate } from '../utils/time';
 
 export default function EditorialSidebar({ layout = 'column' }) {
   const [activeNoteIndex, setActiveNoteIndex] = useState(0);
 
-  const activeNote = FIELD_NOTES[activeNoteIndex];
+  // Dynamic Month & Year (Option A: "Kigali · Oct 2026")
+  const currentMonthYear = useMemo(() => getKigaliMonthYear(), []);
+
+  const fieldNotes = liveStatus.fieldNotes || [];
+  const activeNote = fieldNotes[activeNoteIndex] || fieldNotes[0];
 
   const handlePrevNote = () => {
-    setActiveNoteIndex((prev) => (prev === 0 ? FIELD_NOTES.length - 1 : prev - 1));
+    setActiveNoteIndex((prev) => (prev === 0 ? fieldNotes.length - 1 : prev - 1));
   };
 
   const handleNextNote = () => {
-    setActiveNoteIndex((prev) => (prev === FIELD_NOTES.length - 1 ? 0 : prev + 1));
+    setActiveNoteIndex((prev) => (prev === fieldNotes.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -60,7 +45,7 @@ export default function EditorialSidebar({ layout = 'column' }) {
                 </span>
               </div>
               <span className="font-mono text-[10px] text-slate-400 dark:text-neutral-500">
-                Kigali · Sep 2026
+                {liveStatus.city} · {currentMonthYear}
               </span>
             </div>
 
@@ -69,11 +54,11 @@ export default function EditorialSidebar({ layout = 'column' }) {
               <div className="flex items-center gap-2 mb-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                 <span className="font-sans font-semibold text-sm sm:text-base text-slate-900 dark:text-white leading-snug">
-                  Building Zeno
+                  {liveStatus.activeProject.title}
                 </span>
               </div>
               <p className="font-sans text-xs text-slate-500 dark:text-neutral-400 leading-relaxed pl-4">
-                Fast offline-first developer canvas with instant local sync.
+                {liveStatus.activeProject.description}
               </p>
             </div>
 
@@ -87,7 +72,7 @@ export default function EditorialSidebar({ layout = 'column' }) {
                   Learning
                 </span>
                 <p className="font-sans text-xs text-slate-700 dark:text-neutral-300 font-medium">
-                  Spring Boot Concurrency & PostgreSQL
+                  {liveStatus.learning}
                 </p>
               </div>
 
@@ -96,7 +81,7 @@ export default function EditorialSidebar({ layout = 'column' }) {
                   Exploring
                 </span>
                 <p className="font-sans text-xs text-slate-700 dark:text-neutral-300 font-medium">
-                  Local-First Architecture & Multimodal AI
+                  {liveStatus.exploring}
                 </p>
               </div>
             </div>
@@ -104,7 +89,7 @@ export default function EditorialSidebar({ layout = 'column' }) {
 
           {/* Bottom Timestamp Anchor */}
           <div className="pt-2 text-[10px] font-mono text-slate-400 dark:text-neutral-500">
-            01°57'S 30°03'E · Rwanda
+            {liveStatus.coordinates}
           </div>
         </div>
       </div>
@@ -135,7 +120,7 @@ export default function EditorialSidebar({ layout = 'column' }) {
                   <ChevronLeft size={13} />
                 </button>
                 <span className="text-[10px]">
-                  {activeNoteIndex + 1}/{FIELD_NOTES.length}
+                  {activeNoteIndex + 1}/{fieldNotes.length}
                 </span>
                 <button
                   onClick={handleNextNote}
@@ -166,15 +151,15 @@ export default function EditorialSidebar({ layout = 'column' }) {
 
           {/* Footer Signature & Date */}
           <div className="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400 dark:text-neutral-500">
-            <span>— {activeNote.author} · Kigali</span>
-            <span>{activeNote.date}</span>
+            <span>— {activeNote.author} · {liveStatus.city}</span>
+            <span>{formatFieldNoteDate(activeNote.date)}</span>
           </div>
         </div>
       </div>
 
       {/* Subtle Signature Line */}
       <p className="text-[10px] font-mono text-slate-400 dark:text-neutral-500 text-center tracking-tight col-span-full pt-1">
-        made in Kigali · updated occasionally
+        made in {liveStatus.city} · updated occasionally
       </p>
     </aside>
   );

@@ -8,17 +8,48 @@ export default function GitHubCalendarWidget({ username = 'meekness12' }) {
 
   useEffect(() => {
     let isMounted = true;
+    let hasHydratedFromCache = false;
+    const cacheKey = `gh_contributions_${username}`;
+    const cacheTimestampKey = `gh_contributions_time_${username}`;
+    const ONE_DAY = 24 * 60 * 60 * 1000;
+
+    // Check localStorage cache first for instantaneous rendering
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      const cachedTime = localStorage.getItem(cacheTimestampKey);
+      if (cached && cachedTime && Date.now() - Number(cachedTime) < ONE_DAY) {
+        const parsed = JSON.parse(cached);
+        if (parsed?.contributions && parsed?.totalCount) {
+          setContributions(parsed.contributions);
+          setTotalCount(parsed.totalCount);
+          setLoading(false);
+          hasHydratedFromCache = true;
+        }
+      }
+    } catch {
+      // ignore storage errors
+    }
+
     async function fetchContributions() {
       try {
         const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
         if (res.ok) {
           const data = await res.json();
           if (isMounted && data && Array.isArray(data.contributions)) {
-            // Take the last ~24 weeks of data (approx 168 days) for a sleek responsive desktop view
+            // Take the last ~20 weeks (140 days) for optimal grid alignment
             const recent = data.contributions.slice(-140);
+            const total = data.total?.lastYear || recent.reduce((acc, curr) => acc + curr.count, 0);
             setContributions(recent);
-            setTotalCount(data.total?.lastYear || recent.reduce((acc, curr) => acc + curr.count, 0));
+            setTotalCount(total);
             setLoading(false);
+
+            // Save to cache
+            try {
+              localStorage.setItem(cacheKey, JSON.stringify({ contributions: recent, totalCount: total }));
+              localStorage.setItem(cacheTimestampKey, String(Date.now()));
+            } catch {
+              // ignore storage errors
+            }
             return;
           }
         }
@@ -26,16 +57,28 @@ export default function GitHubCalendarWidget({ username = 'meekness12' }) {
         console.warn('Could not fetch live GitHub activity, using fallback', e);
       }
 
-      // Fallback deterministic simulation based on active development
+      // If already hydrated from cache, don't overwrite with simulation
+      if (isMounted && hasHydratedFromCache) {
+        return;
+      }
+
+      // Fallback deterministic simulation based on developer active cadence
       if (isMounted) {
         const simulated = [];
         const days = 140;
         let total = 0;
-        for (let i = 0; i < days; i++) {
-          const count = Math.random() > 0.4 ? Math.floor(Math.random() * 6) + 1 : 0;
+        const now = new Date();
+        for (let i = days - 1; i >= 0; i--) {
+          const d = new Date(now);
+          d.setDate(d.getDate() - i);
+          // Deterministic pseudo-random seed based on day of year to prevent reload flickering
+          const dayOfYear = Math.floor((d.getTime() - new Date(d.getFullYear(), 0, 0).getTime()) / 86400000);
+          const seed = Math.sin(dayOfYear * 999) * 10000;
+          const pseudoRand = seed - Math.floor(seed);
+          const count = pseudoRand > 0.45 ? Math.floor(pseudoRand * 6) + 1 : 0;
           total += count;
           simulated.push({
-            date: `Day ${i}`,
+            date: d.toISOString().split('T')[0],
             count,
             level: count > 4 ? 4 : count > 2 ? 3 : count > 0 ? 2 : 0,
           });

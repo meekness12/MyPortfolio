@@ -18,16 +18,13 @@ import FeaturedCardsCluster from '../components/FeaturedCardsCluster';
 import DitherWaveBackground from '../components/DitherWaveBackground';
 import EditorialSidebar from '../components/EditorialSidebar';
 import { scrollRevealVariants } from '../utils/motion';
+import { profileConfig } from '../data/profile';
+import { calculateAge } from '../utils/time';
 
 import BannerImg from '../assets/banner.jpg';
 import ProfilePic from '../assets/anime_avatar.jpg';
 
-const roles = [
-  'Frontend Engineer',
-  'Full-Stack Developer',
-  'System Builder',
-  'Creative Coder'
-];
+const roles = profileConfig.roles;
 
 export default function Home({ onViewChange }) {
   // Typewriter effect state
@@ -80,62 +77,8 @@ export default function Home({ onViewChange }) {
     return () => clearTimeout(timer);
   }, [currentText, typingState, roleIndex]);
 
-  const experiences = [
-    {
-      id: 1,
-      company: 'Umurava AI Hackathon',
-      location: 'Remote / Hybrid',
-      role: 'AI Systems Engineer (Team Arc Lab)',
-      period: '2024',
-      description:
-        'Engineered TalentLens, an AI talent screening engine designed to evaluate unstructured resumes with transparent reasoning and native OCR, eliminating manual recruiter data entry.',
-      responsibilities: [
-        'Integrated Gemini 1.5 Flash for native multimodal document processing and zero-data-entry parsing.',
-        'Architected a traceable MatchScore algorithm providing recruiters with explicit gap analysis.',
-        'Built a resilient backend with TypeScript, Express, and MongoDB for batch resume uploads.',
-        'Collaborated on prompt engineering pipelines to extract structured candidate profiles.',
-      ],
-      tools: ['Gemini 1.5 Flash', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'System Design'],
-    },
-    {
-      id: 2,
-      company: 'Rwanda Polytechnic',
-      location: 'Kigali, Rwanda',
-      role: 'Advanced Diploma in Information Technology',
-      period: '2023 — Present',
-      description:
-        'Pursuing studies in software engineering, database modeling, and networking. Built academic management platforms and local network synchronization systems.',
-      responsibilities: [
-        'Engineered InternBridge, an academic internship management platform using Java 21, Spring Boot, and PostgreSQL.',
-        'Implemented strict Role-Based Access Control (RBAC) and candidate tracking workflows.',
-        'Built Classroom Resource Auto-Distribution System running over Local Area Network (LAN) socket connections.',
-        'Maintained code quality through peer reviews and structured documentation.',
-      ],
-      tools: ['Java 21', 'Spring Boot', 'PostgreSQL', 'React', 'Tailwind CSS', 'Networking'],
-    },
-    {
-      id: 3,
-      company: 'Independent Software Engineering',
-      location: 'Kigali, Rwanda',
-      role: 'Full-Stack Developer & UI Designer',
-      period: '2023 — Present',
-      description:
-        'Designing and developing client-focused web applications and open-source tools with high fidelity, accessibility, and clean architecture.',
-      responsibilities: [
-        'Designed high-fidelity user flows in Figma and translated them into responsive React applications.',
-        'Developed digital platforms including Edge Journal and Police Driver’s License administrative systems.',
-        'Focused on speed, keyboard navigation, and responsive ergonomics across all screen sizes.',
-      ],
-      tools: ['React', 'TypeScript', 'Tailwind CSS', 'Figma', 'Git', 'Vite'],
-    },
-  ];
-
-  const socials = [
-    { name: 'GitHub', icon: Github, url: 'https://github.com/meekness12' },
-    { name: 'Twitter (X)', icon: Twitter, url: 'https://twitter.com/meek1hinker' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/meeknessbonheur/' },
-    { name: 'Email', icon: Mail, url: 'mailto:meeknessbon@gmail.com' },
-  ];
+  const experiences = profileConfig.experiences;
+  const socials = profileConfig.socials;
 
   return (
     <div className="w-full flex justify-center pt-20 sm:pt-28 pb-24 px-4 sm:px-6 relative z-10">
@@ -239,7 +182,7 @@ export default function Home({ onViewChange }) {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-500 dark:text-white/50 font-sans">
-              20, Kigali, Rwanda
+              {calculateAge(profileConfig.birthYear)}, {profileConfig.location}
             </p>
           </div>
 
