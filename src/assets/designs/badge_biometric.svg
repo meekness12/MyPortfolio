@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="badge_bio_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="50%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0A0F1D"/>
+    </linearGradient>
+    <linearGradient id="chip_gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="40%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Lanyard Top Loop -->
+  <path d="M265 0 L265 70 L335 70 L335 0 Z" fill="#334155"/>
+  <rect x="255" y="60" width="90" height="15" rx="3" fill="#64748B"/>
+  <path d="M285 75 C285 95 315 95 315 75 Z" fill="none" stroke="#94A3B8" stroke-width="5"/>
+
+  <!-- Card Body -->
+  <rect x="60" y="80" width="480" height="680" rx="28" fill="url(#badge_bio_bg)" stroke="#38BDF8" stroke-opacity="0.3" stroke-width="1.8"/>
+
+  <!-- Punch Hole -->
+  <rect x="240" y="105" width="120" height="18" rx="9" fill="#0A0F1D" stroke="#475569" stroke-width="2"/>
+
+  <!-- Guilloche Security Pattern Curve Overlay -->
+  <path d="M60 260 Q 200 200, 300 280 T 540 220" fill="none" stroke="#38BDF8" stroke-opacity="0.12" stroke-width="2"/>
+  <path d="M60 280 Q 200 220, 300 300 T 540 240" fill="none" stroke="#38BDF8" stroke-opacity="0.12" stroke-width="2"/>
+  <path d="M60 300 Q 200 240, 300 320 T 540 260" fill="none" stroke="#38BDF8" stroke-opacity="0.12" stroke-width="2"/>
+
+  <!-- Header -->
+  <g transform="translate(100, 160)">
+    <!-- Coat of Arms / Security Emblem Shield -->
+    <path d="M20 0 L40 10 L40 35 C40 50 20 60 20 60 C20 60 0 50 0 35 L0 10 Z" fill="#38BDF8" fill-opacity="0.2" stroke="#38BDF8" stroke-width="2"/>
+    <text x="55" y="24" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-size="18" font-weight="800">NATIONAL INNOVATION HUB</text>
+    <text x="55" y="46" fill="#38BDF8" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">SECURE RESEARCH FACILITY // LEVEL 4</text>
+  </g>
+
+  <!-- Smart Chip Mockup (ISO 7816 Contact Plate) -->
+  <g transform="translate(100, 245)">
+    <rect x="0" y="0" width="90" height="70" rx="8" fill="url(#chip_gold)" stroke="#78350F" stroke-width="1.5"/>
+    <!-- Chip contact lines -->
+    <line x1="0" y1="24" x2="90" y2="24" stroke="#78350F" stroke-width="1"/>
+    <line x1="0" y1="46" x2="90" y2="46" stroke="#78350F" stroke-width="1"/>
+    <line x1="30" y1="0" x2="30" y2="70" stroke="#78350F" stroke-width="1"/>
+    <line x1="60" y1="0" x2="60" y2="70" stroke="#78350F" stroke-width="1"/>
+  </g>
+
+  <!-- NFC Wave Icon -->
+  <g transform="translate(440, 260)">
+    <path d="M0 40 C10 30 10 10 0 0" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+    <path d="M12 48 C28 34 28 6 12 -8" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+    <path d="M24 56 C46 38 46 2 24 -16" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Photo + Biometric Scan Ring -->
+  <g transform="translate(100, 350)">
+    <rect x="0" y="0" width="170" height="200" rx="14" fill="#0B132B" stroke="#1E293B" stroke-width="2"/>
+    <circle cx="85" cy="75" r="35" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+    <path d="M30 170 C30 125 140 125 140 170 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+
+    <!-- Biometric fingerprint icon overlay in corner -->
+    <rect x="110" y="140" width="50" height="50" rx="8" fill="#0F172A" stroke="#38BDF8" stroke-width="1.5"/>
+    <path d="M125 165 C125 155 145 155 145 165 C145 175 125 175 125 165" fill="none" stroke="#38BDF8" stroke-width="1.5"/>
+    <path d="M130 165 C130 160 140 160 140 165" fill="none" stroke="#38BDF8" stroke-width="1.5"/>
+  </g>
+
+  <!-- Credential Info Side Column -->
+  <g transform="translate(295, 360)">
+    <text x="0" y="20" fill="#64748B" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">FULL NAME</text>
+    <text x="0" y="50" fill="#FFFFFF" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800">MEEKNESS B.</text>
+
+    <text x="0" y="90" fill="#64748B" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">DEPARTMENT</text>
+    <text x="0" y="115" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="15" font-weight="700">CORE ARCHITECTURE</text>
+
+    <text x="0" y="150" fill="#64748B" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">CARD ID</text>
+    <text x="0" y="175" fill="#FFFFFF" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="700">NIH-8820-BIO</text>
+  </g>
+
+  <!-- Security Hologram Strip -->
+  <g transform="translate(100, 580)">
+    <rect x="0" y="0" width="400" height="40" rx="8" fill="#1E293B" stroke="#334155"/>
+    <text x="20" y="25" fill="#38BDF8" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700">BIOMETRIC ENCRYPTED: SHA-256 HSM</text>
+    <circle cx="365" cy="20" r="10" fill="#10B981"/>
+    <text x="365" y="24" fill="#FFFFFF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="800" text-anchor="middle">OK</text>
+  </g>
+
+  <!-- Microprint Footer -->
+  <line x1="100" y1="645" x2="500" y2="645" stroke="#334155" stroke-width="1"/>
+  <text x="300" y="670" fill="#64748B" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">SPEC: ISO/IEC 7810 ID-1 (CR80) // 85.60 x 53.98 mm // PVC 30mil</text>
+  <text x="300" y="690" fill="#475569" font-family="'Inter', sans-serif" font-size="10" text-anchor="middle">PROPERTY OF NATIONAL INNOVATION HUB • IF FOUND RETURN TO SECURITY</text>
+</svg>

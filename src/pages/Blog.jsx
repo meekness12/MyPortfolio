@@ -2,11 +2,45 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../utils/scroll';
-import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, Clock, Share2, Check, ExternalLink } from 'lucide-react';
 
 import avatarDark from '../assets/anime_avatar.jpg';
 import { BLOG_POSTS } from '../data/blog';
 import { calculateReadingTime } from '../utils/time';
+
+function renderFormattedText(text) {
+  if (typeof text !== 'string') return text;
+  const parts = [];
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index));
+    }
+    const [, linkText, linkUrl] = match;
+    const isExternal = linkUrl.startsWith('http://') || linkUrl.startsWith('https://');
+    parts.push(
+      <a
+        key={`${match.index}-${linkUrl}`}
+        href={linkUrl}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        className="text-brand-blue dark:text-brand-cyan font-medium underline underline-offset-4 decoration-brand-blue/30 dark:decoration-brand-cyan/30 hover:decoration-brand-blue dark:hover:decoration-brand-cyan transition-colors"
+      >
+        {linkText}
+      </a>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
 
 export default function Blog() {
   const { slug } = useParams();
@@ -286,7 +320,7 @@ export default function Blog() {
             <div className="prose-blog font-sans text-[15px] leading-relaxed text-gray-700 dark:text-white/80 space-y-4">
               {selectedPost.content.map((block, idx) => {
                 if (block.type === 'paragraph') {
-                  return <p key={idx}>{block.text}</p>;
+                  return <p key={idx}>{renderFormattedText(block.text)}</p>;
                 }
 
                 if (block.type === 'heading') {
@@ -326,9 +360,39 @@ export default function Blog() {
                   return (
                     <ul key={idx} className="list-disc pl-5 space-y-1.5 my-3">
                       {block.items.map((item, itemIdx) => (
-                        <li key={itemIdx}>{item}</li>
+                        <li key={itemIdx}>{renderFormattedText(item)}</li>
                       ))}
                     </ul>
+                  );
+                }
+
+                if (block.type === 'cta') {
+                  return (
+                    <div
+                      key={idx}
+                      className="my-10 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-transparent dark:from-blue-600/15 dark:via-cyan-600/10 dark:to-transparent border border-brand-blue/20 dark:border-brand-cyan/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 shadow-soft transition-all"
+                    >
+                      <div className="flex-1">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-brand-blue dark:text-brand-cyan font-semibold block mb-1.5">
+                          {block.badge || 'Recommended Free Tool'}
+                        </span>
+                        <h4 className="font-space font-bold text-lg sm:text-xl text-slate-900 dark:text-white mb-2">
+                          {block.title}
+                        </h4>
+                        <p className="text-sm text-slate-600 dark:text-white/70 max-w-lg leading-relaxed">
+                          {block.description}
+                        </p>
+                      </div>
+                      <a
+                        href={block.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="glare-button px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-brand-blue text-white hover:bg-blue-600 dark:bg-brand-cyan dark:text-slate-950 dark:hover:bg-cyan-300 transition-all shadow-soft shrink-0 flex items-center gap-2 cursor-pointer active:scale-95"
+                      >
+                        <span>{block.buttonText || 'Explore Zeno for Free'}</span>
+                        <ExternalLink size={15} />
+                      </a>
+                    </div>
                   );
                 }
 
