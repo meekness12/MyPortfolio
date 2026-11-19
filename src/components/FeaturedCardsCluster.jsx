@@ -105,22 +105,34 @@ function LatticeGraphic() {
 }
 
 // -------------------------------------------------------------
-// Card 3 Graphic: Dot Matrix Pattern (Edge Journal)
+// Card 3 Graphic: Radiant Geometric Wealth Prism (Zeno Flagship)
 // -------------------------------------------------------------
-function DotMatrixGraphic() {
+function ZenoPrismGraphic() {
   return (
     <div className="w-28 h-20 relative flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 rounded-full bg-amber-500/15 blur-xl" />
       <svg viewBox="0 0 120 80" className="w-full h-full">
         <defs>
-          <pattern id="dotPatternCluster" width="4" height="4" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="#94A3B8" />
-          </pattern>
+          <linearGradient id="zenoGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FDE047" />
+            <stop offset="50%" stopColor="#F59E0B" />
+            <stop offset="100%" stopColor="#D97706" />
+          </linearGradient>
+          <linearGradient id="zenoCyanGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#06B6D4" />
+            <stop offset="100%" stopColor="#3B82F6" />
+          </linearGradient>
         </defs>
-        <circle cx="36" cy="30" r="14" fill="url(#dotPatternCluster)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-        <circle cx="68" cy="24" r="14" fill="url(#dotPatternCluster)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-        <circle cx="96" cy="38" r="14" fill="url(#dotPatternCluster)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-        <circle cx="50" cy="54" r="14" fill="url(#dotPatternCluster)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-        <circle cx="82" cy="54" r="14" fill="url(#dotPatternCluster)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+        {/* Wealth Hexagon / Diamond Prisms */}
+        <polygon points="60,10 92,28 92,62 60,78 28,62 28,28" fill="none" stroke="url(#zenoGoldGrad)" strokeWidth="1.5" opacity="0.85" />
+        <polygon points="60,20 84,33 84,57 60,70 36,57 36,33" fill="url(#zenoCyanGrad)" opacity="0.25" stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" />
+        {/* Center Golden Core */}
+        <circle cx="60" cy="45" r="9" fill="url(#zenoGoldGrad)" opacity="0.9" />
+        <circle cx="60" cy="45" r="14" fill="none" stroke="#FDE047" strokeWidth="1" strokeDasharray="2 2" opacity="0.75" />
+        {/* Dynamic Velocity Rays */}
+        <line x1="60" y1="10" x2="60" y2="78" stroke="rgba(255,255,255,0.45)" strokeWidth="1" strokeDasharray="2 2" />
+        <line x1="28" y1="28" x2="92" y2="62" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" />
+        <line x1="28" y1="62" x2="92" y2="28" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" />
       </svg>
     </div>
   );
@@ -185,11 +197,16 @@ export default function FeaturedCardsCluster({ onCardClick, className = '' }) {
 
           {/* Card Label */}
           <div className="relative z-10">
-            <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
-              TalentLens
-            </h3>
+            <div className="flex items-center gap-2 mb-0.5">
+              <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
+                TalentLens
+              </h3>
+              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                ⚡ AI Winner
+              </span>
+            </div>
             <p className="font-mono text-xs text-white/50">
-              talentlens.ai
+              talent-lens-eight.vercel.app
             </p>
           </div>
 
@@ -220,11 +237,16 @@ export default function FeaturedCardsCluster({ onCardClick, className = '' }) {
 
           {/* Card Label */}
           <div className="relative z-10">
-            <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
-              InternBridge
-            </h3>
+            <div className="flex items-center gap-2 mb-0.5">
+              <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
+                InternBridge
+              </h3>
+              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                🟢 Live Enterprise
+              </span>
+            </div>
             <p className="font-mono text-xs text-white/50">
-              internbridge.rw
+              internbridge-inky.vercel.app
             </p>
           </div>
 
@@ -232,41 +254,46 @@ export default function FeaturedCardsCluster({ onCardClick, className = '' }) {
           <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
         </motion.div>
 
-        {/* ---------------- CARD 3: Edge Journal (Foreground / Clipped) ---------------- */}
+        {/* ---------------- CARD 3: Zeno (Foreground / Center / Crown Flagship) ---------------- */}
         <motion.div
-          onMouseEnter={() => setHoveredCard('edgejournal')}
+          onMouseEnter={() => setHoveredCard('zeno')}
           onMouseLeave={() => setHoveredCard(null)}
-          onClick={() => onCardClick && onCardClick('edgejournal')}
+          onClick={() => onCardClick && onCardClick('zeno')}
           initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
           animate={{
             opacity: 1,
-            scale: hoveredCard === 'edgejournal' ? 1.05 : 1,
-            rotate: hoveredCard === 'edgejournal' ? 0 : -2,
-            y: hoveredCard === 'edgejournal' ? -10 : 0,
-            zIndex: hoveredCard === 'edgejournal' ? 35 : 20,
+            scale: hoveredCard === 'zeno' ? 1.05 : 1,
+            rotate: hoveredCard === 'zeno' ? 0 : -2,
+            y: hoveredCard === 'zeno' ? -10 : 0,
+            zIndex: hoveredCard === 'zeno' ? 35 : 20,
           }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="absolute bottom-4 sm:bottom-6 w-[265px] sm:w-[305px] h-[165px] sm:h-[190px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-visible group hover:border-brand-blue/50"
+          className="absolute bottom-4 sm:bottom-6 w-[265px] sm:w-[305px] h-[165px] sm:h-[190px] rounded-2xl p-5 bg-[#0F1219] border border-amber-500/35 hover:border-amber-400 shadow-[0_20px_50px_rgba(245,158,11,0.15)] cursor-pointer flex flex-col justify-between overflow-visible group"
         >
           <BinderClip />
 
           {/* Card Graphic */}
           <div className="self-end -mr-1 -mt-1">
-            <DotMatrixGraphic />
+            <ZenoPrismGraphic />
           </div>
 
           {/* Card Label */}
           <div className="relative z-10 mb-2">
-            <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-brand-blue transition-colors">
-              Edge Journal
-            </h3>
+            <div className="flex items-center gap-2 mb-0.5">
+              <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors">
+                Zeno
+              </h3>
+              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                ✦ Flagship
+              </span>
+            </div>
             <p className="font-mono text-xs text-white/50">
-              edgejournal.dev
+              zeno.kozza.app
             </p>
           </div>
 
           {/* Brushed Texture Sheen */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-amber-500/[0.06] via-white/[0.02] to-transparent pointer-events-none" />
         </motion.div>
       </div>
     </div>

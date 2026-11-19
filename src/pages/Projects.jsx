@@ -174,7 +174,11 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.08 }}
-                    className="dashed-border-anim rounded-2xl w-full h-full shadow-soft hover:shadow-soft-hover transition-all flex flex-col"
+                    className={`rounded-2xl w-full h-full shadow-soft hover:shadow-soft-hover transition-all flex flex-col ${
+                      p.id === 'zeno'
+                        ? 'ring-2 ring-amber-500/40 dark:ring-amber-400/50 shadow-[0_10px_35px_rgba(245,158,11,0.12)]'
+                        : 'dashed-border-anim'
+                    }`}
                   >
                     <div className="relative flex flex-col bg-white dark:bg-dark-surface rounded-[15px] overflow-hidden h-full">
                       
@@ -198,7 +202,26 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
                             {p.title}
                           </h3>
 
-                          {p.isLive ? (
+                          {p.badge ? (
+                            <span
+                              className={`flex items-center gap-1.5 text-xs font-semibold rounded-full px-2.5 py-0.5 shrink-0 ${
+                                p.id === 'zeno'
+                                  ? 'text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/30 font-medium'
+                                  : p.isLive
+                                  ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20'
+                                  : 'text-slate-500 dark:text-white/50 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10'
+                              }`}
+                            >
+                              {p.isLive && (
+                                <span
+                                  className={`w-1.5 h-1.5 rounded-full ${
+                                    p.id === 'zeno' ? 'bg-amber-500' : 'bg-emerald-500'
+                                  } animate-pulse`}
+                                />
+                              )}
+                              {p.badge}
+                            </span>
+                          ) : p.isLive ? (
                             <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 rounded-full px-2.5 py-0.5 shrink-0 bg-emerald-500/10 border border-emerald-500/20">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                               Live
@@ -245,26 +268,35 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
                           </button>
 
                           <div className="flex items-center gap-2">
-                            {p.isLive && (
+                            {p.isLive && p.liveUrl && (
                               <a
                                 href={p.liveUrl}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="p-1.5 rounded-full text-slate-500 hover:text-slate-900 dark:text-white/50 dark:hover:text-white transition-colors"
-                                title="Open Live Demo"
+                                title="Open Live Platform"
                               >
                                 <ExternalLink size={15} />
                               </a>
                             )}
-                            <a
-                              href={p.githubUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="p-1.5 rounded-full text-slate-500 hover:text-slate-900 dark:text-white/50 dark:hover:text-white transition-colors"
-                              title="GitHub Repository"
-                            >
-                              <Github size={15} />
-                            </a>
+                            {p.githubUrl ? (
+                              <a
+                                href={p.githubUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="p-1.5 rounded-full text-slate-500 hover:text-slate-900 dark:text-white/50 dark:hover:text-white transition-colors"
+                                title="GitHub Repository"
+                              >
+                                <Github size={15} />
+                              </a>
+                            ) : (
+                              <span
+                                className="text-[10px] font-mono text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded-md"
+                                title="Proprietary / Closed Source Product"
+                              >
+                                Proprietary
+                              </span>
+                            )}
                           </div>
                         </div>
 
@@ -310,10 +342,30 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
               {/* Title & Metadata Header */}
               <div className="w-full flex flex-col gap-4 pb-8 mb-8 border-b border-black/10 dark:border-white/10">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2.5 flex-wrap">
                     <span className="text-xs font-mono px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue dark:text-brand-cyan border border-brand-blue/20 font-semibold">
                       {selectedProject.shortName}
                     </span>
+                    {selectedProject.badge && (
+                      <span
+                        className={`text-xs font-mono px-3 py-1 rounded-full font-semibold flex items-center gap-1.5 ${
+                          selectedProject.id === 'zeno'
+                            ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                            : selectedProject.isLive
+                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                            : 'bg-black/[0.05] dark:bg-white/[0.08] text-slate-600 dark:text-white/60'
+                        }`}
+                      >
+                        {selectedProject.isLive && (
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              selectedProject.id === 'zeno' ? 'bg-amber-500' : 'bg-emerald-500'
+                            } animate-pulse`}
+                          />
+                        )}
+                        <span>{selectedProject.badge}</span>
+                      </span>
+                    )}
                     <span className="text-xs font-mono text-slate-400 dark:text-white/40">
                       {selectedProject.period}
                     </span>
@@ -326,21 +378,27 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
                         href={selectedProject.liveUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="glare-button px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 flex items-center gap-1.5 shadow-soft transition-all"
+                        className="glare-button px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-brand-blue text-white hover:bg-brand-blue/90 dark:bg-brand-cyan dark:text-slate-950 dark:hover:bg-cyan-300 flex items-center gap-1.5 shadow-soft transition-all"
                       >
-                        <span>Live Demo</span>
+                        <span>Live Platform</span>
                         <ExternalLink size={14} />
                       </a>
                     )}
-                    <a
-                      href={selectedProject.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="glare-button px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white dark:bg-dark-surface border border-black/10 dark:border-white/15 text-slate-800 dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.04] flex items-center gap-1.5 shadow-soft transition-all"
-                    >
-                      <Github size={14} />
-                      <span>Repository</span>
-                    </a>
+                    {selectedProject.githubUrl ? (
+                      <a
+                        href={selectedProject.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="glare-button px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white dark:bg-dark-surface border border-black/10 dark:border-white/15 text-slate-800 dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.04] flex items-center gap-1.5 shadow-soft transition-all"
+                      >
+                        <Github size={14} />
+                        <span>Repository</span>
+                      </a>
+                    ) : (
+                      <span className="px-3.5 py-1.5 rounded-full text-xs font-mono font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/25 flex items-center gap-1.5">
+                        <span>✦ Closed Source / Proprietary</span>
+                      </span>
+                    )}
                   </div>
                 </div>
 
