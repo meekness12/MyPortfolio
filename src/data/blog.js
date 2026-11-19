@@ -4,7 +4,6 @@
  * Publish new articles, update categories, or edit essay content here.
  */
 
-import productDashboard from '../assets/product_dashboard.jpg';
 import internbridgeImg from '../assets/internbridge.png';
 import classroomImg from '../assets/classroom.png';
 import portfolioImg from '../assets/Portfolio.jpg';
@@ -147,7 +146,7 @@ export const BLOG_POSTS = [
     categories: ['AI', 'Engineering'],
     date: 'March 18, 2026',
     isoDate: '2026-03-18',
-    thumbnail: productDashboard,
+    thumbnail: portfolioImg,
     content: [
       {
         type: 'paragraph',

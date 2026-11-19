@@ -262,38 +262,71 @@ export default function Designs() {
 
                       {/* Stacked Preview Mockup Sheets Peeking Out of Pocket */}
                       <div className="relative w-full h-[180px] sm:h-[195px] flex items-center justify-center overflow-visible pt-6">
-                        {/* Left Preview Card */}
-                        <div
-                          className={`absolute rounded-xl overflow-hidden shadow-md border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[1] ${previewClasses.left}`}
-                        >
-                          <img
-                            src={cat.previews[0]}
-                            alt={`${cat.name} preview 1`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-
-                        {/* Center/Back Preview Card (Stands taller on hover) */}
-                        <div
-                          className={`absolute rounded-xl overflow-hidden shadow-xl border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[2] ${previewClasses.center}`}
-                        >
-                          <img
-                            src={cat.previews[1]}
-                            alt={`${cat.name} preview 2`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-
-                        {/* Right Preview Card */}
-                        <div
-                          className={`absolute rounded-xl overflow-hidden shadow-md border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[1] ${previewClasses.right}`}
-                        >
-                          <img
-                            src={cat.previews[2]}
-                            alt={`${cat.name} preview 3`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
+                        {cat.previews.length === 1 ? (
+                          /* Single Centered Commanding Hero Sheet (e.g. Roll-up Banners, Badges) */
+                          <div
+                            className={`absolute rounded-xl overflow-hidden shadow-xl border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[2] ${previewClasses.center}`}
+                          >
+                            <img
+                              src={cat.previews[0]}
+                              alt={`${cat.name} preview`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        ) : cat.previews.length === 2 ? (
+                          /* Dual Balanced Sheets */
+                          <>
+                            <div
+                              className={`absolute rounded-xl overflow-hidden shadow-md border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[1] ${previewClasses.left}`}
+                            >
+                              <img
+                                src={cat.previews[0]}
+                                alt={`${cat.name} preview 1`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div
+                              className={`absolute rounded-xl overflow-hidden shadow-xl border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[2] ${previewClasses.center}`}
+                            >
+                              <img
+                                src={cat.previews[1]}
+                                alt={`${cat.name} preview 2`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          /* Triple Fan Sheets */
+                          <>
+                            <div
+                              className={`absolute rounded-xl overflow-hidden shadow-md border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[1] ${previewClasses.left}`}
+                            >
+                              <img
+                                src={cat.previews[0]}
+                                alt={`${cat.name} preview 1`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div
+                              className={`absolute rounded-xl overflow-hidden shadow-xl border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[2] ${previewClasses.center}`}
+                            >
+                              <img
+                                src={cat.previews[1]}
+                                alt={`${cat.name} preview 2`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div
+                              className={`absolute rounded-xl overflow-hidden shadow-md border border-black/10 dark:border-white/15 bg-slate-900 transition-all duration-300 ease-out z-[1] ${previewClasses.right}`}
+                            >
+                              <img
+                                src={cat.previews[2]}
+                                alt={`${cat.name} preview 3`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </>
+                        )}
                       </div>
 
                       {/* Skeuomorphic Folder Flap (Foreground Pocket with Left Raised Tab) */}
@@ -337,7 +370,7 @@ export default function Designs() {
                               className="text-slate-400 dark:text-white/40 group-hover:text-slate-700 dark:group-hover:text-white transition-colors"
                             />
                             <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-slate-500 dark:text-white/60">
-                              {cat.items.length} works
+                              {cat.items.length} {cat.items.length === 1 ? 'work' : 'works'}
                             </span>
                           </div>
                         </div>
