@@ -26,14 +26,23 @@ export default function Contact() {
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_pi90lov';
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'jSzN1nnBCyfWN1SA3';
 
+    const formattedMessage = `${message.trim()}\n\n----------------------------------------\n📍 Sent via Portfolio Contact Form: meekthinker.me\n👤 Sender: ${name.trim()} (${email.trim()})\n🌐 Origin: https://meekthinker.me/contact`;
+
     try {
       await emailjs.send(
         serviceId,
         templateId,
         {
+          name: name.trim(),
           user_name: name.trim(),
+          from_name: name.trim(),
+          email: email.trim(),
           user_email: email.trim(),
-          message: message.trim(),
+          reply_to: email.trim(),
+          message: formattedMessage,
+          source: 'meekthinker.me Portfolio',
+          site_url: 'https://meekthinker.me',
+          subject: `New Message from ${name.trim()} via meekthinker.me`,
         },
         publicKey
       );
@@ -130,12 +139,24 @@ export default function Contact() {
               </button>
 
               {status === 'error' && (
-                <p className="text-xs text-red-500 text-center">
-                  Could not send message right now. Feel free to email directly at{' '}
-                  <a href="mailto:meeknessbon@gmail.com" className="underline font-mono">
-                    meeknessbon@gmail.com
-                  </a>
-                </p>
+                <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-center space-y-1.5">
+                  <p className="text-xs text-red-500 font-medium">
+                    Could not deliver message right now.
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-white/60">
+                    Send directly to{' '}
+                    <a
+                      href={`mailto:meeknessbon@gmail.com?subject=${encodeURIComponent(
+                        `Message from ${name || 'Portfolio Visitor'} via meekthinker.me`
+                      )}&body=${encodeURIComponent(
+                        `${message}\n\n---\nSent from meekthinker.me/contact by ${name} (${email})`
+                      )}`}
+                      className="underline font-mono text-brand-blue dark:text-brand-cyan font-semibold hover:opacity-80"
+                    >
+                      meeknessbon@gmail.com
+                    </a>
+                  </p>
+                </div>
               )}
             </form>
           </div>

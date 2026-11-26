@@ -7,7 +7,6 @@ import {
   Twitter,
   Linkedin,
   Mail,
-  ChevronDown,
   Layers,
   ArrowUpRight,
   CheckCircle2
@@ -31,9 +30,6 @@ export default function Home({ onViewChange }) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [typingState, setTypingState] = useState('typing'); // 'typing' | 'pausing' | 'deleting'
-
-  // Experience accordion state
-  const [expandedExp, setExpandedExp] = useState(1);
 
   // Banner mode: 'dither' | 'skyline'
   const [bannerMode, setBannerMode] = useState('dither');
@@ -77,7 +73,6 @@ export default function Home({ onViewChange }) {
     return () => clearTimeout(timer);
   }, [currentText, typingState, roleIndex]);
 
-  const experiences = profileConfig.experiences;
   const socials = profileConfig.socials;
 
   return (
@@ -258,99 +253,6 @@ export default function Home({ onViewChange }) {
             </span>
           </div>
           <TechMarquee />
-        </motion.div>
-
-        {/* Work Experience Accordion */}
-        <motion.div
-          variants={scrollRevealVariants}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true, margin: '-40px' }}
-          className="w-full"
-        >
-          <div className="mb-6 px-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-slate-400 dark:text-white/40 block mb-1">
-              Career & Journey
-            </span>
-            <h3 className="font-space font-bold text-2xl text-slate-900 dark:text-white">
-              Work Experience
-            </h3>
-          </div>
-
-          <div className="dashed-border-anim rounded-2xl w-full">
-            <div className="bg-white dark:bg-dark-surface rounded-2xl divide-y divide-black/5 dark:divide-white/10 transition-colors duration-150">
-              {experiences.map((exp) => {
-                const isExpanded = expandedExp === exp.id;
-                return (
-                  <div key={exp.id}>
-                    <button
-                      onClick={() => setExpandedExp(isExpanded ? null : exp.id)}
-                      className="w-full flex flex-col md:flex-row md:items-center justify-between gap-2 p-5 md:p-6 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors duration-150 cursor-pointer"
-                    >
-                      <div>
-                        <h4 className="font-space font-semibold text-base sm:text-lg text-slate-900 dark:text-white">
-                          {exp.company}
-                        </h4>
-                        <p className="text-xs sm:text-sm text-slate-500 dark:text-white/50">
-                          {exp.role} · {exp.location}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-slate-500 dark:text-white/50">
-                          {exp.period}
-                        </span>
-                        <ChevronDown
-                          size={16}
-                          className={`text-slate-400 dark:text-white/40 transition-transform duration-200 ${
-                            isExpanded ? 'rotate-180 text-brand-blue' : ''
-                          }`}
-                        />
-                      </div>
-                    </button>
-
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-5 md:px-6 pb-6 pt-1 flex flex-col gap-4 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
-                            <p className="text-sm text-slate-600 dark:text-white/70 leading-relaxed">
-                              {exp.description}
-                            </p>
-
-                            <ul className="flex flex-col gap-2">
-                              {exp.responsibilities.map((resp, i) => (
-                                <li key={i} className="flex gap-2.5 text-sm text-slate-600 dark:text-white/70">
-                                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0" />
-                                  <span>{resp}</span>
-                                </li>
-                              ))}
-                            </ul>
-
-                            <div className="flex flex-wrap gap-1.5 pt-2">
-                              {exp.tools.map((tool) => (
-                                <span
-                                  key={tool}
-                                  className="text-xs font-mono font-medium text-slate-700 dark:text-white/80 bg-black/[0.04] dark:bg-white/10 rounded-full px-3 py-1"
-                                >
-                                  {tool}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </motion.div>
 
         {/* Featured Projects Tactile Cards Cluster */}
