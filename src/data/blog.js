@@ -95,11 +95,11 @@ export const BLOG_POSTS = [
       },
       {
         type: 'paragraph',
-        text: 'There is a critical boundary that wealth builders must never cross: trading security for convenience. You should never be forced to hand over your bank login credentials, passwords, or security answers to third-party scraping aggregators. Your net worth, transactions, and balance sheets are private sovereign data.',
+        text: 'There is a critical boundary that wealth builders must never cross: trading security for convenience. You should never be forced to hand over your bank login credentials, passwords, or security answers to third-party scraping aggregators. Your net worth, transactions, and balance sheets are strictly private personal data.',
       },
       {
         type: 'paragraph',
-        text: 'Modern financial technology must be built with local-first offline resilience, client-side encryption, and clean CSV statement imports. You deserve artificial intelligence that works for you without turning your personal spending telemetry into a product sold to advertisers.',
+        text: 'Modern financial technology must be built with local-first offline resilience, client-side encryption, and clean CSV statement imports. You deserve software that works for you without turning your personal spending habits and transaction history into a product sold to advertisers.',
       },
       {
         type: 'heading',
@@ -107,7 +107,7 @@ export const BLOG_POSTS = [
       },
       {
         type: 'paragraph',
-        text: 'Because existing tools were either too expensive, too complex, or completely invasive of user privacy, I designed and co-architected [Zeno](https://zeno.kozza.app/)—a free, privacy-first personal financial command center built specifically to solve these challenges.',
+        text: 'Because existing tools were either too expensive, too complex, or completely invasive of user privacy, I designed and co-architected [Zeno](https://zeno.kozza.app/)—a free, privacy-first personal finance platform built specifically to solve these challenges.',
       },
       {
         type: 'paragraph',
