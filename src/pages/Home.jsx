@@ -282,16 +282,10 @@ export default function Home({ onViewChange }) {
             </button>
           </div>
 
-          {/* Tactile 3-Cards Physical Stage (shwn.design style) */}
-          <div className="w-full bg-slate-50/50 dark:bg-dark-surface/40 border border-black/5 dark:border-white/5 rounded-3xl p-3 sm:p-6 shadow-inner flex flex-col items-center">
-            <FeaturedCardsCluster
-              onCardClick={(projectId) => onViewChange('projects', projectId)}
-            />
-            
-            <p className="text-xs font-sans text-slate-400 dark:text-white/40 mt-3 text-center">
-              Click any card to inspect full architectural case study and live demo
-            </p>
-          </div>
+          {/* Featured Systems Architectural Bento Showcase */}
+          <FeaturedCardsCluster
+            onCardClick={(projectId) => onViewChange('projects', projectId)}
+          />
         </motion.div>
 
         {/* Social Connect Strip */}

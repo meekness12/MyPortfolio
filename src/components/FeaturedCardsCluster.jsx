@@ -1,301 +1,382 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import DitherWaveBackground from './DitherWaveBackground';
+import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, Check } from 'lucide-react';
+import { projects } from '../data/projects';
 
-// -------------------------------------------------------------
-// Push-Pin SVG Component (for Card 1 - shwn.design style)
-// -------------------------------------------------------------
-function PushPin() {
+const CARD_DESCRIPTIONS = {
+  zeno: 'Privacy-first zero-based envelope budgeting, multi-asset net worth tracking, and receipt OCR in RWF without bank scraping.',
+  internbridge: 'Role-based university internship portal unifying student placements, weekly mentor sign-offs, and grading rubrics.',
+  talentlens: 'Multimodal resume screening with Gemini 1.5 Flash extraction, weighted match scoring, and candidate gap analysis.',
+};
+
+const FEATURED_BADGE_LABELS = {
+  zeno: 'Flagship',
+  internbridge: 'Enterprise',
+  talentlens: 'Hackathon Winner',
+};
+
+/**
+ * Updates CSS pointer coordinates directly on the card element to render
+ * the hairline surface glint without triggering React re-renders.
+ */
+function handleCardPointerMove(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`);
+}
+
+function handleCardLinkClick(e, projectId, onCardClick) {
+  if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && onCardClick) {
+    e.preventDefault();
+    onCardClick(projectId);
+  }
+}
+
+function ZenoBrandMark() {
   return (
-    <div className="absolute -top-3.5 left-5 z-30 pointer-events-none drop-shadow-md">
-      <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-        {/* Soft cast shadow */}
-        <ellipse cx="14" cy="22" rx="7" ry="3" fill="rgba(0,0,0,0.4)" filter="blur(1px)" />
-        {/* Metal pin shaft */}
-        <line x1="16" y1="18" x2="14" y2="24" stroke="#CBD5E1" strokeWidth="2.5" strokeLinecap="round" />
-        {/* Transparent acrylic head outer */}
-        <circle cx="16" cy="14" r="8" fill="rgba(255,255,255,0.7)" stroke="rgba(255,255,255,0.9)" strokeWidth="1" />
-        {/* Cyan glass tint */}
-        <circle cx="16" cy="14" r="5" fill="rgba(6,182,212,0.35)" />
-        {/* White specular highlight */}
-        <ellipse cx="14" cy="11" rx="3" ry="1.5" fill="white" transform="rotate(-30 14 11)" />
-        {/* Pin center core */}
-        <circle cx="16" cy="14" r="2" fill="#3B82F6" opacity="0.8" />
-      </svg>
+    <svg width="20" height="18" viewBox="0 0 24 20" fill="none" aria-hidden="true">
+      <rect x="1" y="9" width="3.5" height="9" rx="1.75" fill="#065F46" />
+      <rect x="6.5" y="5" width="3.5" height="13" rx="1.75" fill="#10B981" />
+      <rect x="12" y="1" width="3.5" height="17" rx="1.75" fill="#F59E0B" />
+      <circle cx="19.5" cy="16" r="2" fill="#F59E0B" />
+    </svg>
+  );
+}
+
+/**
+ * Domain UI specimen for Zeno: crisp Budget Envelopes & 50/25/15/10 allocation window.
+ */
+function ZenoShowcaseVisual() {
+  const allocations = [
+    { label: 'Needs', pct: 50, color: 'bg-emerald-600 dark:bg-emerald-500' },
+    { label: 'Invest', pct: 25, color: 'bg-sky-600 dark:bg-sky-500' },
+    { label: 'Savings', pct: 15, color: 'bg-amber-500 dark:bg-amber-400' },
+    { label: 'Personal', pct: 10, color: 'bg-slate-400 dark:bg-slate-500' },
+  ];
+
+  const envelopes = [
+    { name: 'Groceries', ratio: '57%', width: 'w-[57%]', tone: 'bg-emerald-500' },
+    { name: 'Clothing', ratio: '69%', width: 'w-[69%]', tone: 'bg-amber-500' },
+  ];
+
+  return (
+    <div
+      aria-hidden="true"
+      className="relative w-full h-full flex items-end justify-end pt-4 pl-4 sm:pl-6 md:pt-6"
+    >
+      <div className="w-full rounded-tl-xl border-t border-l border-black/[0.08] dark:border-white/[0.09] bg-white dark:bg-[#0D1017] shadow-[0_-4px_24px_rgba(15,23,42,0.05)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] p-4 sm:p-5 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-3px] group-hover:translate-x-[-2px] motion-reduce:transition-none motion-reduce:group-hover:transform-none">
+        {/* App Header Row */}
+        <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-black/[0.06] dark:border-white/[0.06]">
+          <div className="flex items-center gap-2">
+            <ZenoBrandMark />
+            <span className="font-space font-semibold text-xs text-slate-900 dark:text-white tracking-tight">
+              Budget Envelopes
+            </span>
+          </div>
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            On Track
+          </span>
+        </div>
+
+        {/* Balance & Framework Strip */}
+        <div className="pt-3.5 pb-3">
+          <div className="flex items-baseline justify-between gap-2 mb-2">
+            <div>
+              <span className="block font-mono text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Needs · 35% Split
+              </span>
+              <span className="font-space font-bold text-xl sm:text-2xl text-slate-900 dark:text-white tabular-nums tracking-tight">
+                RF 49,000
+              </span>
+            </div>
+            <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 tabular-nums">
+              100% Assigned
+            </span>
+          </div>
+
+          {/* 50 / 25 / 15 / 10 Segmented Allocation Bar */}
+          <div className="flex h-2 w-full rounded-full overflow-hidden gap-0.5 bg-slate-100 dark:bg-white/[0.05]">
+            {allocations.map((seg) => (
+              <div
+                key={seg.label}
+                style={{ width: `${seg.pct}%` }}
+                className={`${seg.color} transition-opacity duration-200 group-hover:opacity-90`}
+              />
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mt-1.5 text-[9px] sm:text-[10px] font-mono text-slate-400 dark:text-slate-500 tabular-nums">
+            {allocations.map((seg) => (
+              <span key={seg.label} className="whitespace-nowrap">
+                {seg.label} {seg.pct}%
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Envelope Progress Rows */}
+        <div className="space-y-2 pt-2.5 border-t border-black/[0.05] dark:border-white/[0.06]">
+          {envelopes.map((env) => (
+            <div
+              key={env.name}
+              className="flex items-center justify-between gap-3 rounded-lg bg-slate-50/90 dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.04] px-2.5 py-2"
+            >
+              <span className="font-sans text-[11px] font-medium text-slate-700 dark:text-slate-300 w-20 shrink-0">
+                {env.name}
+              </span>
+              <div className="flex-1 h-1.5 rounded-full bg-slate-200/80 dark:bg-white/[0.07] overflow-hidden">
+                <div className={`h-full rounded-full ${env.tone} ${env.width}`} />
+              </div>
+              <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 tabular-nums w-8 text-right">
+                {env.ratio}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-// -------------------------------------------------------------
-// Binder Clip SVG Component (for Card 3 - shwn.design style)
-// -------------------------------------------------------------
-function BinderClip() {
+/**
+ * Domain UI specimen for InternBridge: RBAC placement & mentor sign-off flow.
+ */
+function InternBridgeSpecimen() {
+  const steps = [
+    { role: 'Student Logbook', meta: 'Week 08 · Submitted', done: true },
+    { role: 'Industrial Mentor', meta: 'Signed & Verified', done: true },
+    { role: 'Academic Rubric', meta: 'Evaluation · 94/100', done: false },
+  ];
+
   return (
-    <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-30 pointer-events-none drop-shadow-lg">
-      <svg width="34" height="44" viewBox="0 0 36 46" fill="none">
-        {/* Cast shadow */}
-        <ellipse cx="18" cy="41" rx="9" ry="3" fill="rgba(0,0,0,0.45)" filter="blur(1px)" />
-        {/* Chrome wire handles */}
-        <path
-          d="M 12,14 L 12,32 C 12,38 24,38 24,32 L 24,14"
-          stroke="#E2E8F0"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          fill="none"
-        />
-        {/* Black steel clip body */}
-        <rect x="6" y="2" width="24" height="15" rx="2" fill="#0F172A" stroke="#475569" strokeWidth="1" />
-        {/* Steel highlight strip */}
-        <line x1="8" y1="4" x2="28" y2="4" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-        {/* Clip center gap */}
-        <rect x="13" y="10" width="10" height="2" rx="0.5" fill="#020617" />
-      </svg>
+    <div
+      aria-hidden="true"
+      className="w-full h-[168px] p-4 sm:p-5 bg-slate-100/70 dark:bg-[#0D1017] border-b border-black/[0.06] dark:border-white/[0.06] flex items-center justify-center overflow-hidden"
+    >
+      <div className="w-full max-w-[330px] rounded-xl bg-white dark:bg-[#141822] border border-black/[0.07] dark:border-white/[0.08] shadow-xs p-3 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:transform-none">
+        <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-black/[0.05] dark:border-white/[0.06]">
+          <span className="font-mono text-[10px] font-medium text-slate-500 dark:text-slate-400">
+            Placement Workflow
+          </span>
+          <span className="font-mono text-[10px] text-emerald-600 dark:text-emerald-400">
+            RBAC · Active
+          </span>
+        </div>
+
+        <div className="space-y-1.5">
+          {steps.map((step) => (
+            <div
+              key={step.role}
+              className="flex items-center justify-between gap-2 px-2 py-1 rounded-md bg-slate-50/80 dark:bg-white/[0.025]"
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <span
+                  className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
+                    step.done
+                      ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                      : 'bg-slate-200/80 dark:bg-white/10 text-slate-500 dark:text-slate-400'
+                  }`}
+                >
+                  {step.done ? (
+                    <Check size={10} strokeWidth={2.5} />
+                  ) : (
+                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                  )}
+                </span>
+                <span className="font-sans text-[11px] font-medium text-slate-800 dark:text-slate-200 truncate">
+                  {step.role}
+                </span>
+              </div>
+              <span className="font-mono text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-500 shrink-0 tabular-nums">
+                {step.meta}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-// -------------------------------------------------------------
-// Card 1 Graphic: Cyan Dithered Orbital Sphere (TalentLens)
-// -------------------------------------------------------------
-function OrbitalGraphic() {
+/**
+ * Domain UI specimen for TalentLens: structured resume parsing & MatchScore breakdown.
+ */
+function TalentLensSpecimen() {
+  const criteria = [
+    { label: 'Core Stack', score: 94, barClass: 'w-[94%] bg-slate-900 dark:bg-white' },
+    { label: 'System Design', score: 86, barClass: 'w-[86%] bg-brand-blue dark:bg-brand-cyan' },
+  ];
+
   return (
-    <div className="w-24 h-24 relative flex items-center justify-center pointer-events-none">
-      <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-xl" />
-      <svg viewBox="0 0 100 100" className="w-full h-full">
-        <defs>
-          <radialGradient id="sphereGradCluster" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#A5F3FC" />
-            <stop offset="50%" stopColor="#06B6D4" />
-            <stop offset="100%" stopColor="#083344" />
-          </radialGradient>
-        </defs>
-        <circle cx="50" cy="50" r="32" fill="url(#sphereGradCluster)" />
-        <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.5" strokeDasharray="1 2" />
-        <ellipse cx="50" cy="50" rx="46" ry="14" fill="none" stroke="#22D3EE" strokeWidth="1.5" strokeDasharray="3 2" transform="rotate(-25 50 50)" opacity="0.85" />
-        <ellipse cx="50" cy="50" rx="40" ry="18" fill="none" stroke="#38BDF8" strokeWidth="1" transform="rotate(35 50 50)" opacity="0.6" />
-      </svg>
+    <div
+      aria-hidden="true"
+      className="w-full h-[168px] p-4 sm:p-5 bg-slate-100/70 dark:bg-[#0D1017] border-b border-black/[0.06] dark:border-white/[0.06] flex items-center justify-center overflow-hidden"
+    >
+      <div className="w-full max-w-[330px] rounded-xl bg-white dark:bg-[#141822] border border-black/[0.07] dark:border-white/[0.08] shadow-xs p-3 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:transform-none">
+        <div className="flex items-center justify-between mb-2.5 pb-1.5 border-b border-black/[0.05] dark:border-white/[0.06]">
+          <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 truncate">
+            candidate_cv.pdf
+          </span>
+          <span className="font-mono text-[11px] font-semibold text-slate-900 dark:text-white tabular-nums">
+            89% Match
+          </span>
+        </div>
+
+        <div className="space-y-2.5">
+          {criteria.map((item) => (
+            <div key={item.label}>
+              <div className="flex items-center justify-between text-[10px] font-mono mb-1">
+                <span className="text-slate-500 dark:text-slate-400">{item.label}</span>
+                <span className="text-slate-800 dark:text-slate-200 tabular-nums">{item.score}%</span>
+              </div>
+              <div className="h-1.5 w-full rounded-full bg-slate-100 dark:bg-white/[0.06] overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${item.barClass} transition-[width] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none`}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.05]">
+          {['TypeScript', 'Node.js', 'MongoDB'].map((tag) => (
+            <span
+              key={tag}
+              className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-// -------------------------------------------------------------
-// Card 2 Graphic: Emerald Geometric Leaf Lattice (InternBridge)
-// -------------------------------------------------------------
-function LatticeGraphic() {
+/**
+ * Shared double-bezel interactive card wrapper matching EditorialSidebar chassis.
+ */
+function BentoProjectCard({ project, onCardClick, className = '', children }) {
   return (
-    <div className="w-24 h-24 relative flex items-center justify-center pointer-events-none">
-      <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-xl" />
-      <svg viewBox="0 0 100 100" className="w-full h-full">
-        <defs>
-          <linearGradient id="leafGradCluster" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#F59E0B" />
-            <stop offset="50%" stopColor="#10B981" />
-            <stop offset="100%" stopColor="#064E3B" />
-          </linearGradient>
-        </defs>
-        <path d="M 50,15 L 76,42 L 50,85 L 24,42 Z" fill="url(#leafGradCluster)" opacity="0.9" />
-        <line x1="50" y1="15" x2="50" y2="85" stroke="rgba(255,255,255,0.6)" strokeWidth="1.2" />
-        <line x1="24" y1="42" x2="76" y2="42" stroke="rgba(255,255,255,0.6)" strokeWidth="1.2" />
-        <line x1="37" y1="28" x2="63" y2="63" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="63" y1="28" x2="37" y2="63" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="50" y1="85" x2="50" y2="92" stroke="#10B981" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    </div>
-  );
-}
-
-// -------------------------------------------------------------
-// Card 3 Graphic: Radiant Geometric Wealth Prism (Zeno Flagship)
-// -------------------------------------------------------------
-function ZenoPrismGraphic() {
-  return (
-    <div className="w-28 h-20 relative flex items-center justify-center pointer-events-none">
-      <div className="absolute inset-0 rounded-full bg-amber-500/15 blur-xl" />
-      <svg viewBox="0 0 120 80" className="w-full h-full">
-        <defs>
-          <linearGradient id="zenoGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FDE047" />
-            <stop offset="50%" stopColor="#F59E0B" />
-            <stop offset="100%" stopColor="#D97706" />
-          </linearGradient>
-          <linearGradient id="zenoCyanGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#06B6D4" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </linearGradient>
-        </defs>
-        {/* Wealth Hexagon / Diamond Prisms */}
-        <polygon points="60,10 92,28 92,62 60,78 28,62 28,28" fill="none" stroke="url(#zenoGoldGrad)" strokeWidth="1.5" opacity="0.85" />
-        <polygon points="60,20 84,33 84,57 60,70 36,57 36,33" fill="url(#zenoCyanGrad)" opacity="0.25" stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" />
-        {/* Center Golden Core */}
-        <circle cx="60" cy="45" r="9" fill="url(#zenoGoldGrad)" opacity="0.9" />
-        <circle cx="60" cy="45" r="14" fill="none" stroke="#FDE047" strokeWidth="1" strokeDasharray="2 2" opacity="0.75" />
-        {/* Dynamic Velocity Rays */}
-        <line x1="60" y1="10" x2="60" y2="78" stroke="rgba(255,255,255,0.45)" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="28" y1="28" x2="92" y2="62" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="28" y1="62" x2="92" y2="28" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" />
-      </svg>
-    </div>
+    <Link
+      to={`/projects/${project.id}`}
+      onClick={(e) => handleCardLinkClick(e, project.id, onCardClick)}
+      onPointerMove={handleCardPointerMove}
+      className={`group block min-w-0 text-left rounded-[22px] p-1 bg-white dark:bg-[#11141C] border border-black/[0.08] dark:border-white/[0.08] shadow-soft hover:shadow-soft-hover hover:border-black/20 dark:hover:border-white/20 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue dark:focus-visible:ring-brand-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-light-bg dark:focus-visible:ring-offset-dark-bg transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none motion-reduce:active:scale-100 ${className}`}
+    >
+      <article className="relative h-full rounded-[17px] bg-slate-50/75 dark:bg-[#161A23] border border-black/[0.05] dark:border-white/[0.05] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden">
+        <div className="bento-glint" />
+        {children}
+      </article>
+    </Link>
   );
 }
 
 export default function FeaturedCardsCluster({ onCardClick, className = '' }) {
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [isDark, setIsDark] = useState(true);
-
-  useEffect(() => {
-    const checkDark = () => {
-      setIsDark(document.documentElement.classList.contains('dark'));
+  const featuredMap = useMemo(() => {
+    const byId = Object.fromEntries(projects.map((p) => [p.id, p]));
+    return {
+      zeno: byId.zeno,
+      internbridge: byId.internbridge,
+      talentlens: byId.talentlens,
     };
-    checkDark();
-    const observer = new MutationObserver(checkDark);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
   }, []);
 
+  const { zeno, internbridge, talentlens } = featuredMap;
+  const companionProjects = [internbridge, talentlens].filter(Boolean);
+
   return (
-    <div
-      className={`relative w-full max-w-[620px] h-[310px] min-[400px]:h-[350px] sm:h-[420px] flex items-center justify-center mx-auto my-2 select-none overflow-hidden sm:overflow-visible ${className}`}
-    >
-      {/* Interactive Dither Wave Capacitive Desk Mat */}
-      <div className="absolute inset-1 sm:inset-2 rounded-3xl overflow-hidden pointer-events-none opacity-25 dark:opacity-35 border border-black/5 dark:border-white/10 z-0 shadow-inner">
-        <DitherWaveBackground
-          color={isDark ? '#0A0C10' : '#F8F9FA'}
-          paperColor={isDark ? '#3B82F6' : '#64748B'}
-          pixelSize={2.0}
-          density={0.7}
-          speed={0.6}
-          interactive={true}
-          className="w-full h-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-100/50 via-transparent to-slate-100/30 dark:from-[#0A0C10]/60 dark:via-transparent dark:to-[#0A0C10]/30 pointer-events-none" />
-      </div>
+    <div className={`w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 ${className}`}>
+      {/* ---------------- FLAGSHIP ROW: ZENO ---------------- */}
+      {zeno && (
+        <BentoProjectCard project={zeno} onCardClick={onCardClick} className="md:col-span-2">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 items-stretch">
+            {/* Editorial Copy Column */}
+            <div className="md:col-span-5 min-w-0 p-6 sm:p-7 flex flex-col justify-between gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    {zeno.domain}
+                  </span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300">
+                    {FEATURED_BADGE_LABELS.zeno}
+                  </span>
+                </div>
 
-      {/* Rotated Bento Card Stage with Responsive Mobile Scaling */}
-      <div className="w-full h-full relative flex items-center justify-center scale-[0.76] min-[400px]:scale-[0.85] min-[520px]:scale-[0.92] sm:scale-100 origin-center transition-transform duration-200">
-        {/* ---------------- CARD 1: TalentLens (Left / Pinned) ---------------- */}
-        <motion.div
-          onMouseEnter={() => setHoveredCard('talentlens')}
-          onMouseLeave={() => setHoveredCard(null)}
-          onClick={() => onCardClick && onCardClick('talentlens')}
-          initial={{ opacity: 0, scale: 0.9, rotate: -12 }}
-          animate={{
-            opacity: 1,
-            scale: hoveredCard === 'talentlens' ? 1.05 : 1,
-            rotate: hoveredCard === 'talentlens' ? -6 : -12,
-            y: hoveredCard === 'talentlens' ? -10 : 0,
-            zIndex: hoveredCard === 'talentlens' ? 35 : 10,
-          }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="absolute left-2 sm:left-4 top-4 sm:top-6 w-[255px] sm:w-[290px] h-[160px] sm:h-[185px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-hidden group hover:border-cyan-400/50"
-        >
-          <PushPin />
-          
-          {/* Card Graphic */}
-          <div className="self-end -mr-2 -mt-2">
-            <OrbitalGraphic />
-          </div>
+                <h3 className="font-instrument font-bold text-3xl sm:text-4xl text-slate-900 dark:text-white tracking-tight mb-2.5">
+                  {zeno.shortName}
+                </h3>
 
-          {/* Card Label */}
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-0.5">
-              <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
-                TalentLens
-              </h3>
-              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                ⚡ AI Winner
-              </span>
+                <p className="font-sans text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {CARD_DESCRIPTIONS.zeno}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between gap-3 pt-4 border-t border-black/[0.06] dark:border-white/[0.06]">
+                <span className="font-mono text-[11px] text-slate-400 dark:text-slate-500 whitespace-nowrap">
+                  {zeno.tech.slice(0, 2).join(' · ')}
+                </span>
+
+                <span className="inline-flex items-center gap-1 font-sans text-xs font-semibold text-slate-900 dark:text-white group-hover:text-brand-blue dark:group-hover:text-brand-cyan transition-colors whitespace-nowrap shrink-0">
+                  <span>Case study</span>
+                  <ArrowUpRight
+                    size={14}
+                    className="transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+                  />
+                </span>
+              </div>
             </div>
-            <p className="font-mono text-xs text-white/50">
-              talent-lens-eight.vercel.app
-            </p>
-          </div>
 
-          {/* Brushed Texture Sheen */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
-        </motion.div>
-
-        {/* ---------------- CARD 2: InternBridge (Right) ---------------- */}
-        <motion.div
-          onMouseEnter={() => setHoveredCard('internbridge')}
-          onMouseLeave={() => setHoveredCard(null)}
-          onClick={() => onCardClick && onCardClick('internbridge')}
-          initial={{ opacity: 0, scale: 0.9, rotate: 9 }}
-          animate={{
-            opacity: 1,
-            scale: hoveredCard === 'internbridge' ? 1.05 : 1,
-            rotate: hoveredCard === 'internbridge' ? 3 : 9,
-            y: hoveredCard === 'internbridge' ? -10 : 0,
-            zIndex: hoveredCard === 'internbridge' ? 35 : 12,
-          }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="absolute right-2 sm:right-4 top-8 sm:top-10 w-[255px] sm:w-[290px] h-[160px] sm:h-[185px] rounded-2xl p-5 bg-[#0F1219] border border-white/15 shadow-2xl cursor-pointer flex flex-col justify-between overflow-hidden group hover:border-emerald-400/50"
-        >
-          {/* Card Graphic */}
-          <div className="self-end -mr-2 -mt-2">
-            <LatticeGraphic />
-          </div>
-
-          {/* Card Label */}
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-0.5">
-              <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
-                InternBridge
-              </h3>
-              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                🟢 Live Enterprise
-              </span>
+            {/* Domain UI Specimen Column */}
+            <div className="md:col-span-7 min-w-0 bg-slate-100/60 dark:bg-[#0F131C]/70 border-t md:border-t-0 md:border-l border-black/[0.05] dark:border-white/[0.05]">
+              <ZenoShowcaseVisual />
             </div>
-            <p className="font-mono text-xs text-white/50">
-              internbridge-inky.vercel.app
-            </p>
           </div>
+        </BentoProjectCard>
+      )}
 
-          {/* Brushed Texture Sheen */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
-        </motion.div>
+      {/* ---------------- COMPANION ROW: INTERNBRIDGE & TALENTLENS ---------------- */}
+      {companionProjects.map((project) => (
+        <BentoProjectCard key={project.id} project={project} onCardClick={onCardClick}>
+          <div className="relative z-10 h-full flex flex-col">
+            {project.id === 'internbridge' ? <InternBridgeSpecimen /> : <TalentLensSpecimen />}
 
-        {/* ---------------- CARD 3: Zeno (Foreground / Center / Crown Flagship) ---------------- */}
-        <motion.div
-          onMouseEnter={() => setHoveredCard('zeno')}
-          onMouseLeave={() => setHoveredCard(null)}
-          onClick={() => onCardClick && onCardClick('zeno')}
-          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-          animate={{
-            opacity: 1,
-            scale: hoveredCard === 'zeno' ? 1.05 : 1,
-            rotate: hoveredCard === 'zeno' ? 0 : -2,
-            y: hoveredCard === 'zeno' ? -10 : 0,
-            zIndex: hoveredCard === 'zeno' ? 35 : 20,
-          }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="absolute bottom-4 sm:bottom-6 w-[265px] sm:w-[305px] h-[165px] sm:h-[190px] rounded-2xl p-5 bg-[#0F1219] border border-amber-500/35 hover:border-amber-400 shadow-[0_20px_50px_rgba(245,158,11,0.15)] cursor-pointer flex flex-col justify-between overflow-visible group"
-        >
-          <BinderClip />
+            <div className="p-5 sm:p-6 flex flex-col flex-1 justify-between gap-4">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2.5">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    <span className="truncate">{project.domain}</span>
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-slate-400 dark:text-slate-500 shrink-0">
+                    {FEATURED_BADGE_LABELS[project.id]}
+                  </span>
+                </div>
 
-          {/* Card Graphic */}
-          <div className="self-end -mr-1 -mt-1">
-            <ZenoPrismGraphic />
-          </div>
+                <div className="flex items-center justify-between gap-2 mb-1.5">
+                  <h3 className="font-space font-bold text-lg sm:text-xl text-slate-900 dark:text-white tracking-tight group-hover:text-brand-blue dark:group-hover:text-brand-cyan transition-colors">
+                    {project.shortName}
+                  </h3>
+                  <ArrowUpRight
+                    size={16}
+                    className="text-slate-400 dark:text-slate-500 group-hover:text-brand-blue dark:group-hover:text-brand-cyan transition-all duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0 motion-reduce:transition-none"
+                  />
+                </div>
 
-          {/* Card Label */}
-          <div className="relative z-10 mb-2">
-            <div className="flex items-center gap-2 mb-0.5">
-              <h3 className="font-space font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors">
-                Zeno
-              </h3>
-              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                ✦ Flagship
-              </span>
+                <p className="font-sans text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {CARD_DESCRIPTIONS[project.id]}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-black/[0.05] dark:border-white/[0.06] font-mono text-[11px] text-slate-400 dark:text-slate-500">
+                {project.tech.slice(0, 3).join(' · ')}
+              </div>
             </div>
-            <p className="font-mono text-xs text-white/50">
-              zeno.kozza.app
-            </p>
           </div>
-
-          {/* Brushed Texture Sheen */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-amber-500/[0.06] via-white/[0.02] to-transparent pointer-events-none" />
-        </motion.div>
-      </div>
+        </BentoProjectCard>
+      ))}
     </div>
   );
 }

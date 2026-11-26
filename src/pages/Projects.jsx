@@ -106,7 +106,7 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
         <AnimatePresence mode="wait">
           
           {/* ------------------------------------------------------- */}
-          {/* VIEW A: FEATURED 3-CARDS CLUSTER (shwn.design Style)    */}
+          {/* VIEW A: FEATURED BENTO SHOWCASE                         */}
           {/* ------------------------------------------------------- */}
           {viewMode === 'featured' && (
             <motion.div
@@ -117,11 +117,11 @@ export default function Projects({ initialProjectId = null, onClearInitialProjec
               transition={{ duration: 0.35 }}
               className="w-full flex flex-col items-center"
             >
-              {/* Spacious Tactile Stage */}
+              {/* Architectural 1 + 2 Bento Showcase */}
               <FeaturedCardsCluster onCardClick={openProjectDetail} />
 
               {/* Action Button: Show All Projects Below Cards */}
-              <div className="mt-8 flex flex-col items-center">
+              <div className="mt-10 flex flex-col items-center">
                 <button
                   onClick={() => {
                     setViewMode('all');
